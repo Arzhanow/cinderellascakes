@@ -23,8 +23,8 @@ This living document tracks how the React/Vite project will be executed. It must
 - [ ] Identify external assets (photos, 3D models, PDF catalogue) and define placeholders or delivery timelines.
 
 ## Phase 1 – Environment & Tooling
-- [~] Confirm Vite + React + Tailwind scaffolding is clean and up to date (deps, scripts, linting, formatting).
-- [ ] Install and configure required libraries: Framer Motion, @react-three/fiber, @react-three/drei, react-i18next, React Hook Form, React Helmet (spec “Tech Stack” bullet list).
+- [~] Confirm Vite + React + Tailwind scaffolding is clean and up to date (deps, scripts, lintинг, formatting).
+- [x] Install and configure required libraries: Framer Motion, @react-three/fiber, @react-three/drei, react-i18next, React Hook Form, React Helmet (spec “Tech Stack” bullet list).
 - [ ] Establish shared config: absolute imports/aliases, Tailwind theme tokens, ESLint/Prettier rules, Git conventions.
 - [ ] Document any environment setup steps (Node version, npm scripts) inside `README.md`.
 
@@ -87,3 +87,4 @@ This living document tracks how the React/Vite project will be executed. It must
 - 2025-02-14 – По указание интерактивните/3D елементи са вътрешна спецификация: UI текстовете не трябва да обещават „3D истории“ или „интерактивна торта“, но функционалността остава в обхвата за разработка.
 - 2025-02-14 – Създадена е проектната структура (layouts/pages/locales/hooks/styles + MainLayout + Home shell) според `cinderellapromt.txt`, включително базов footer.
 - 2025-02-15 – Всички визуални елементи вече се реализират чрез Tailwind класове (или @apply в base слой); отделни CSS файлове за компоненти бяха премахнати.
+- 2025-02-15 – Hero секцията получи Framer Motion анимации и бе изграден full-screen slideshow (Най-търсени продукти / За магазини / За хотели / Кетъринг), за да покрие изискванията от `cinderellapromt.txt`.

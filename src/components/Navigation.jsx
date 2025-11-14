@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 const navLinks = [
   { label: 'Начало', href: '#home' },
+  { label: 'Принципи', href: '#principles' },
   { label: 'За нас', href: '#about' },
   { label: 'Продукти', href: '#products' },
-  { label: 'Истории', href: '#stories' },
-  { label: 'Услуги', href: '#services' },
+  { label: 'Производство', href: '#services' },
   { label: 'Контакт', href: '#contact' },
 ]
 
@@ -16,10 +16,13 @@ const Navigation = () => {
   const closeMenu = () => setMenuOpen(false)
 
   return (
-    <header className="sticky top-16 z-20 px-4">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 rounded-[999px] border border-white/15 bg-brand-dusk/80 px-5 py-3 shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl lg:px-8">
+    <header
+      className="sticky z-30 w-screen max-w-[100vw] px-0"
+      style={{ top: 'var(--topbar-height)' }}
+    >
+      <div className="flex w-screen max-w-[100vw] items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8 lg:rounded-[999px]">
         <div className="flex items-center gap-3 text-white">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-sm font-bold tracking-[0.08em] text-brand-night">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-base font-bold tracking-[0.08em] text-brand-night">
             CC
           </span>
           <div className="text-[0.65rem] uppercase leading-tight tracking-[0.35em] text-white/70">
@@ -30,7 +33,7 @@ const Navigation = () => {
 
         <nav
           aria-label="Основна навигация"
-          className="hidden items-center gap-6 text-sm font-medium text-white/60 lg:flex"
+          className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium text-white/70 lg:flex"
         >
           {navLinks.map((link) => (
             <a
@@ -44,7 +47,7 @@ const Navigation = () => {
           ))}
         </nav>
 
-        <button className="hidden rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-5 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-brand-night shadow-glow-cta transition hover:-translate-y-0.5 lg:inline-flex">
+        <button className="hidden rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-brand-night shadow-glow-cta transition hover:-translate-y-0.5 lg:inline-flex">
           Запази дегустация
         </button>
 
@@ -69,32 +72,31 @@ const Navigation = () => {
       </div>
 
       <div
-        className={`fixed inset-0 z-30 bg-brand-night/95 px-6 py-20 text-white transition duration-300 lg:hidden ${
+        className={`fixed inset-0 z-40 flex min-h-screen flex-col items-center justify-center gap-10 bg-brand-night/95 px-8 py-12 text-center text-white transition duration-300 lg:hidden ${
           menuOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         }`}
       >
-        <div className="flex items-center justify-between text-lg font-semibold">
-          <p>Потопи се в света на Cinderella&apos;s Cakes</p>
-          <button
-            aria-label="Затвори меню"
-            className="text-4xl leading-none text-white/70"
-            onClick={closeMenu}
-            type="button"
-          >
-            ×
-          </button>
-        </div>
+        <button
+          aria-label="Затвори меню"
+          className="absolute right-8 top-8 text-4xl leading-none text-white/70"
+          onClick={closeMenu}
+          type="button"
+        >
+          ×
+        </button>
 
-        <div className="mt-10 flex flex-col gap-4 text-2xl font-semibold">
+        <p className="font-luxury text-2xl text-white">Cinderella&apos;s Cakes</p>
+
+        <nav className="flex flex-col gap-4 text-2xl font-semibold">
           {navLinks.map((link) => (
             <a key={link.href} href={link.href} onClick={closeMenu}>
               {link.label}
             </a>
           ))}
-        </div>
+        </nav>
 
         <button
-          className="mt-10 w-full rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night"
+          className="w-full rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night"
           onClick={closeMenu}
           type="button"
         >

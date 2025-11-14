@@ -1,4 +1,8 @@
 @layer base {
+  :root {
+    --topbar-height: 64px;
+  }
+
   body {
     @apply min-h-screen bg-brand-night font-sans text-white antialiased;
   }

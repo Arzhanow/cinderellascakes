@@ -5,8 +5,8 @@ Custom Vite + React build for a luxury confectionery experience. The goal is to 
 ## Tech Stack
 
 - React 19 + Vite 7
-- Tailwind CSS v4
-- Planned additions: Framer Motion, React Three Fiber, React Hook Form, react-i18next, React Helmet.
+- Tailwind CSS v4 (custom theme tokens)
+- Framer Motion, React Three Fiber + Drei, React Hook Form, react-i18next, React Helmet
 
 ## Project Structure
 
