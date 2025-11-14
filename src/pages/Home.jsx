@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const heroSlides = [
   {
@@ -10,7 +11,7 @@ const heroSlides = [
       'Чисти линии, балансирани кремове и ръчно изписани карамелени орнаменти. Част от моделите са налични без захар, без брашно или с протеин.',
     image: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1600&q=80',
     cta: 'Виж най-търсените',
-    href: '#products',
+    href: '/#products',
   },
   {
     id: 'retail',
@@ -20,7 +21,7 @@ const heroSlides = [
       'Мини десерти и торти с ясно етикетиране, стабилна логистика и визуален стандарт за премиум витрини.',
     image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1600&q=80',
     cta: 'Искам оферта',
-    href: '#services',
+    href: '/retail',
   },
   {
     id: 'hotels',
@@ -30,7 +31,7 @@ const heroSlides = [
       'Закуски, следобедни чаи и гала десерти със зададен стандарт на сервиране. Включени са варианти без захар и без брашно.',
     image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80',
     cta: 'Разгледай колекцията',
-    href: '#services',
+    href: '/hotels',
   },
   {
     id: 'catering',
@@ -40,7 +41,7 @@ const heroSlides = [
       'Създаваме сладки инсталации за корпоративни и частни формати. Темата, диетите и сервизът са синхронизирани предварително.',
     image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80',
     cta: 'Запази консултация',
-    href: '#contact',
+    href: '/catering',
   },
 ]
 
@@ -96,6 +97,7 @@ const businessServices = [
     text: 'Постоянно качество и чиста визия за премиум витрини. Асортимент от торти, монодесерти и сезонни серии.',
     details: ['Опаковка и етикетиране по изискване', 'Доставки по график в Пловдив и региона'],
     cta: 'Запитване за договор',
+    path: '/retail',
   },
   {
     id: 'hotels',
@@ -103,6 +105,7 @@ const businessServices = [
     text: 'Закуски, десерти и торти за събития. Визуален стандарт за петзвезден опит.',
     details: ['Гъвкави менюта с опции без захар/брашно', 'Предварително планирани срокове и сервиз'],
     cta: 'Получете оферта',
+    path: '/hotels',
   },
   {
     id: 'catering',
@@ -110,6 +113,7 @@ const businessServices = [
     text: 'Скалируеми решения за корпоративни и частни събития.',
     details: ['Мини размери и персонализирани плата', 'Логистика в Пловдив и региона'],
     cta: 'Заяви дата',
+    path: '/catering',
   },
 ]
 
@@ -156,12 +160,12 @@ const HomePage = () => {
               Премиум сладкария от Пловдив – торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a
+              <Link
                 className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-brand-night shadow-glow-primary transition hover:-translate-y-1"
-                href="#products"
+                to="/#products"
               >
                 Виж най-търсените
-              </a>
+              </Link>
               <a
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white"
                 href="/catalog.pdf"
@@ -182,13 +186,23 @@ const HomePage = () => {
             <h2 className="mt-2 font-luxury text-3xl text-white">{currentSlide.label}</h2>
             <p className="mt-4 leading-relaxed">{currentSlide.description}</p>
             <p className="mt-6 text-sm uppercase tracking-[0.3em] text-white/60">Навигирай модела – завърти, приближи, открий детайла.</p>
-            <a
-              className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-brand-night transition hover:-translate-y-1"
-              href={currentSlide.href}
-            >
-              {currentSlide.cta}
-              <span aria-hidden="true">→</span>
-            </a>
+            {currentSlide.href.startsWith('/') ? (
+              <Link
+                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-brand-night transition hover:-translate-y-1"
+                to={currentSlide.href}
+              >
+                {currentSlide.cta}
+                <span aria-hidden="true">→</span>
+              </Link>
+            ) : (
+              <a
+                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-brand-night transition hover:-translate-y-1"
+                href={currentSlide.href}
+              >
+                {currentSlide.cta}
+                <span aria-hidden="true">→</span>
+              </a>
+            )}
           </motion.div>
         </div>
 
@@ -231,13 +245,13 @@ const HomePage = () => {
           <p className="text-xs uppercase tracking-[0.5em] text-white/60">История</p>
           <h2 className="mt-3 font-luxury text-3xl text-white">{storyTeaser.title}</h2>
           <p className="mt-4 text-base leading-relaxed">{storyTeaser.text}</p>
-          <a
+          <Link
             className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan"
-            href="/about"
+            to="/#about"
           >
             {storyTeaser.cta}
             <span aria-hidden="true">→</span>
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -304,10 +318,22 @@ const HomePage = () => {
                   </li>
                 ))}
               </ul>
-              <button className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan">
-                {service.cta}
-                <span aria-hidden="true">→</span>
-              </button>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  className="inline-flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-brand-night transition hover:-translate-y-0.5"
+                  to={service.path}
+                >
+                  Научи повече
+                  <span aria-hidden="true">→</span>
+                </Link>
+                <Link
+                  className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan"
+                  to="/#contact"
+                >
+                  {service.cta}
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
             </article>
           ))}
         </div>

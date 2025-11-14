@@ -1,8 +1,9 @@
+import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Navigation from '../components/Navigation'
 import TopBar from '../components/TopBar'
 
-const MainLayout = ({ children }) => {
+const MainLayout = () => {
   return (
     <div className="relative min-h-screen bg-brand-night text-white">
       <div
@@ -16,7 +17,7 @@ const MainLayout = ({ children }) => {
       <div className="relative z-10 pb-16">
         <TopBar />
         <Navigation />
-        {children}
+        <Outlet />
         <Footer />
       </div>
     </div>

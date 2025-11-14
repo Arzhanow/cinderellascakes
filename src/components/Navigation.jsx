@@ -1,12 +1,13 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 const navLinks = [
-  { label: 'Начало', href: '#home' },
-  { label: 'Принципи', href: '#principles' },
-  { label: 'За нас', href: '#about' },
-  { label: 'Продукти', href: '#products' },
-  { label: 'Производство', href: '#services' },
-  { label: 'Контакт', href: '#contact' },
+  { label: 'Начало', href: '/' },
+  { label: 'Принципи', href: '/#principles' },
+  { label: 'За нас', href: '/#about' },
+  { label: 'Продукти', href: '/#products' },
+  { label: 'Производство', href: '/#services' },
+  { label: 'Контакт', href: '/#contact' },
 ]
 
 const Navigation = () => {
@@ -36,20 +37,23 @@ const Navigation = () => {
           className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium text-white/70 lg:flex"
         >
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.href}
               className="group relative pb-1 transition hover:text-white"
-              href={link.href}
+              to={link.href}
             >
               {link.label}
               <span className="absolute inset-x-0 top-full block h-0.5 origin-right scale-x-0 bg-gradient-to-r from-brand-blush to-brand-cyan transition-transform duration-300 group-hover:origin-left group-hover:scale-x-100"></span>
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <button className="hidden rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-brand-night shadow-glow-cta transition hover:-translate-y-0.5 lg:inline-flex">
+        <Link
+          className="hidden rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-brand-night shadow-glow-cta transition hover:-translate-y-0.5 lg:inline-flex"
+          to="/#contact"
+        >
           Запази дегустация
-        </button>
+        </Link>
 
         <button
           aria-expanded={menuOpen}
@@ -89,19 +93,19 @@ const Navigation = () => {
 
         <nav className="flex flex-col gap-4 text-2xl font-semibold">
           {navLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={closeMenu}>
+            <Link key={link.href} to={link.href} onClick={closeMenu}>
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <button
+        <Link
           className="w-full rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night"
           onClick={closeMenu}
-          type="button"
+          to="/#contact"
         >
           Запази дегустация
-        </button>
+        </Link>
       </div>
     </header>
   )
