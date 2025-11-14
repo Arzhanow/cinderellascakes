@@ -351,7 +351,7 @@ const HomePage = () => {
             <div>
               <label className="text-xs uppercase tracking-[0.3em] text-white/60">Как да се обърнем към теб?</label>
               <input
-                className="mt-2 w-full rounded-2xl border border-white/20 bg-transparent px-4 py-3 text-white placeholder:text-white/40 focus:border-white"
+                className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
                 placeholder="Име и фамилия"
                 type="text"
               />
@@ -360,36 +360,36 @@ const HomePage = () => {
               <div>
                 <label className="text-xs uppercase tracking-[0.3em] text-white/60">Имейл</label>
                 <input
-                  className="mt-2 w-full rounded-2xl border border-white/20 bg-transparent px-4 py-3 text-white placeholder:text-white/40 focus:border-white"
-                  placeholder="example@domain.com"
-                  type="email"
-                />
+                    className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
+                    placeholder="example@domain.com"
+                    type="email"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs uppercase tracking-[0.3em] text-white/60">Телефон</label>
+                  <input
+                    className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
+                    placeholder="+359 ..."
+                    type="tel"
+                  />
+                </div>
               </div>
               <div>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60">Телефон</label>
-                <input
-                  className="mt-2 w-full rounded-2xl border border-white/20 bg-transparent px-4 py-3 text-white placeholder:text-white/40 focus:border-white"
-                  placeholder="+359 ..."
-                  type="tel"
-                />
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60">Повод / дата / гости</label>
+                <textarea
+                  className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
+                  placeholder="Разкажи ни какво празнуваш и колко гости очакваш"
+                  rows={4}
+                ></textarea>
               </div>
-            </div>
-            <div>
-              <label className="text-xs uppercase tracking-[0.3em] text-white/60">Повод / дата / гости</label>
-              <textarea
-                className="mt-2 w-full rounded-2xl border border-white/20 bg-transparent px-4 py-3 text-white placeholder:text-white/40 focus:border-white"
-                placeholder="Разкажи ни какво празнуваш и колко гости очакваш"
-                rows={4}
-              ></textarea>
-            </div>
-            <div>
-              <label className="text-xs uppercase tracking-[0.3em] text-white/60">Предпочитания</label>
-              <div className="mt-2 flex flex-wrap gap-3 text-sm">
-                {['Без захар', 'Без брашно', 'С протеин'].map((option) => (
-                  <label key={option} className="inline-flex items-center gap-2 rounded-full border border-white/20 px-4 py-2 text-white/70">
-                    <input className="accent-brand-blush" type="checkbox" />
-                    {option}
-                  </label>
+              <div>
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60">Предпочитания</label>
+                <div className="mt-2 flex flex-wrap gap-3 text-sm">
+                  {['Без захар', 'Без брашно', 'С протеин'].map((option) => (
+                    <label key={option} className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                      <input className="accent-brand-blush" type="checkbox" />
+                      {option}
+                    </label>
                 ))}
               </div>
             </div>
