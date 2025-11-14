@@ -11,22 +11,22 @@
   }
 
   [data-theme='rose'] {
-    --color-brand-night: 250 234 242;
-    --color-brand-dusk: 245 217 235;
-    --color-brand-blush: 255 160 196;
-    --color-brand-lilac: 218 173 255;
-    --color-brand-accent: 255 122 162;
-    --color-brand-cyan: 210 164 211;
+    --color-brand-night: 244 214 226;
+    --color-brand-dusk: 232 188 210;
+    --color-brand-blush: 255 170 205;
+    --color-brand-lilac: 224 160 245;
+    --color-brand-accent: 248 110 152;
+    --color-brand-cyan: 177 127 180;
     --theme-foreground: 47 31 41;
   }
 
   [data-theme='peach'] {
-    --color-brand-night: 253 241 233;
-    --color-brand-dusk: 250 226 206;
-    --color-brand-blush: 255 190 150;
-    --color-brand-lilac: 255 210 180;
-    --color-brand-accent: 255 140 120;
-    --color-brand-cyan: 227 168 141;
+    --color-brand-night: 248 232 212;
+    --color-brand-dusk: 234 200 172;
+    --color-brand-blush: 255 195 150;
+    --color-brand-lilac: 255 210 170;
+    --color-brand-accent: 250 135 105;
+    --color-brand-cyan: 196 145 114;
     --theme-foreground: 58 34 22;
   }
 
