@@ -1,0 +1,9 @@
+@layer base {
+  body {
+    @apply min-h-screen bg-brand-night font-sans text-white antialiased;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}

@@ -1,16 +1,58 @@
-# React + Vite
+# Cinderella’s Cakes Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Custom Vite + React build for a luxury confectionery experience. The goal is to deliver a bilingual, mobile-first landing site with cinematic UI flourishes, motion, and future-ready content architecture.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 19 + Vite 7
+- Tailwind CSS v4
+- Planned additions: Framer Motion, React Three Fiber, React Hook Form, react-i18next, React Helmet.
 
-## React Compiler
+## Project Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+cinderellascakes/
+├── public/
+│   ├── index.html
+│   ├── favicon.ico (placeholder)
+│   └── images/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── Footer.jsx
+│   │   ├── Navigation.jsx
+│   │   └── TopBar.jsx
+│   ├── hooks/
+│   │   └── useToggleLanguage.js
+│   ├── layouts/
+│   │   └── MainLayout.jsx
+│   ├── locales/
+│   │   ├── bg.json
+│   │   └── en.json
+│   ├── pages/
+│   │   └── Home.jsx
+│   ├── styles/
+│   │   └── base.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── package.json
+├── tailwind.config.js
+├── vite.config.js
+└── DEVELOPMENT_PLAN.md
+```
 
-## Expanding the ESLint configuration
+Each folder is aligned with the design brief: components host re-usable UI, layouts define chrome (topbar/nav/footer), pages represent routes, locales/hooks prepare us for i18n, and styles centralize global + section styles alongside Tailwind utilities.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Scripts
+
+- `npm run dev` – start Vite in dev mode with HMR.
+- `npm run build` – production build (runs during CI).
+- `npm run preview` – preview the production bundle locally.
+- `npm run lint` – lint all files via ESLint.
+
+## Next Steps
+
+1. Install the rest of the required libraries (Framer Motion, R3F, react-i18next, etc.).
+2. Flesh out additional pages (About, Products, Stories, Services) under `src/pages/`.
+3. Wire localization + routing so the layout hosts actual navigation targets.

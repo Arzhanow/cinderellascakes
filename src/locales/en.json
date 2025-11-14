@@ -1,0 +1,19 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "products": "Products",
+    "stories": "Stories",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "hero": {
+    "eyebrow": "Cinderella’s Cakes · Plovdiv",
+    "title": "A digital boutique that whispers luxury before the first bite.",
+    "description": "We craft a responsive, bilingual experience that shows Cinderella’s Cakes as the premium atelier of Bulgaria."
+  },
+  "cta": {
+    "primary": "Experience the magic",
+    "secondary": "B2B Catalogue"
+  }
+}
