@@ -1,6 +1,8 @@
 @layer base {
   :root {
     --topbar-height: 64px;
+    --navigation-height: 0px;
+    --anchor-padding: 16px;
     --color-brand-night: 5 1 10;
     --color-brand-dusk: 10 8 20;
     --color-brand-blush: 255 176 247;

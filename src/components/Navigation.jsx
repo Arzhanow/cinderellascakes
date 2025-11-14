@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ThemeSwitcher from './ThemeSwitcher'
 
@@ -13,12 +13,26 @@ const navLinks = [
 
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const headerRef = useRef(null)
+
+  useEffect(() => {
+    const updateNavigationHeight = () => {
+      if (headerRef.current) {
+        document.documentElement.style.setProperty('--navigation-height', `${headerRef.current.offsetHeight}px`)
+      }
+    }
+
+    updateNavigationHeight()
+    window.addEventListener('resize', updateNavigationHeight)
+    return () => window.removeEventListener('resize', updateNavigationHeight)
+  }, [])
 
   const toggleMenu = () => setMenuOpen((prev) => !prev)
   const closeMenu = () => setMenuOpen(false)
 
   return (
     <header
+      ref={headerRef}
       className="sticky z-30 w-screen max-w-[100vw] px-0"
       style={{ top: 'var(--topbar-height)' }}
     >
