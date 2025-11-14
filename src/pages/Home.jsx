@@ -165,7 +165,7 @@ const HomePage = () => {
         </div>
 
         <div className="relative z-10 layout-shell flex w-full flex-col gap-10 py-16 lg:flex-row lg:items-center 2xl:gap-16 3xl:py-24 4xl:py-32">
-          <div className="max-w-2xl text-white">
+          <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
             <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
             <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl">
@@ -214,36 +214,36 @@ const HomePage = () => {
                 onClick={() => setActiveSlide(index)}
                 type="button"
               >
-                <span className="text-[0.7rem] uppercase tracking-[0.3em]">0{index + 1}</span>
-                <span>{slide.label}</span>
+                <span className="text-[0.7rem] uppercase tracking-[0.3em] 3xl:text-sm 4xl:text-base">0{index + 1}</span>
+                <span className="text-sm 2xl:text-base 4xl:text-lg">{slide.label}</span>
               </button>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6" id="principles">
-        <div className="grid gap-6 md:grid-cols-2">
+      <section className="layout-shell" id="principles">
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 2xl:gap-8 4xl:gap-10">
           {principles.map((principle) => (
             <article
               key={principle.title}
-              className="rounded-[28px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 backdrop-blur-lg"
+              className="rounded-[28px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 backdrop-blur-lg 2xl:px-8 2xl:py-10 4xl:px-10 4xl:py-12"
             >
-              <p className="text-xs uppercase tracking-[0.4em] text-white/60">Основни принципи</p>
-              <h3 className="mt-2 font-luxury text-2xl text-white">{principle.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-white/80">{principle.description}</p>
+              <p className="text-xs uppercase tracking-[0.4em] text-white/60 2xl:text-sm 4xl:text-base">Основни принципи</p>
+              <h3 className="mt-2 font-luxury text-2xl text-white 2xl:text-3xl 4xl:text-4xl">{principle.title}</h3>
+              <p className="mt-4 text-sm leading-relaxed text-white/80 2xl:text-base 4xl:text-lg">{principle.description}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6" id="about">
-        <div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg">
-          <p className="text-xs uppercase tracking-[0.5em] text-white/60">История</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white">{storyTeaser.title}</h2>
-          <p className="mt-4 text-base leading-relaxed">{storyTeaser.text}</p>
+      <section className="layout-shell" id="about">
+        <div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-14 4xl:py-16">
+          <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">История</p>
+          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">{storyTeaser.title}</h2>
+          <p className="mt-4 text-base leading-relaxed 2xl:text-xl 4xl:text-2xl">{storyTeaser.text}</p>
           <Link
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
             to="/#about"
           >
             {storyTeaser.cta}
@@ -252,37 +252,37 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl space-y-8 px-6" id="products">
-        <div className="flex flex-col gap-4 text-white">
+      <section className="layout-shell space-y-8 2xl:space-y-10 4xl:space-y-12" id="products">
+        <div className="flex flex-col gap-4 text-white 3xl:gap-6">
           <div>
-            <p className="text-xs uppercase tracking-[0.5em] text-white/60">B2B</p>
-            <h2 className="mt-2 font-luxury text-3xl">Магазини · Хотели · Кетъринг</h2>
-            <p className="mt-2 text-white/80">
+            <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">B2B</p>
+            <h2 className="mt-2 font-luxury text-3xl 2xl:text-4xl 4xl:text-5xl">Магазини · Хотели · Кетъринг</h2>
+            <p className="mt-2 text-white/80 2xl:text-xl 4xl:text-2xl">
               Един и същ стандарт – независимо дали десертът стои във витрина, сервира се в стая или украсява сцена.
             </p>
           </div>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-4 3xl:gap-6">
             <a
-              className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-1"
+              className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
               href="#contact"
             >
               Искам оферта
             </a>
             <a
-              className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:-translate-y-1 hover:border-white"
+              className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
               href="/catalog.pdf"
             >
               Каталог (PDF)
             </a>
           </div>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-3 2xl:gap-8 4xl:gap-12">
           {businessServices.map((service) => (
-            <article key={service.id} className="rounded-[28px] border border-white/10 bg-white/5 p-6 text-white/85 backdrop-blur-lg">
-              <p className="text-xs uppercase tracking-[0.4em] text-white/60">{service.title}</p>
-              <h3 className="mt-2 font-luxury text-2xl text-white">{service.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed">{service.text}</p>
-              <ul className="mt-4 space-y-2 text-sm text-white">
+            <article key={service.id} className="rounded-[28px] border border-white/10 bg-white/5 p-6 text-white/85 backdrop-blur-lg 2xl:p-8 4xl:p-10">
+              <p className="text-xs uppercase tracking-[0.4em] text-white/60 2xl:text-sm 4xl:text-base">{service.title}</p>
+              <h3 className="mt-2 font-luxury text-2xl text-white 2xl:text-3xl 4xl:text-4xl">{service.title}</h3>
+              <p className="mt-4 text-sm leading-relaxed 2xl:text-base 4xl:text-lg">{service.text}</p>
+              <ul className="mt-4 space-y-2 text-sm text-white 2xl:text-base 4xl:text-lg">
                 {service.details.map((detail) => (
                   <li key={detail} className="flex items-start gap-3">
                     <span className="mt-1 h-1.5 w-6 rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan"></span>
@@ -290,16 +290,16 @@ const HomePage = () => {
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-wrap gap-3 3xl:gap-4">
                 <Link
-                  className="inline-flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-0.5 2xl:px-7 2xl:py-3 2xl:text-sm 4xl:px-9 4xl:py-4 4xl:text-base"
                   to={service.path}
                 >
                   Научи повече
                   <span aria-hidden="true">→</span>
                 </Link>
                 <Link
-                  className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan"
+                  className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
                   to="/#contact"
                 >
                   {service.cta}
@@ -311,23 +311,23 @@ const HomePage = () => {
         </div>
       </section>
 
-      <section className="mx-auto max-w-4xl px-6" id="contact">
-        <div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg">
-          <p className="text-xs uppercase tracking-[0.5em] text-white/60">Контакт</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white">Разкажи ни за повода</h2>
-          <p className="mt-2 text-white/80">Име, дата, гости и вкусови предпочитания – отговорът идва до един работен ден.</p>
-          <form className="mt-8 space-y-4">
+      <section className="layout-shell max-w-4xl 3xl:max-w-[1100px]" id="contact">
+        <div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-12 4xl:py-16">
+          <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">Контакт</p>
+          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">Разкажи ни за повода</h2>
+          <p className="mt-2 text-white/80 2xl:text-lg 4xl:text-xl">Име, дата, гости и вкусови предпочитания – отговорът идва до един работен ден.</p>
+          <form className="mt-8 space-y-4 2xl:space-y-6 4xl:space-y-8">
             <div>
-              <label className="text-xs uppercase tracking-[0.3em] text-white/60">Как да се обърнем към теб?</label>
+              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Как да се обърнем към теб?</label>
               <input
                 className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
                 placeholder="Име и фамилия"
                 type="text"
               />
             </div>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2 2xl:gap-6 4xl:gap-8">
               <div>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60">Имейл</label>
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Имейл</label>
                 <input
                     className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
                     placeholder="example@domain.com"
@@ -335,7 +335,7 @@ const HomePage = () => {
                   />
                 </div>
                 <div>
-                  <label className="text-xs uppercase tracking-[0.3em] text-white/60">Телефон</label>
+                  <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Телефон</label>
                   <input
                     className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
                     placeholder="+359 ..."
@@ -344,7 +344,7 @@ const HomePage = () => {
                 </div>
               </div>
               <div>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60">Повод / дата / гости</label>
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Повод / дата / гости</label>
                 <textarea
                   className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
                   placeholder="Разкажи ни какво празнуваш и колко гости очакваш"
@@ -352,8 +352,8 @@ const HomePage = () => {
                 ></textarea>
               </div>
               <div>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60">Предпочитания</label>
-                <div className="mt-2 flex flex-wrap gap-3 text-sm">
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Предпочитания</label>
+                <div className="mt-2 flex flex-wrap gap-3 text-sm 2xl:gap-4 2xl:text-base 4xl:text-lg">
                   <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
                     <input className="accent-brand-blush" type="checkbox" />
                     Без захар
@@ -368,7 +368,7 @@ const HomePage = () => {
                   </label>
                 </div>
               </div>
-            <button className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1">
+            <button className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-12 4xl:py-5 4xl:text-lg">
               Изпрати запитване
             </button>
           </form>

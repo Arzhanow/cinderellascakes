@@ -57,7 +57,7 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
     <div className="flex flex-col gap-6 text-white">
       <div
         aria-label={`${label} 3D модел`}
-        className="relative isolate h-[360px] w-full overflow-hidden rounded-[28px] border border-white/15 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.25),_transparent_70%)]"
+        className="relative isolate h-[360px] w-full overflow-hidden rounded-[28px] border border-white/15 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.25),_transparent_70%)] sm:h-[420px] lg:h-[460px] 2xl:h-[520px] 3xl:h-[600px] 4xl:h-[680px]"
         id={`hero-model-${slideId}`}
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.18),transparent_60%)]"></div>
@@ -70,7 +70,7 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
             key={modelSrc}
             camera={{ position: [0, 0.9, 3], fov: 35, near: 0.1, far: 20 }}
             className="absolute inset-0"
-            dpr={[1, 1.8]}
+            dpr={[1, 2.2]}
             shadows
           >
             <ambientLight intensity={0.55} />
@@ -110,8 +110,8 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
       </div>
 
       <div className="text-center">
-        <p className="text-xs uppercase tracking-[0.5em] text-white/60">{eyebrow}</p>
-        <h2 className="mt-3 font-luxury text-3xl text-white">{label}</h2>
+        <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">{eyebrow}</p>
+        <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">{label}</h2>
       </div>
     </div>
   )
