@@ -1,15 +1,15 @@
 const Footer = () => {
   return (
     <footer
-      className="mt-16 border-t border-white/10 bg-brand-dusk/50 px-6 py-10 text-white/80 backdrop-blur-xl"
+      className="mt-16 border-t border-white/10 bg-brand-dusk/50 py-10 text-white/80 backdrop-blur-xl 3xl:mt-24 4xl:mt-32"
       id="contact"
     >
-      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-6">
+      <div className="layout-shell flex flex-wrap items-center justify-between gap-6">
         <div>
-          <p className="text-xs uppercase tracking-[0.45em] text-white/50">Cinderella’s Cakes</p>
-          <p className="text-2xl font-semibold text-white">Луксозна сладкария от Пловдив</p>
+          <p className="text-xs uppercase tracking-[0.45em] text-white/50 2xl:text-sm 4xl:text-base">Cinderella’s Cakes</p>
+          <p className="text-2xl font-semibold text-white 2xl:text-3xl 4xl:text-4xl">Луксозна сладкария от Пловдив</p>
         </div>
-        <div className="flex flex-wrap gap-4 text-sm font-semibold text-white">
+        <div className="flex flex-wrap gap-4 text-sm font-semibold text-white 2xl:text-base 4xl:text-lg">
           <a className="transition hover:text-brand-blush" href="mailto:hello@cinderellascakes.bg">
             hello@cinderellascakes.bg
           </a>
@@ -24,7 +24,7 @@ const Footer = () => {
           </a>
         </div>
       </div>
-      <div className="mx-auto mt-6 flex max-w-6xl flex-wrap justify-between gap-4 text-xs uppercase tracking-[0.35em] text-white/60">
+      <div className="layout-shell mt-6 flex flex-wrap justify-between gap-4 text-xs uppercase tracking-[0.35em] text-white/60 2xl:text-sm 4xl:text-base">
         <span>© {new Date().getFullYear()} Cinderella’s Cakes</span>
         <span>Създадено с React + Vite</span>
       </div>

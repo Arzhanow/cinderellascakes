@@ -32,8 +32,8 @@ const DessertModel = ({ src }) => {
   }, [clonedScene])
 
   return (
-    <Float speed={1.1} rotationIntensity={0.35} floatIntensity={0.6}>
-      <primitive object={clonedScene} position={[0, -0.45, 0]} dispose={null} />
+    <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.9} position={[0, 0, 0]}>
+      <primitive object={clonedScene} position={[0, -0.5, 0]} />
     </Float>
   )
 }
@@ -73,6 +73,7 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
             dpr={[1, 2.2]}
             shadows
           >
+            <color attach="background" args={[0, 0, 0, 0]} />
             <ambientLight intensity={0.55} />
             <spotLight
               angle={0.5}
@@ -98,7 +99,6 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
               autoRotate
               autoRotateSpeed={0.8}
               enablePan={false}
-              target={[0, -0.2, 0]}
               maxDistance={4}
               minDistance={2}
               enableZoom

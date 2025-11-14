@@ -36,20 +36,20 @@ const Navigation = () => {
       className="sticky z-30 w-screen max-w-[100vw] px-0"
       style={{ top: 'var(--topbar-height)' }}
     >
-      <div className="flex w-screen max-w-[100vw] items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8">
+      <div className="flex w-screen max-w-[100vw] items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8 xl:px-12 3xl:px-20 4xl:px-28">
         <div className="flex items-center gap-3 text-white">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-base font-bold tracking-[0.08em] text-button-contrast">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-base font-bold tracking-[0.08em] text-button-contrast 3xl:h-16 3xl:w-16 3xl:text-lg 4xl:h-20 4xl:w-20 4xl:text-xl">
             CC
           </span>
-          <div className="text-[0.65rem] uppercase leading-tight tracking-[0.35em] text-white/70">
+          <div className="text-[0.65rem] uppercase leading-tight tracking-[0.35em] text-white/70 3xl:text-sm 4xl:text-base">
             <span className="block">Cinderella&apos;s</span>
-            <span className="text-sm font-semibold tracking-[0.15em] text-white">Cakes</span>
+            <span className="text-sm font-semibold tracking-[0.15em] text-white 3xl:text-base 4xl:text-lg">Cakes</span>
           </div>
         </div>
 
         <nav
           aria-label="Основна навигация"
-          className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium text-white/70 lg:flex"
+          className="hidden flex-1 items-center justify-center gap-6 text-sm font-medium text-white/70 lg:flex xl:text-base 3xl:text-lg"
         >
           {navLinks.map((link) => (
             <Link
@@ -66,7 +66,7 @@ const Navigation = () => {
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeSwitcher />
           <Link
-            className="rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-button-contrast shadow-glow-cta transition hover:-translate-y-0.5"
+            className="rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-button-contrast shadow-glow-cta transition hover:-translate-y-0.5 xl:px-8 xl:py-3 xl:text-sm 3xl:px-10 3xl:py-3.5 3xl:text-base 4xl:px-12 4xl:py-4 4xl:text-lg"
             to="/#contact"
           >
             Запази дегустация
