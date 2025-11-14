@@ -142,7 +142,7 @@ const HomePage = () => {
   const currentSlide = heroSlides[activeSlide]
 
   return (
-    <main className="space-y-20 pb-20 pt-0" id="home">
+    <main className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36" id="home">
       <section className="relative min-h-screen w-full overflow-hidden" data-surface="dark" id="hero">
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
@@ -164,22 +164,22 @@ const HomePage = () => {
           ></div>
         </div>
 
-        <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-16 lg:flex-row lg:items-center">
+        <div className="relative z-10 layout-shell flex w-full flex-col gap-10 py-16 lg:flex-row lg:items-center 2xl:gap-16 3xl:py-24 4xl:py-32">
           <div className="max-w-2xl text-white">
-            <p className="text-xs uppercase tracking-[0.7em] text-white/60">Пловдив · Fine Pastry</p>
-            <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl">Приказка за ценители.</h1>
-            <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg">
+            <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
+            <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
+            <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl">
               Премиум сладкария от Пловдив – торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-4 3xl:gap-6">
               <Link
-                className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1"
+                className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to="/#products"
               >
                 Виж най-търсените
               </Link>
               <Link
-                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white"
+                className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to={currentSlide.href}
               >
                 Повече за продукта
@@ -190,7 +190,7 @@ const HomePage = () => {
           <motion.div
             key={currentSlide.label}
             animate={{ opacity: 1, y: 0 }}
-            className="w-full rounded-[32px] border border-white/15 bg-white/10 p-8 text-white/85 backdrop-blur-xl"
+            className="w-full rounded-[32px] border border-white/15 bg-white/10 p-8 text-white/85 backdrop-blur-xl 2xl:p-10 4xl:p-12"
             initial={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
           >
@@ -203,12 +203,12 @@ const HomePage = () => {
           </motion.div>
         </div>
 
-        <div className="relative z-10 mt-6 px-6">
-          <div className="flex flex-wrap gap-3">
+        <div className="relative z-10 layout-shell mt-6 3xl:mt-10">
+          <div className="flex flex-wrap gap-3 3xl:gap-4">
             {heroSlides.map((slide, index) => (
               <button
                 key={slide.id}
-                className={`flex items-center gap-3 rounded-full border px-4 py-2 text-sm transition hover:border-white hover:text-white ${
+                className={`flex items-center gap-3 rounded-full border px-4 py-2 text-sm transition hover:border-white hover:text-white 2xl:px-5 2xl:py-2.5 2xl:text-base 4xl:px-6 4xl:py-3 4xl:text-lg ${
                   activeSlide === index ? 'border-white bg-white/20 text-white' : 'border-white/30 text-white/70'
                 }`}
                 onClick={() => setActiveSlide(index)}
