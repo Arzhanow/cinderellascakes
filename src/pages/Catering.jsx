@@ -36,7 +36,7 @@ const CateringPage = () => {
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <Link
-            className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night transition hover:-translate-y-1"
+            className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-1"
             to="/#contact"
           >
             Заяви дата
@@ -109,7 +109,7 @@ const CateringPage = () => {
           Разкажете ни темата, броя гости и любими вкусове. Ще подготвим план, бюджет и дегустация по избор.
         </p>
         <Link
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-night shadow-glow-primary transition hover:-translate-y-1"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1"
           to="/#contact"
         >
           Разкажи ни за повода

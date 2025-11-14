@@ -12,6 +12,7 @@
     --hero-gradient-start: rgba(5, 1, 10, 0.85);
     --hero-gradient-end: rgba(5, 1, 10, 0.35);
     --hero-overlay: rgba(5, 1, 10, 0.7);
+    --theme-button-contrast: 5 1 10;
   }
 
   [data-theme='rose'] {
@@ -26,6 +27,7 @@
     --hero-gradient-start: rgba(47, 31, 41, 0.9);
     --hero-gradient-end: rgba(47, 31, 41, 0.45);
     --hero-overlay: rgba(47, 31, 41, 0.82);
+    --theme-button-contrast: 47 31 41;
   }
 
   [data-theme='peach'] {
@@ -40,6 +42,7 @@
     --hero-gradient-start: rgba(58, 34, 22, 0.9);
     --hero-gradient-end: rgba(58, 34, 22, 0.45);
     --hero-overlay: rgba(58, 34, 22, 0.82);
+    --theme-button-contrast: 58 34 22;
   }
 
   body {
@@ -110,6 +113,10 @@
 
   [data-surface='dark'] .text-white\/40 {
     color: rgb(255 255 255 / 0.4) !important;
+  }
+
+  .text-button-contrast {
+    color: rgb(var(--theme-button-contrast) / 1) !important;
   }
 
   .border-white {

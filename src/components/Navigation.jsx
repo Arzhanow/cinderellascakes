@@ -24,7 +24,7 @@ const Navigation = () => {
     >
       <div className="flex w-screen max-w-[100vw] items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8">
         <div className="flex items-center gap-3 text-white">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-base font-bold tracking-[0.08em] text-brand-night">
+          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-base font-bold tracking-[0.08em] text-button-contrast">
             CC
           </span>
           <div className="text-[0.65rem] uppercase leading-tight tracking-[0.35em] text-white/70">
@@ -52,7 +52,7 @@ const Navigation = () => {
         <div className="hidden items-center gap-3 lg:flex">
           <ThemeSwitcher />
           <Link
-            className="rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-brand-night shadow-glow-cta transition hover:-translate-y-0.5"
+            className="rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-button-contrast shadow-glow-cta transition hover:-translate-y-0.5"
             to="/#contact"
           >
             Запази дегустация
@@ -106,7 +106,7 @@ const Navigation = () => {
         <ThemeSwitcher layout="stack" />
 
         <Link
-          className="w-full rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night"
+          className="w-full rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast"
           onClick={closeMenu}
           to="/#contact"
         >

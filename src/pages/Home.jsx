@@ -164,7 +164,7 @@ const HomePage = () => {
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link
-                className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-brand-night shadow-glow-primary transition hover:-translate-y-1"
+                className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1"
                 to="/#products"
               >
                 Виж най-търсените
@@ -191,7 +191,7 @@ const HomePage = () => {
             <p className="mt-6 text-sm uppercase tracking-[0.3em] text-white/60">Навигирай модела – завърти, приближи, открий детайла.</p>
             {currentSlide.href.startsWith('/') ? (
               <Link
-                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-brand-night transition hover:-translate-y-1"
+                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3ем] text-button-contrast transition hover:-translate-y-1"
                 to={currentSlide.href}
               >
                 {currentSlide.cta}
@@ -199,7 +199,7 @@ const HomePage = () => {
               </Link>
             ) : (
               <a
-                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-brand-night transition hover:-translate-y-1"
+                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-button-contrast transition hover:-translate-y-1"
                 href={currentSlide.href}
               >
                 {currentSlide.cta}
@@ -294,7 +294,7 @@ const HomePage = () => {
           </div>
           <div className="flex flex-wrap gap-4">
             <a
-              className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night transition hover:-translate-y-1"
+              className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-1"
               href="#contact"
             >
               Искам оферта
@@ -323,7 +323,7 @@ const HomePage = () => {
               </ul>
               <div className="mt-6 flex flex-wrap gap-3">
                 <Link
-                  className="inline-flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-brand-night transition hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-0.5"
                   to={service.path}
                 >
                   Научи повече
@@ -393,7 +393,7 @@ const HomePage = () => {
                 ))}
               </div>
             </div>
-            <button className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night shadow-glow-primary transition hover:-translate-y-1">
+            <button className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1">
               Изпрати запитване
             </button>
           </form>

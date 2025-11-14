@@ -40,7 +40,7 @@ const HotelsPage = () => {
         </p>
         <div className="mt-8 flex flex-wrap gap-4">
           <Link
-            className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night transition hover:-translate-y-1"
+            className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-1"
             to="/#contact"
           >
             Получете оферта
@@ -111,7 +111,7 @@ const HotelsPage = () => {
           Споделете броя стаи, формати и любими вкусове. В рамките на 24 часа връщаме предложение и времеви график.
         </p>
         <Link
-          className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-brand-night shadow-glow-primary transition hover:-translate-y-1"
+          className="mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-8 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1"
           to="/#contact"
         >
           Разкажи ни за повода
