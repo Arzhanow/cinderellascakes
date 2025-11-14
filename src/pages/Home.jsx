@@ -145,11 +145,14 @@ const HomePage = () => {
               initial={{ opacity: 0 }}
               transition={{ duration: 0.8 }}
               style={{
-                backgroundImage: `linear-gradient(120deg, rgba(5,1,10,0.85), rgba(5,1,10,0.35)), url(${currentSlide.image})`,
+                backgroundImage: `linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-end)), url(${currentSlide.image})`,
               }}
             ></motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 bg-brand-night/70"></div>
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: 'var(--hero-overlay)' }}
+          ></div>
         </div>
 
         <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col gap-10 px-6 py-16 lg:flex-row lg:items-center">
