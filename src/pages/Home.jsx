@@ -5,6 +5,17 @@ import HeroModel from '../components/HeroModel'
 
 const heroSlides = [
   {
+    id: 'garash',
+    label: 'Signature Garash',
+    eyebrow: 'Какаов пралин · Без брашно',
+    description:
+      'Ръчната ни интерпретация на класическа торта Гараш – сатенен ганаш, орехов дакоаз и полирано огледално покритие.',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Повече за продукта',
+    href: '/#contact',
+    model: '/models/garash.glb',
+  },
+  {
     id: 'midnight',
     label: 'Midnight Velvet',
     eyebrow: 'Тъмен шоколад · Без брашно',
@@ -13,7 +24,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1475856034132-877a997f29d7?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
-    model: '/models/midnight.glb',
+    model: null,
   },
   {
     id: 'cloudberry',
@@ -24,7 +35,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
-    model: '/models/cloudberry.glb',
+    model: null,
   },
   {
     id: 'arabella',
@@ -35,7 +46,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
-    model: '/models/arabella.glb',
+    model: null,
   },
   {
     id: 'opera',
@@ -46,7 +57,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
-    model: '/models/opera.glb',
+    model: null,
   },
   {
     id: 'citrus',
@@ -57,7 +68,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
-    model: '/models/citrus.glb',
+    model: null,
   },
 ]
 
