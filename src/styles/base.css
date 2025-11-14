@@ -1,13 +1,102 @@
 @layer base {
   :root {
     --topbar-height: 64px;
+    --color-brand-night: 5 1 10;
+    --color-brand-dusk: 10 8 20;
+    --color-brand-blush: 255 176 247;
+    --color-brand-lilac: 189 147 249;
+    --color-brand-accent: 255 121 198;
+    --color-brand-cyan: 139 233 253;
+    --theme-foreground: 255 255 255;
+  }
+
+  [data-theme='rose'] {
+    --color-brand-night: 250 234 242;
+    --color-brand-dusk: 245 217 235;
+    --color-brand-blush: 255 160 196;
+    --color-brand-lilac: 218 173 255;
+    --color-brand-accent: 255 122 162;
+    --color-brand-cyan: 210 164 211;
+    --theme-foreground: 47 31 41;
+  }
+
+  [data-theme='peach'] {
+    --color-brand-night: 253 241 233;
+    --color-brand-dusk: 250 226 206;
+    --color-brand-blush: 255 190 150;
+    --color-brand-lilac: 255 210 180;
+    --color-brand-accent: 255 140 120;
+    --color-brand-cyan: 227 168 141;
+    --theme-foreground: 58 34 22;
   }
 
   body {
-    @apply min-h-screen bg-brand-night font-sans text-white antialiased;
+    @apply min-h-screen font-sans antialiased;
+    background-color: rgb(var(--color-brand-night) / 1);
+    color: rgb(var(--theme-foreground) / 1);
   }
 
   #root {
     @apply min-h-screen;
+  }
+
+  .text-white {
+    color: rgb(var(--theme-foreground) / 1) !important;
+  }
+
+  .text-white\/85 {
+    color: rgb(var(--theme-foreground) / 0.85) !important;
+  }
+
+  .text-white\/80 {
+    color: rgb(var(--theme-foreground) / 0.8) !important;
+  }
+
+  .text-white\/75 {
+    color: rgb(var(--theme-foreground) / 0.75) !important;
+  }
+
+  .text-white\/70 {
+    color: rgb(var(--theme-foreground) / 0.7) !important;
+  }
+
+  .text-white\/60 {
+    color: rgb(var(--theme-foreground) / 0.6) !important;
+  }
+
+  .text-white\/50 {
+    color: rgb(var(--theme-foreground) / 0.5) !important;
+  }
+
+  .text-white\/40 {
+    color: rgb(var(--theme-foreground) / 0.4) !important;
+  }
+
+  [data-surface='dark'] .text-white {
+    color: rgb(255 255 255 / 1) !important;
+  }
+
+  [data-surface='dark'] .text-white\/85 {
+    color: rgb(255 255 255 / 0.85) !important;
+  }
+
+  [data-surface='dark'] .text-white\/80 {
+    color: rgb(255 255 255 / 0.8) !important;
+  }
+
+  [data-surface='dark'] .text-white\/70 {
+    color: rgb(255 255 255 / 0.7) !important;
+  }
+
+  [data-surface='dark'] .text-white\/60 {
+    color: rgb(255 255 255 / 0.6) !important;
+  }
+
+  [data-surface='dark'] .text-white\/50 {
+    color: rgb(255 255 255 / 0.5) !important;
+  }
+
+  [data-surface='dark'] .text-white\/40 {
+    color: rgb(255 255 255 / 0.4) !important;
   }
 }

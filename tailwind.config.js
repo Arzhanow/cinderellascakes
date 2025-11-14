@@ -9,12 +9,12 @@ export default {
       },
       colors: {
         brand: {
-          night: '#05010a',
-          dusk: '#0a0814',
-          blush: '#ffb0f7',
-          lilac: '#bd93f9',
-          accent: '#ff79c6',
-          cyan: '#8be9fd',
+          night: 'rgb(var(--color-brand-night) / <alpha-value>)',
+          dusk: 'rgb(var(--color-brand-dusk) / <alpha-value>)',
+          blush: 'rgb(var(--color-brand-blush) / <alpha-value>)',
+          lilac: 'rgb(var(--color-brand-lilac) / <alpha-value>)',
+          accent: 'rgb(var(--color-brand-accent) / <alpha-value>)',
+          cyan: 'rgb(var(--color-brand-cyan) / <alpha-value>)',
         },
       },
       boxShadow: {

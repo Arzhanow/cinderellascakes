@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import ThemeSwitcher from './ThemeSwitcher'
 
 const navLinks = [
   { label: 'Начало', href: '/' },
@@ -48,12 +49,15 @@ const Navigation = () => {
           ))}
         </nav>
 
-        <Link
-          className="hidden rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-brand-night shadow-glow-cta transition hover:-translate-y-0.5 lg:inline-flex"
-          to="/#contact"
-        >
-          Запази дегустация
-        </Link>
+        <div className="hidden items-center gap-3 lg:flex">
+          <ThemeSwitcher />
+          <Link
+            className="rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-brand-night shadow-glow-cta transition hover:-translate-y-0.5"
+            to="/#contact"
+          >
+            Запази дегустация
+          </Link>
+        </div>
 
         <button
           aria-expanded={menuOpen}
@@ -98,6 +102,8 @@ const Navigation = () => {
             </Link>
           ))}
         </nav>
+
+        <ThemeSwitcher layout="stack" />
 
         <Link
           className="w-full rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-brand-night"
