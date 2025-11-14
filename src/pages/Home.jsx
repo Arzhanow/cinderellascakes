@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
+import HeroModel from '../components/HeroModel'
 
 const heroSlides = [
   {
@@ -12,6 +13,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1475856034132-877a997f29d7?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
+    model: '/models/midnight.glb',
   },
   {
     id: 'cloudberry',
@@ -22,6 +24,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
+    model: '/models/cloudberry.glb',
   },
   {
     id: 'arabella',
@@ -32,6 +35,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
+    model: '/models/arabella.glb',
   },
   {
     id: 'opera',
@@ -42,6 +46,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
+    model: '/models/opera.glb',
   },
   {
     id: 'citrus',
@@ -52,6 +57,7 @@ const heroSlides = [
     image: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&w=1600&q=80',
     cta: 'Повече за продукта',
     href: '/#contact',
+    model: '/models/citrus.glb',
   },
 ]
 
@@ -161,12 +167,12 @@ const HomePage = () => {
               >
                 Виж най-търсените
               </Link>
-              <a
+              <Link
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white"
-                href="/catalog.pdf"
+                to={currentSlide.href}
               >
-                Изтегли каталога (PDF)
-              </a>
+                Повече за продукта
+              </Link>
             </div>
           </div>
 
@@ -177,27 +183,12 @@ const HomePage = () => {
             initial={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-xs uppercase tracking-[0.5em] text-white/60">{currentSlide.eyebrow}</p>
-            <h2 className="mt-2 font-luxury text-3xl text-white">{currentSlide.label}</h2>
-            <p className="mt-4 leading-relaxed">{currentSlide.description}</p>
-            <p className="mt-6 text-sm uppercase tracking-[0.3em] text-white/60">Навигирай модела – завърти, приближи, открий детайла.</p>
-            {currentSlide.href.startsWith('/') ? (
-              <Link
-                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3ем] text-button-contrast transition hover:-translate-y-1"
-                to={currentSlide.href}
-              >
-                {currentSlide.cta}
-                <span aria-hidden="true">→</span>
-              </Link>
-            ) : (
-              <a
-                className="mt-6 inline-flex items-center gap-3 rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-button-contrast transition hover:-translate-y-1"
-                href={currentSlide.href}
-              >
-                {currentSlide.cta}
-                <span aria-hidden="true">→</span>
-              </a>
-            )}
+            <HeroModel
+              eyebrow={currentSlide.eyebrow}
+              label={currentSlide.label}
+              modelSrc={currentSlide.model}
+              slideId={currentSlide.id}
+            />
           </motion.div>
         </div>
 
