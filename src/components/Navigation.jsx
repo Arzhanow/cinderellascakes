@@ -6,8 +6,8 @@ const navLinks = [
   { label: 'Начало', href: '/' },
   { label: 'Принципи', href: '/#principles' },
   { label: 'За нас', href: '/#about' },
-  { label: 'Продукти', href: '/#products' },
-  { label: 'Производство', href: '/#services' },
+  { label: 'Продукти', href: '/#hero' },
+  { label: 'Производство', href: '/#products' },
   { label: 'Контакт', href: '/#contact' },
 ]
 

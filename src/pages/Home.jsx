@@ -4,44 +4,54 @@ import { Link } from 'react-router-dom'
 
 const heroSlides = [
   {
-    id: 'signature',
-    label: 'Подписани торти',
-    eyebrow: 'Колекция за ценители',
+    id: 'midnight',
+    label: 'Midnight Velvet',
+    eyebrow: 'Тъмен шоколад · Без брашно',
     description:
-      'Чисти линии, балансирани кремове и ръчно изписани карамелени орнаменти. Част от моделите са налични без захар, без брашно или с протеин.',
-    image: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Виж най-търсените',
-    href: '/#products',
+      'Пет слоя белгийски шоколад, карамел с морска сол и сатенен ганаш. Вариантът без брашно запазва чистия силует и дълбокия вкус.',
+    image: 'https://images.unsplash.com/photo-1475856034132-877a997f29d7?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Повече за продукта',
+    href: '/#contact',
   },
   {
-    id: 'retail',
-    label: 'Магазини и бутици',
-    eyebrow: 'Ритейл партньорства',
+    id: 'cloudberry',
+    label: 'Cloudberry Silk',
+    eyebrow: 'С протеин · Ядково мляко',
     description:
-      'Мини десерти и торти с ясно етикетиране, стабилна логистика и визуален стандарт за премиум витрини.',
-    image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Искам оферта',
-    href: '/retail',
+      'Леки блатове от ядково мляко, мус от бяла пралина и розов грейпфрут. Подходяща за спортуващи гости и утринни дегустации.',
+    image: 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Повече за продукта',
+    href: '/#contact',
   },
   {
-    id: 'hotels',
-    label: 'Хотели и спа',
-    eyebrow: 'Гостоприемство',
+    id: 'arabella',
+    label: 'Arabella Rose',
+    eyebrow: 'Розов грейпфрут · Без захар',
     description:
-      'Закуски, следобедни чаи и гала десерти със зададен стандарт на сервиране. Включени са варианти без захар и без брашно.',
+      'Крем от розов грейпфрут, шамфъстък и ръчно моделирани листа. Версията без захар се подслажда с йерусалимски артишок и стевия.',
+    image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Повече за продукта',
+    href: '/#contact',
+  },
+  {
+    id: 'opera',
+    label: 'Pistachio Opera',
+    eyebrow: 'Разделено порциониране',
+    description:
+      'Торта тип “opera” с бадемов дакоаз, крем от пиемонтски шамфъстък и нежен кафеен сироп. Изглежда идентично независимо от порцията.',
     image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Разгледай колекцията',
-    href: '/hotels',
+    cta: 'Повече за продукта',
+    href: '/#contact',
   },
   {
-    id: 'catering',
-    label: 'Кетъринг и събития',
-    eyebrow: 'Преживявания',
+    id: 'citrus',
+    label: 'Citrus Muse',
+    eyebrow: 'Сезонна лимитирана серия',
     description:
-      'Създаваме сладки инсталации за корпоративни и частни формати. Темата, диетите и сервизът са синхронизирани предварително.',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Запази консултация',
-    href: '/catering',
+      'Марокански портокал, лайм и прахообразен йогурт създават свежа текстура. Идеален избор за летни събития и хотели с богата закуска.',
+    image: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Повече за продукта',
+    href: '/#contact',
   },
 ]
 
@@ -71,24 +81,6 @@ const storyTeaser = {
   text: 'Започнахме с няколко форми и убеждението, че фината сладкария е характер, не декор. Днес създаваме десерти за хора, които търсят повече от „нещо сладко“.',
   cta: 'Прочети нашата история',
 }
-
-const bestSellers = [
-  {
-    name: 'Midnight Velvet',
-    description: 'Тъмен шоколад, бавен ганаш и минималистичен силует. Любима на феновете на чистите линии.',
-    tag: 'Без брашно',
-  },
-  {
-    name: 'Cloudberry Silk',
-    description: 'Леки блатове с ядково мляко, мус от бяла пралина и шушулки тонка. Създадена за сезонни поводи.',
-    tag: 'С протеин',
-  },
-  {
-    name: 'Arabella Rose',
-    description: 'Розов грейпфрут, шамфъстък и ръчно моделирани листа. Вариант без захар е наличен по заявка.',
-    tag: 'Без захар',
-  },
-]
 
 const businessServices = [
   {
@@ -261,36 +253,11 @@ const HomePage = () => {
       <section className="mx-auto max-w-6xl space-y-8 px-6" id="products">
         <div className="flex flex-col gap-4 text-white">
           <div>
-            <p className="text-xs uppercase tracking-[0.5em] text-white/60">Най-търсени</p>
-            <h2 className="mt-2 font-luxury text-3xl">Избраното от нашите клиенти</h2>
-            <p className="mt-2 text-white/80">Колекция от десерти с собствена история.</p>
-          </div>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {bestSellers.map((item) => (
-            <article key={item.name} className="rounded-[28px] border border-white/10 bg-white/5 p-6 text-white/85 backdrop-blur-lg">
-              <div className="flex items-center justify-between">
-                <h3 className="font-luxury text-2xl text-white">{item.name}</h3>
-                <span className="rounded-full border border-white/30 px-3 py-1 text-xs uppercase tracking-[0.3em] text-white/70">
-                  {item.tag}
-                </span>
-              </div>
-              <p className="mt-4 text-sm leading-relaxed">{item.description}</p>
-              <button className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan">
-                Виж историята
-                <span aria-hidden="true">→</span>
-              </button>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl space-y-8 px-6" id="services">
-        <div className="flex flex-col gap-4 text-white">
-          <div>
             <p className="text-xs uppercase tracking-[0.5em] text-white/60">B2B</p>
-            <h2 className="mt-2 font-luxury text-3xl">Производство за бизнес</h2>
-            <p className="mt-2 text-white/80">Консистентно качество, коректни срокове, визуален стандарт.</p>
+            <h2 className="mt-2 font-luxury text-3xl">Магазини · Хотели · Кетъринг</h2>
+            <p className="mt-2 text-white/80">
+              Един и същ стандарт – независимо дали десертът стои във витрина, сервира се в стая или украсява сцена.
+            </p>
           </div>
           <div className="flex flex-wrap gap-4">
             <a
@@ -385,14 +352,20 @@ const HomePage = () => {
               <div>
                 <label className="text-xs uppercase tracking-[0.3em] text-white/60">Предпочитания</label>
                 <div className="mt-2 flex flex-wrap gap-3 text-sm">
-                  {['Без захар', 'Без брашно', 'С протеин'].map((option) => (
-                    <label key={option} className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
-                      <input className="accent-brand-blush" type="checkbox" />
-                      {option}
-                    </label>
-                ))}
+                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                    <input className="accent-brand-blush" type="checkbox" />
+                    Без захар
+                  </label>
+                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                    <input className="accent-brand-blush" type="checkbox" />
+                    Без брашно
+                  </label>
+                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                    <input className="accent-brand-blush" type="checkbox" />
+                    С протеин
+                  </label>
+                </div>
               </div>
-            </div>
             <button className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1">
               Изпрати запитване
             </button>
