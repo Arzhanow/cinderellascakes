@@ -133,7 +133,7 @@ const HomePage = () => {
   const currentSlide = heroSlides[activeSlide]
 
   return (
-    <main className="space-y-20 pb-20 pt-14" id="home">
+    <main className="space-y-20 pb-20 pt-0" id="home">
       <section className="relative min-h-screen w-full overflow-hidden" data-surface="dark" id="hero">
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
