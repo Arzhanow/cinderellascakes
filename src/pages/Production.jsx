@@ -1,16 +1,15 @@
- import { useMemo, useState } from 'react'
- import { AnimatePresence, motion } from 'framer-motion'
- import { Link } from 'react-router-dom'
- import ProductionSlider from '../components/ProductionSlider'
- import {
-   createStagger,
-   createTransition,
-   fadeInUp,
-   glowIn,
-   popIn,
-   revealConfig,
-   slideIn,
- } from '../utils/motionPresets'
+import { useMemo, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import ProductionSlider from '../components/ProductionSlider'
+import {
+  createStagger,
+  createTransition,
+  fadeInUp,
+  glowIn,
+  revealConfig,
+  slideIn,
+} from '../utils/motionPresets'
 
  const CONTACT = {
    email: 'hello@cinderellascakes.bg',
@@ -100,16 +99,14 @@
    ease: [0.3, 0, 0.2, 1],
  }
 
- const ProductionPage = () => {
+const ProductionPage = () => {
   const memoizedServices = useMemo(() => productionServices, [])
-  const [activeService, setActiveService] = useState(memoizedServices[0])
+  const [selectedService, setSelectedService] = useState(null)
+  const hasSelection = Boolean(selectedService)
+  const gridColumns = hasSelection ? 'lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)]' : ''
 
-  const handleSlideChange = (service) => {
-    setActiveService(service)
-  }
-
-   return (
-     <main className="relative min-h-screen overflow-hidden bg-brand-night text-white">
+  return (
+    <main className="relative min-h-screen overflow-hidden bg-brand-night text-white">
        <div
          aria-hidden="true"
          className="pointer-events-none absolute inset-0"
@@ -149,31 +146,31 @@
            </motion.p>
          </motion.header>
 
-         <div className="grid gap-10 lg:grid-cols-[minmax(0,600px)_minmax(0,1fr)]">
-           <ProductionSlider slides={memoizedServices} onSlideChange={handleSlideChange} />
+        <div className={`grid gap-10 ${gridColumns}`}>
+          <ProductionSlider slides={memoizedServices} onSlideSelect={setSelectedService} />
 
-           <AnimatePresence mode="wait">
-             {activeService && (
-               <motion.article
-                 key={activeService.id}
-                 className="rounded-[36px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 shadow-[0_25px_65px_rgba(5,0,18,0.45)] backdrop-blur-xl sm:px-8 sm:py-10 2xl:px-10 2xl:py-12 4xl:px-12 4xl:py-14"
-                 initial={{ opacity: 0, y: 24 }}
-                 animate={{ opacity: 1, y: 0 }}
+          <AnimatePresence mode="wait">
+            {selectedService && (
+              <motion.article
+                key={selectedService.id}
+                className="rounded-[36px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 shadow-[0_25px_65px_rgba(5,0,18,0.45)] backdrop-blur-xl sm:px-8 sm:py-10 2xl:px-10 2xl:py-12 4xl:px-12 4xl:py-14"
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
                  exit={{ opacity: 0, y: -16 }}
                  transition={detailTransition}
                >
-                 <p className="text-xs uppercase tracking-[0.55em] text-white/60 2xl:text-sm 4xl:text-base">{activeService.eyebrow}</p>
-                 <h2 className="mt-3 font-luxury text-3xl text-white sm:text-4xl 2xl:text-5xl">{activeService.detailHeading}</h2>
-                 <p className="mt-4 text-white/80 2xl:text-lg">{activeService.summary}</p>
-                 <p className="mt-3 text-sm font-semibold uppercase tracking-[0.35em] text-brand-accent/80 2xl:text-base">{activeService.highlight}</p>
+                <p className="text-xs uppercase tracking-[0.55em] text-white/60 2xl:text-sm 4xl:text-base">{selectedService.eyebrow}</p>
+                <h2 className="mt-3 font-luxury text-3xl text-white sm:text-4xl 2xl:text-5xl">{selectedService.detailHeading}</h2>
+                <p className="mt-4 text-white/80 2xl:text-lg">{selectedService.summary}</p>
+                <p className="mt-3 text-sm font-semibold uppercase tracking-[0.35em] text-brand-accent/80 2xl:text-base">{selectedService.highlight}</p>
 
-                 <div className="mt-6 flex flex-wrap gap-3">
-                   {activeService.chips.map((chip) => (
-                     <span
-                       key={`${activeService.id}-${chip}`}
-                       className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80"
-                     >
-                       {chip}
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {selectedService.chips.map((chip) => (
+                    <span
+                      key={`${selectedService.id}-${chip}`}
+                      className="rounded-full border border-white/20 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white/80"
+                    >
+                      {chip}
                      </span>
                    ))}
                  </div>
@@ -182,8 +179,8 @@
                    <div>
                      <p className="text-xs uppercase tracking-[0.4em] text-white/50">Как да заявите</p>
                      <ol className="mt-3 space-y-2 text-sm text-white/80 2xl:text-base">
-                       {activeService.process.map((step, index) => (
-                         <li key={`${activeService.id}-process-${step}`}>
+                       {selectedService.process.map((step, index) => (
+                         <li key={`${selectedService.id}-process-${step}`}>
                            <span className="mr-2 inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/20 text-xs font-semibold text-white/70">
                              {index + 1}
                            </span>
@@ -196,8 +193,8 @@
                    <div>
                      <p className="text-xs uppercase tracking-[0.4em] text-white/50">Какво получавате</p>
                      <ul className="mt-3 space-y-2 text-sm text-white/80 2xl:text-base">
-                       {activeService.benefits.map((benefit) => (
-                         <li key={`${activeService.id}-benefit-${benefit}`} className="flex items-start gap-3">
+                       {selectedService.benefits.map((benefit) => (
+                         <li key={`${selectedService.id}-benefit-${benefit}`} className="flex items-start gap-3">
                            <span aria-hidden="true" className="mt-1 h-1.5 w-1.5 rounded-full bg-brand-accent"></span>
                            <span>{benefit}</span>
                          </li>
@@ -209,14 +206,14 @@
                  <div className="mt-8 grid gap-4 rounded-[28px] border border-white/15 bg-black/30 p-5 text-sm text-white/85 shadow-inner backdrop-blur-lg 2xl:p-6 4xl:text-base">
                    <div>
                      <p className="text-xs uppercase tracking-[0.45em] text-white/50">Имейл</p>
-                     <a className="text-lg font-semibold text-white transition hover:text-brand-accent" href={`mailto:${activeService.contact.email}`}>
-                       {activeService.contact.email}
+                     <a className="text-lg font-semibold text-white transition hover:text-brand-accent" href={`mailto:${selectedService.contact.email}`}>
+                       {selectedService.contact.email}
                      </a>
                    </div>
                    <div>
                      <p className="text-xs uppercase tracking-[0.45em] text-white/50">Телефон</p>
-                     <a className="text-lg font-semibold text-white transition hover:text-brand-accent" href={`tel:${activeService.contact.phone.replace(/\s+/g, '')}`}>
-                       {activeService.contact.phone}
+                     <a className="text-lg font-semibold text-white transition hover:text-brand-accent" href={`tel:${selectedService.contact.phone.replace(/\s+/g, '')}`}>
+                       {selectedService.contact.phone}
                      </a>
                    </div>
                    <div>
@@ -231,7 +228,7 @@
                  <div className="mt-6 flex flex-wrap gap-4">
                    <Link
                      className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-sm"
-                     to={activeService.detailPage}
+                     to={selectedService.detailPage}
                    >
                      Към страницата
                    </Link>
@@ -246,32 +243,9 @@
              )}
            </AnimatePresence>
          </div>
+      </section>
+    </main>
+  )
+}
 
-         <motion.section
-           className="grid gap-6 rounded-[40px] border border-white/10 bg-white/5 px-6 py-10 backdrop-blur-xl sm:grid-cols-3 sm:gap-8 sm:px-10 sm:py-12 3xl:px-16 3xl:py-16"
-           variants={createStagger(0.08)}
-           {...revealConfig}
-         >
-           {memoizedServices.map((service) => (
-             <motion.div
-               key={`summary-${service.id}`}
-               className="flex flex-col gap-3 border border-white/10 bg-black/20 px-4 py-5 text-white/80 shadow-[0_15px_35px_rgba(5,0,20,0.35)] backdrop-blur-lg 2xl:px-6 2xl:py-7"
-               variants={popIn}
-               transition={createTransition(0, 0.5)}
-             >
-               <p className="text-xs uppercase tracking-[0.45em] text-white/50">{service.eyebrow}</p>
-               <p className="text-lg font-semibold text-white">{service.title}</p>
-               <p className="text-sm">{service.subtitle}</p>
-               <Link className="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-brand-cyan transition hover:text-white" to={service.detailPage}>
-                 Към услугата
-                 <span aria-hidden="true">→</span>
-               </Link>
-             </motion.div>
-           ))}
-         </motion.section>
-       </section>
-     </main>
-   )
- }
-
- export default ProductionPage
+export default ProductionPage
