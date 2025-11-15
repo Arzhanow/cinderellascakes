@@ -1,10 +1,16 @@
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
-import { createStagger, createTransition, fadeInUp, glowIn, revealConfig, scaleIn, tiltIn } from '../utils/motionPresets'
+import { createStagger, createTransition, fadeInUp, glowIn, scaleIn, tiltIn } from '../utils/motionPresets'
 
 const MotionLink = motion.create(Link)
+
+const repeatRevealConfig = {
+  initial: 'hidden',
+  whileInView: 'visible',
+  viewport: { once: false, amount: 0.3 },
+}
 
 const storyHighlights = [
   {
@@ -117,12 +123,32 @@ const cinderellaModelSettings = {
   },
 }
 
+const progressRoadmap = [
+  { id: 'intro', label: 'Старт' },
+  { id: 'timeline', label: 'Време' },
+  { id: 'portfolio', label: 'Портфолио' },
+  { id: 'principles', label: 'Ценности' },
+  { id: 'cta', label: 'Финал' },
+]
+
 const AboutPage = () => {
-  const portfolioRef = useRef(null)
+  const portfolioSectionRef = useRef(null)
+  const [maxStep, setMaxStep] = useState(0)
+  const totalSections = progressRoadmap.length
+  const progressSpring = useSpring(0, { stiffness: 120, damping: 24, mass: 0.8 })
+
   const { scrollYProgress } = useScroll({
-    target: portfolioRef,
+    target: portfolioSectionRef,
     offset: ['start start', 'end end'],
   })
+
+  useEffect(() => {
+    progressSpring.set(maxStep / totalSections)
+  }, [maxStep, totalSections, progressSpring])
+
+  const handleStepEnter = (index) => {
+    setMaxStep((prev) => Math.max(prev, index + 1))
+  }
 
   const modelX = useTransform(scrollYProgress, [0, 1], [-80, 220])
   const modelY = useTransform(scrollYProgress, [0, 1], [-20, 320])
@@ -131,12 +157,47 @@ const AboutPage = () => {
   const modelGlow = useTransform(scrollYProgress, [0, 1], [0.35, 0.8])
 
   return (
-    <main className="layout-shell space-y-16 pb-20 pt-28 text-white 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
+    <main className="layout-shell relative space-y-16 pb-20 pt-28 text-white 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-[-2.5rem] top-24 hidden h-[calc(100%-6rem)] w-2 md:block lg:left-[-3rem]"
+      >
+        <div className="relative h-full w-px overflow-visible rounded-full bg-white/10">
+          <motion.span
+            className="absolute inset-0 origin-top rounded-full bg-gradient-to-b from-brand-blush via-brand-cyan to-brand-accent"
+            style={{ scaleY: progressSpring, transformOrigin: 'top' }}
+          />
+          <div className="absolute -left-6 top-0 flex h-full flex-col justify-between text-[0.55rem] font-semibold uppercase tracking-[0.35em] text-white/45">
+            {progressRoadmap.map((step, index) => (
+              <motion.div key={step.id} className="flex items-center gap-2">
+                <motion.span
+                  className="block h-1.5 w-1.5 rounded-full bg-white"
+                  animate={{
+                    opacity: index + 1 <= maxStep ? 1 : 0.35,
+                    scale: index + 1 <= maxStep ? 1.25 : 0.9,
+                  }}
+                  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                />
+                <motion.span
+                  animate={{ opacity: index + 1 <= maxStep ? 1 : 0.4 }}
+                  className="text-white"
+                  transition={{ duration: 0.4 }}
+                >
+                  {step.label}
+                </motion.span>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <motion.section
         className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]"
         initial="hidden"
         animate="visible"
         variants={createStagger(0.12)}
+        onViewportEnter={() => handleStepEnter(0)}
+        viewport={{ once: false, amount: 0.45 }}
       >
         <motion.div
           className="rounded-[40px] border border-white/15 bg-white/5 px-8 py-10 text-white/90 shadow-[0_35px_80px_rgba(6,10,34,0.45)] backdrop-blur-3xl 2xl:px-12 2xl:py-14"
@@ -190,7 +251,12 @@ const AboutPage = () => {
         </motion.div>
       </motion.section>
 
-      <motion.section className="space-y-8" variants={createStagger(0.08)} {...revealConfig}>
+      <motion.section
+        className="space-y-8"
+        variants={createStagger(0.08)}
+        {...repeatRevealConfig}
+        onViewportEnter={() => handleStepEnter(1)}
+      >
         <motion.div className="max-w-3xl" variants={fadeInUp}>
           <p className="text-xs uppercase tracking-[0.55em] text-white/60">Линия на времето</p>
           <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl">От телевизионния старт до собствен бранд</h2>
@@ -216,7 +282,12 @@ const AboutPage = () => {
         </div>
       </motion.section>
 
-      <section className="relative" ref={portfolioRef}>
+      <motion.section
+        className="relative"
+        ref={portfolioSectionRef}
+        onViewportEnter={() => handleStepEnter(2)}
+        viewport={{ once: false, amount: 0.45 }}
+      >
         <div className="relative min-h-[130vh]">
           <motion.div
             className="absolute left-0 top-0 z-20 w-full max-w-[540px] rounded-[44px] border border-white/15 bg-white/5 p-5 shadow-[0_50px_120px_rgba(4,0,22,0.55)] backdrop-blur-3xl sm:left-6 lg:left-12"
@@ -237,7 +308,7 @@ const AboutPage = () => {
           </motion.div>
 
           <div className="pt-[520px] sm:pt-[560px]">
-            <motion.div className="space-y-10 md:pl-[55%]" variants={createStagger(0.12)} {...revealConfig}>
+            <motion.div className="space-y-10 md:pl-[55%]" variants={createStagger(0.12)} {...repeatRevealConfig}>
               {portfolioMoments.map((moment) => (
                 <motion.article
                   key={moment.title}
@@ -252,9 +323,14 @@ const AboutPage = () => {
             </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <motion.section className="space-y-8" variants={createStagger(0.08)} {...revealConfig}>
+      <motion.section
+        className="space-y-8"
+        variants={createStagger(0.08)}
+        {...repeatRevealConfig}
+        onViewportEnter={() => handleStepEnter(3)}
+      >
         <motion.div className="max-w-2xl" variants={fadeInUp}>
           <p className="text-xs uppercase tracking-[0.55em] text-white/60">Ателие</p>
           <h2 className="mt-3 font-luxury text-3xl text-white">Философията на Полина и екипа ѝ</h2>
@@ -281,7 +357,8 @@ const AboutPage = () => {
       <motion.section
         className="rounded-[48px] border border-white/10 bg-gradient-to-r from-brand-dusk/80 via-brand-night/80 to-brand-dusk/70 px-10 py-12 text-center shadow-[0_40px_90px_rgba(5,0,25,0.55)] backdrop-blur-3xl"
         variants={scaleIn}
-        {...revealConfig}
+        {...repeatRevealConfig}
+        onViewportEnter={() => handleStepEnter(4)}
       >
         <motion.p className="text-xs uppercase tracking-[0.65em] text-white/55" variants={fadeInUp}>
           Следваща глава

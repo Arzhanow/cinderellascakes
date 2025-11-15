@@ -1,4 +1,5 @@
 ﻿import { useEffect, useState } from 'react'
+import { useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
@@ -9,7 +10,6 @@ import {
   createTransition,
   fadeIn,
   fadeInUp,
-  floatIn,
   glowIn,
   heroRevealConfig,
   popIn,
@@ -22,6 +22,12 @@ import {
 const MotionLink = motion.create(Link)
 const panelHoverClasses =
   'transform-gpu transition duration-300 hover:-translate-y-2 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_25px_45px_rgba(15,23,42,0.45)]'
+const heroTitleVariants = {
+  initial: { opacity: 0, y: 35, scale: 0.95, filter: 'blur(10px)' },
+  animate: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
+  exit: { opacity: 0, y: -28, scale: 0.97, filter: 'blur(8px)' },
+}
+const heroTitleTransition = createTransition(0.04, 0.85, 'easeInOut')
 
 const heroSlides = [
   {
@@ -132,25 +138,30 @@ const principles = [
 
 const storyTeaser = {
   title: 'Историята на Полина и Cinderella’s Cakes',
-  text: 'От Hell’s Kitchen България до уютната витрина в Пловдив – това е само началото...',
+  text: 'Полина Петрова Алатинова блесна като „майсторка на сладкишите“ в Hell’s Kitchen България 2024 и оттам смело доведе мечтата си до собствена сладкарница. Днес Cinderella’s Cakes в Пловдив съчетава домашни рецепти, втори обект в центъра и признание от First Lady Awards 2025 – а общността расте с всяка споделена торта.',
   cta: 'Прочети цялата история',
 }
 
 const founderHighlights = [
   {
-    label: '2024',
-    title: "Hell's Kitchen · сезон 6",
-    description: 'Полина впечатлява като „майсторка на сладкишите“ и получава увереност за следващата стъпка...',
+    title: "Hell's Kitchen България 2024",
+    description: 'Кулинарното шоу я представя на цялата страна и дори без формално образование получава похвали от шеф Виктор Ангелов.',
   },
   {
-    label: 'Остромила',
-    title: 'Първата сладкарница',
-    description: 'Бутиковият обект в Пловдив посреща клиенти с домашни рецепти и лично отношение от Поли...',
+    title: 'Сладкарницата в Остромила',
+    description: 'През лятото на 2024 г. отваря първата бутикова витрина, където Поли лично посреща гостите и препоръчва специалитети.',
   },
   {
-    label: '2025',
-    title: 'First Lady Awards',
-    description: 'Отличието в категория „Храни – сладкарство“ доказва, че приказката тепърва се пише...',
+    title: 'Cinderella’s Cakes 2 · ул. Белград 19',
+    description: 'Вторият обект от юли 2025 г. носи „оазис на сладките изкушения“ в центъра на Пловдив, за да е по-близо до феновете.',
+  },
+  {
+    title: 'Медийни участия 2025',
+    description: 'Черешката на тортата, репортажи и интервюта поддържат историята ѝ пред широка аудитория и отварят нови възможности.',
+  },
+  {
+    title: 'Първа дама · категория „Храни – сладкарство“',
+    description: 'First Lady Awards 2025, както и благотворителни събития като Halloween Street Food, поставят акцент върху каузите и общността.',
   },
 ]
 
@@ -183,9 +194,28 @@ const businessServices = [
 
 const sliderDuration = 14000
 
+const mapLocations = [
+  {
+    id: 'ostromila',
+    name: 'Остромила',
+    street: 'ул. Остромила 6',
+    iframeSrc:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93.1754255197011!2d24.747196832376392!3d42.15703068009086!2m3!1f250.68440604797843!2f54.21000084914744!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x14acd1c04d8bb463%3A0x46c404a293c347c7!2sCinderella%27s%20cakes%20by%20Polina%20Alatinova!5e1!3m2!1sbg!2sbg!4v1763227386930!5m2!1sbg!2sbg',
+  },
+  {
+    id: 'belgrad',
+    name: 'Център · Белград 19',
+    street: 'ул. Белград 19 (до Гранд Хотел Пловдив)',
+    iframeSrc:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44.66049509984441!2d24.723269230712667!3d42.11549187073368!2m3!1f41.3262054833626!2f46.62220418710541!3f0!3m2!1i1024!2i768!4f54.002700629379184!3m3!1m2!1s0x14acd10017adc899%3A0x89418724d4acc8f4!2sCinderella%27s%20cakes%20by%20Polina%20Alatinova!5e1!3m2!1sbg!2sbg!4v1763227593142!5m2!1sbg!2sbg',
+  },
+]
+
 const HomePage = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const [showIntroLoader, setShowIntroLoader] = useState(true)
+  const [activeMap, setActiveMap] = useState(null)
+  const closeButtonRef = useRef(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -205,6 +235,7 @@ const HomePage = () => {
   }, [])
 
   const currentSlide = heroSlides[activeSlide]
+  const activeLocation = mapLocations.find((location) => location.id === activeMap)
 
   const goToPrev = () => {
     setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
@@ -213,6 +244,28 @@ const HomePage = () => {
   const goToNext = () => {
     setActiveSlide((prev) => (prev + 1) % heroSlides.length)
   }
+
+  useEffect(() => {
+    if (!activeMap || typeof window === 'undefined') {
+      return
+    }
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setActiveMap(null)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    const focusTimeout = window.setTimeout(() => {
+      closeButtonRef.current?.focus()
+    }, 10)
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      window.clearTimeout(focusTimeout)
+    }
+  }, [activeMap])
 
   return (
     <>
@@ -275,9 +328,19 @@ const HomePage = () => {
                       <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base 2xl:text-lg">
                         {currentSlide.eyebrow}
                       </span>
-                      <p className="mt-4 font-script text-5xl text-white lg:text-6xl xl:text-[4.75rem] 2xl:text-[5.5rem] 3xl:text-[6rem] 4xl:text-[6.75rem]">
-                        {currentSlide.label}
-                      </p>
+                      <AnimatePresence mode="wait">
+                        <motion.p
+                          key={`hero-desktop-title-${currentSlide.id}`}
+                          className="mt-4 font-script text-5xl text-white lg:text-6xl xl:text-[4.75rem] 2xl:text-[5.5rem] 3xl:text-[6rem] 4xl:text-[6.75rem]"
+                          variants={heroTitleVariants}
+                          initial="initial"
+                          animate="animate"
+                          exit="exit"
+                          transition={heroTitleTransition}
+                        >
+                          {currentSlide.label}
+                        </motion.p>
+                      </AnimatePresence>
                     </div>
                   </div>
                 </div>
@@ -349,9 +412,19 @@ const HomePage = () => {
             <span className="text-[0.6rem] uppercase tracking-[0.5em] text-white/60">
               {currentSlide.eyebrow}
             </span>
-            <p className="mt-2 font-script text-4xl leading-none text-white drop-shadow-lg sm:text-5xl">
-              {currentSlide.label}
-            </p>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={`hero-mobile-title-${currentSlide.id}`}
+                className="mt-2 font-script text-4xl leading-none text-white drop-shadow-lg sm:text-5xl"
+                variants={heroTitleVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={heroTitleTransition}
+              >
+                {currentSlide.label}
+              </motion.p>
+            </AnimatePresence>
           </motion.div>
           <motion.div
             className="pointer-events-auto inline-flex items-center gap-4 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-white shadow-lg backdrop-blur-lg"
@@ -416,7 +489,7 @@ const HomePage = () => {
       </motion.section>
 
       <motion.section className="layout-shell" id="about" variants={scaleIn} {...revealConfig} transition={createTransition(0.1, 0.8)}>
-        <motion.div className={`rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-14 4xl:py-16 ${panelHoverClasses}`} variants={createStagger(0.1)}>
+        <motion.div className={`rounded-[32px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 backdrop-blur-lg 2xl:px-8 2xl:py-10 4xl:px-10 4xl:py-12 ${panelHoverClasses}`} variants={createStagger(0.1)}>
           <motion.p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base" variants={slideIn('down', 35)}>
             История
           </motion.p>
@@ -426,23 +499,16 @@ const HomePage = () => {
           <motion.p className="mt-4 text-base leading-relaxed 2xl:text-xl 4xl:text-2xl" variants={fadeInUp}>
             {storyTeaser.text}
           </motion.p>
-          <motion.div className="mt-8 grid gap-4 md:grid-cols-2 2xl:gap-6" variants={createStagger(0.08)}>
+          <motion.ul className="mt-6 list-disc space-y-3 pl-5 text-sm leading-relaxed text-white/85 2xl:space-y-4 2xl:text-base 4xl:text-lg" variants={createStagger(0.08)}>
             {founderHighlights.map((highlight) => (
-              <motion.article
-                key={`${highlight.label}-${highlight.title}`}
-                className={`rounded-3xl border border-white/10 bg-white/5 px-5 py-5 text-white/85 backdrop-blur ${panelHoverClasses}`}
-                variants={floatIn}
-                transition={createTransition(0, 0.6)}
-              >
-                <p className="text-[0.65rem] uppercase tracking-[0.4em] text-white/50 2xl:text-xs">{highlight.label}</p>
-                <h3 className="mt-2 font-semibold text-white 2xl:text-xl">{highlight.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/80 2xl:text-base">{highlight.description}</p>
-              </motion.article>
+              <motion.li key={highlight.title} variants={fadeInUp}>
+                <span className="font-semibold text-white">{highlight.title}:</span> {highlight.description}
+              </motion.li>
             ))}
-          </motion.div>
-            <MotionLink
-              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
-              to="/about"
+          </motion.ul>
+          <MotionLink
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
+            to="/about"
               variants={popIn}
               whileHover={{ y: -3 }}
               whileTap={{ scale: 0.95 }}
@@ -623,9 +689,78 @@ const HomePage = () => {
               Изпрати запитване
             </motion.button>
           </motion.form>
+          <motion.div className="mt-8 grid gap-4 sm:grid-cols-2" variants={createStagger(0.05)}>
+            {mapLocations.map((location) => (
+              <motion.button
+                key={location.id}
+                aria-label={`Отвори карта за ${location.name}`}
+                className="rounded-2xl border border-white/15 bg-white/5 px-6 py-5 text-left text-white/85 backdrop-blur-lg transition hover:-translate-y-1 hover:border-white/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan/60"
+                onClick={() => setActiveMap(location.id)}
+                type="button"
+                variants={fadeInUp}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <span className="text-xs uppercase tracking-[0.4em] text-white/60">Карта</span>
+                <span className="mt-2 block font-semibold text-white">{location.name}</span>
+                <span className="text-sm text-white/70">{location.street}</span>
+              </motion.button>
+            ))}
+          </motion.div>
         </motion.div>
       </motion.section>
     </motion.main>
+    <AnimatePresence>
+      {activeLocation && (
+        <motion.div
+          key="map-modal"
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/70 px-4 py-8 backdrop-blur-md"
+          exit={{ opacity: 0 }}
+          initial={{ opacity: 0 }}
+          onClick={() => setActiveMap(null)}
+          transition={createTransition(0, 0.3, 'easeOut')}
+        >
+          <motion.div
+            aria-labelledby={`map-modal-title-${activeLocation.id}`}
+            aria-modal="true"
+            className="relative w-full max-w-4xl rounded-[32px] border border-white/15 bg-[#0B1120]/95 p-6 text-white shadow-[0_35px_120px_rgba(2,6,23,0.65)] sm:p-8"
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 30 }}
+            initial={{ opacity: 0, scale: 0.9, y: 40 }}
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+            transition={createTransition(0.05, 0.45, 'easeOut')}
+          >
+            <button
+              className="absolute right-4 top-4 rounded-full border border-white/20 bg-white/10 p-2 text-sm text-white transition hover:border-white/60 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan/60"
+              onClick={() => setActiveMap(null)}
+              ref={closeButtonRef}
+              type="button"
+              aria-label="Затвори картата"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <p className="text-xs uppercase tracking-[0.4em] text-white/60">Локация</p>
+            <h3 className="mt-2 font-luxury text-3xl text-white" id={`map-modal-title-${activeLocation.id}`}>
+              {activeLocation.name}
+            </h3>
+            <p className="text-sm text-white/70">{activeLocation.street}</p>
+            <div className="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+              <iframe
+                allowFullScreen
+                className="h-[420px] w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src={activeLocation.iframeSrc}
+                style={{ border: 0 }}
+                title={`Карта - ${activeLocation.name}`}
+              ></iframe>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
     </>
   )
 }
