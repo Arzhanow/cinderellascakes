@@ -64,7 +64,6 @@ const heroSlides = [
   {
     id: 'yadesh',
     label: 'Ядеш и ревеш',
-    eyebrow: 'Фъстъчен карамел и мус',
     description:
       'Слоеста торта с печени ядки, карамелен мус и солен карамел - толкова богата, че оставя без думи.',
     image: 'https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=1600&q=80',
@@ -75,7 +74,6 @@ const heroSlides = [
   {
     id: 'carrot',
     label: 'Морковена',
-    eyebrow: 'Подправки и крем сирене',
     description:
       'Сочни блатове с морков, портокал и канела, комбинирани с лек крем сирене и цитрусова кора.',
     image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80',
@@ -86,7 +84,6 @@ const heroSlides = [
   {
     id: 'no-sugar-choco',
     label: 'Шоколадова без захар и брашно',
-    eyebrow: '70% какао · кето',
     description:
       'Интензивен шоколадов мус без рафинирана захар и без брашно - чист вкус за хората на специален режим.',
     image: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?auto=format&fit=crop&w=1600&q=80',
@@ -606,7 +603,6 @@ const HomePage = () => {
 }
 
 export default HomePage
-
 
 
 
