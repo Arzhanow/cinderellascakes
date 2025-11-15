@@ -18,7 +18,7 @@ const ModelUnavailable = ({ label }) => (
   </div>
 )
 
-const DessertModel = ({ src }) => {
+const DessertModel = ({ src, groupScale = 0.92, yOffset = -0.9 }) => {
   const { scene } = useGLTF(src)
   const clonedScene = useMemo(() => scene.clone(true), [scene])
   const groupRef = useRef(null)
@@ -40,14 +40,26 @@ const DessertModel = ({ src }) => {
 
   return (
     <Float speed={1.8} rotationIntensity={0.65} floatIntensity={1.1} position={[0, 0, 0]}>
-      <group ref={groupRef} position={[0, -0.9, 0]} scale={[0.92, 0.92, 0.92]}>
+      <group ref={groupRef} position={[0, yOffset, 0]} scale={[groupScale, groupScale, groupScale]}>
         <primitive object={clonedScene} />
       </group>
     </Float>
   )
 }
 
-const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[320px] w-full' }) => {
+const HeroModel = ({
+  eyebrow,
+  label,
+  modelSrc,
+  slideId,
+  className = 'h-[320px] w-full',
+  modelSettings = {},
+}) => {
+  const {
+    modelScale = 0.92,
+    modelYOffset = -0.9,
+    cameraPosition = [0, 1.35, 1.95],
+  } = modelSettings
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -83,7 +95,7 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[320px] w
 
         <Canvas
           key={modelSrc}
-          camera={{ position: [0, 1.35, 1.95], fov: 32, near: 0.1, far: 15 }}
+          camera={{ position: cameraPosition, fov: 32, near: 0.1, far: 15 }}
           className="absolute inset-0"
           dpr={[1, 2.2]}
           gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
@@ -107,7 +119,7 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[320px] w
             position={[-5, 6, -2]}
           />
           <Suspense fallback={<LoadingOverlay label={label} />}>
-            <DessertModel src={modelSrc} />
+            <DessertModel src={modelSrc} groupScale={modelScale} yOffset={modelYOffset} />
             <Environment preset="studio" />
             <ContactShadows opacity={0.45} scale={6} blur={2.5} far={4} resolution={512} position={[0, -1.2, 0]} />
           </Suspense>

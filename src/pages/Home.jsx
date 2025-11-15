@@ -14,6 +14,11 @@ const heroSlides = [
     cta: 'Повече за продукта',
     href: '/#contact',
     model: '/models/garash.glb',
+    modelSettings: {
+      cameraPosition: [0, 1.35, 2.35],
+      modelScale: 0.8,
+      modelYOffset: -1.1,
+    },
   },
   {
     id: 'midnight',
@@ -182,6 +187,7 @@ const HomePage = () => {
                 label={currentSlide.label}
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
+                modelSettings={currentSlide.modelSettings}
                 className="pointer-events-none absolute left-[55%] top-[18%] h-[420px] w-[420px] -translate-x-[40%] opacity-95 sm:left-[62%] sm:top-[17%] sm:h-[520px] sm:w-[520px] sm:-translate-x-[32%] md:left-[64%] md:top-[16%] md:h-[580px] md:w-[580px] lg:left-[66%] lg:top-[15%] lg:h-[660px] lg:w-[660px] xl:left-[68%] xl:top-[14%] xl:h-[760px] xl:w-[760px] 2xl:left-[68%] 2xl:top-[13%] 2xl:h-[820px] 2xl:w-[820px] 4xl:left-[69%] 4xl:top-[12%] 4xl:h-[880px] 4xl:w-[880px]"
               />
             </div>
