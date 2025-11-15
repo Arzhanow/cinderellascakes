@@ -175,6 +175,14 @@ const HomePage = () => {
 
   const currentSlide = heroSlides[activeSlide]
 
+  const goToPrev = () => {
+    setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+  }
+
+  const goToNext = () => {
+    setActiveSlide((prev) => (prev + 1) % heroSlides.length)
+  }
+
   return (
     <main className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36" id="home">
       <section className="relative min-h-[90vh] w-full overflow-hidden" data-surface="dark" id="hero">
@@ -211,14 +219,22 @@ const HomePage = () => {
           ></div>
           {currentSlide.model && (
             <div className="absolute inset-0">
-              <HeroModel
-                eyebrow={currentSlide.eyebrow}
-                label={currentSlide.label}
-                modelSrc={currentSlide.model}
-                slideId={currentSlide.id}
-                modelSettings={currentSlide.modelSettings}
-                className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(220px,55vw,340px)] w-[clamp(220px,55vw,340px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(240px,52vw,380px)] sm:w-[clamp(240px,52vw,380px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[420px] md:w-[420px] md:-translate-y-1/2 md:translate-x-0 lg:h-[520px] lg:w-[520px] xl:h-[600px] xl:w-[600px] 2xl:h-[700px] 2xl:w-[700px] 3xl:h-[760px] 3xl:w-[760px] 4xl:h-[820px] 4xl:w-[820px]"
-              />
+              <div className="relative h-full w-full">
+                <HeroModel
+                  eyebrow={currentSlide.eyebrow}
+                  label={currentSlide.label}
+                  modelSrc={currentSlide.model}
+                  slideId={currentSlide.id}
+                  modelSettings={currentSlide.modelSettings}
+                  className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(220px,55vw,340px)] w-[clamp(220px,55vw,340px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(240px,52vw,380px)] sm:w-[clamp(240px,52vw,380px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[420px] md:w-[420px] md:-translate-y-1/2 md:translate-x-0 lg:h-[520px] lg:w-[520px] xl:h-[600px] xl:w-[600px] 2xl:h-[700px] 2xl:w-[700px] 3xl:h-[760px] 3xl:w-[760px] 4xl:h-[820px] 4xl:w-[820px]"
+                />
+                <div className="pointer-events-none absolute left-1/2 bottom-[clamp(280px,65vw,460px)] z-30 -translate-x-1/2 text-center text-white drop-shadow-2xl sm:bottom-[clamp(320px,52vw,520px)] md:bottom-auto md:left-auto md:right-[10%] md:top-[16%] md:translate-x-0 md:text-right">
+                  <span className="text-[0.6rem] uppercase tracking-[0.6em] text-white/60 sm:text-xs">
+                    {currentSlide.eyebrow}
+                  </span>
+                  <p className="mt-3 font-script text-4xl text-white sm:text-5xl lg:text-6xl">{currentSlide.label}</p>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -248,25 +264,41 @@ const HomePage = () => {
 
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-16 z-20 sm:bottom-18 lg:bottom-20">
-          <div className="layout-shell pointer-events-auto">
-            <div className="flex flex-wrap gap-3 3xl:gap-4">
+        <div className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center sm:bottom-10 lg:bottom-12">
+          <div className="pointer-events-auto inline-flex items-center gap-4 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-white shadow-lg backdrop-blur-lg">
+            <button
+              aria-label="Предишна торта"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-2xl transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              onClick={goToPrev}
+              type="button"
+            >
+              <span aria-hidden="true">←</span>
+            </button>
+            <div className="flex items-center gap-3">
               {heroSlides.map((slide, index) => (
                 <button
                   key={slide.id}
-                  className={`flex items-center gap-3 rounded-full border px-4 py-2 text-sm transition hover:border-white hover:text-white 2xl:px-5 2xl:py-2.5 2xl:text-base 4xl:px-6 4xl:py-3 4xl:text-lg ${
-                    activeSlide === index ? 'border-white bg-white/20 text-white' : 'border-white/30 text-white/70'
+                  aria-label={`Показване на ${slide.label}`}
+                  className={`h-3 w-3 rounded-full border transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
+                    activeSlide === index
+                      ? 'scale-110 border-white bg-white shadow-glow-primary'
+                      : 'border-white/40 bg-white/10 hover:border-white/70'
                   }`}
                   onClick={() => setActiveSlide(index)}
                   type="button"
                 >
-                  <span className="text-[0.7rem] uppercase tracking-[0.3em] 3xl:text-sm 4xl:text-base">
-                    0{index + 1}
-                  </span>
-                  <span className="text-sm 2xl:text-base 4xl:text-lg">{slide.label}</span>
+                  <span className="sr-only">{slide.label}</span>
                 </button>
               ))}
             </div>
+            <button
+              aria-label="Следваща торта"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-2xl transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              onClick={goToNext}
+              type="button"
+            >
+              <span aria-hidden="true">→</span>
+            </button>
           </div>
         </div>
       </section>

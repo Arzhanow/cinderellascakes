@@ -10,6 +10,7 @@ export default {
       fontFamily: {
         sans: ['"Manrope"', 'Inter', 'system-ui', 'sans-serif'],
         luxury: ['"Playfair Display"', 'serif'],
+        script: ['"Great Vibes"', 'cursive'],
       },
       colors: {
         brand: {
