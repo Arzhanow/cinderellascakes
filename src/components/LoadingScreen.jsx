@@ -9,9 +9,7 @@ const themePalettes = {
     text: '#f8f5ff',
     textMuted: 'rgba(248, 245, 255, 0.75)',
     label: 'rgba(248, 245, 255, 0.6)',
-    cardBackground: 'rgba(9, 2, 20, 0.8)',
     cardBorder: 'rgba(255, 255, 255, 0.15)',
-    cardShadow: '0 25px 65px rgba(5, 0, 14, 0.6)',
     accent: '#fbd0ff',
     accentAlt: '#8be9fd',
     ringTrack: 'rgba(255, 255, 255, 0.12)',
@@ -24,9 +22,7 @@ const themePalettes = {
     text: '#2d1221',
     textMuted: 'rgba(45, 18, 33, 0.75)',
     label: 'rgba(45, 18, 33, 0.55)',
-    cardBackground: 'rgba(255, 253, 255, 0.9)',
     cardBorder: 'rgba(45, 18, 33, 0.15)',
-    cardShadow: '0 25px 65px rgba(183, 86, 133, 0.35)',
     accent: '#c6407b',
     accentAlt: '#8740f2',
     ringTrack: 'rgba(45, 18, 33, 0.2)',
@@ -39,9 +35,7 @@ const themePalettes = {
     text: '#3d1b07',
     textMuted: 'rgba(61, 27, 7, 0.78)',
     label: 'rgba(61, 27, 7, 0.6)',
-    cardBackground: 'rgba(255, 248, 243, 0.92)',
     cardBorder: 'rgba(61, 27, 7, 0.17)',
-    cardShadow: '0 25px 65px rgba(211, 128, 72, 0.35)',
     accent: '#ef5a2c',
     accentAlt: '#f3a536',
     ringTrack: 'rgba(61, 27, 7, 0.25)',
@@ -89,9 +83,7 @@ const LoadingScreen = ({ onComplete }) => {
     text,
     textMuted,
     label,
-    cardBackground,
     cardBorder,
-    cardShadow,
     accent,
     accentAlt,
     ringTrack,
@@ -143,17 +135,8 @@ const LoadingScreen = ({ onComplete }) => {
     >
       <div className="flex w-full max-w-[420px] flex-col items-center gap-10 px-4 text-center sm:gap-12">
         <div className="relative h-48 w-full sm:h-56">
-          <div
-            aria-hidden="true"
-            className="absolute inset-0 rounded-[32px]"
-            style={{
-              background: cardBackground,
-              border: `1px solid ${cardBorder}`,
-              boxShadow: cardShadow,
-            }}
-          ></div>
           <Canvas
-            className="relative z-10 h-full w-full"
+            className="relative h-full w-full"
             camera={{ position: [0.3, 0.8, 3], fov: 30 }}
             gl={{ antialias: true, alpha: true }}
             dpr={[1, 2]}
