@@ -1,5 +1,5 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
 import { createStagger, createTransition, fadeInUp, glowIn, scaleIn, tiltIn } from '../utils/motionPresets'
@@ -258,9 +258,6 @@ const AboutPage = () => {
   }
 
   const stageProgress = useSpring(pageScroll, { stiffness: 100, damping: 30, mass: 0.65 })
-  const heroPathD = useMemo(() => {
-    return heroPathPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ')
-  }, [heroPathPoints])
 
   const computePathCoordinate = (axis, progressValue) => {
     const clamped = Math.min(Math.max(progressValue, 0), 1)

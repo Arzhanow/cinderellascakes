@@ -1,6 +1,6 @@
 ﻿import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ThemeSwitcher from './ThemeSwitcher'
 import LogoBadge from './LogoBadge'
 import { createStagger, createTransition, fadeInUp, glowIn, slideIn } from '../utils/motionPresets'
@@ -18,6 +18,7 @@ const MotionLink = motion.create(Link)
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const headerRef = useRef(null)
+  const location = useLocation()
 
   useEffect(() => {
     const updateNavigationHeight = () => {
@@ -33,6 +34,13 @@ const Navigation = () => {
 
   const toggleMenu = () => setMenuOpen((prev) => !prev)
   const closeMenu = () => setMenuOpen(false)
+  const handleBrandClick = (event) => {
+    if (location.pathname === '/' && !location.hash) {
+      event.preventDefault()
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+    closeMenu()
+  }
 
   return (
     <motion.header
@@ -51,11 +59,17 @@ const Navigation = () => {
         animate="visible"
         transition={createTransition(0.2, 0.8)}
       >
-        <div className="flex items-center gap-3 text-white">
-          <LogoBadge />
-          <span className="inline-flex items-center font-script text-3xl tracking-[0.02em] text-white/90 whitespace-nowrap leading-tight self-center relative top-1 3xl:text-[2.75rem] 4xl:text-[3.25rem]">
-            Cinderella&apos;s Cakes
-          </span>
+        <div className="flex flex-1 items-center justify-center gap-3 text-white lg:flex-none lg:justify-start">
+          <MotionLink
+            to="/"
+            onClick={handleBrandClick}
+            className="inline-flex items-center gap-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+          >
+            <LogoBadge />
+            <span className="inline-flex items-center font-script text-3xl tracking-[0.02em] text-white/90 whitespace-nowrap leading-tight relative top-1 3xl:text-[2.75rem] 4xl:text-[3.25rem]">
+              Cinderella&apos;s Cakes
+            </span>
+          </MotionLink>
         </div>
 
         <motion.nav
@@ -133,7 +147,9 @@ const Navigation = () => {
               ×
             </motion.button>
 
-            <motion.p
+            <MotionLink
+              to="/"
+              onClick={handleBrandClick}
               className="font-script text-4xl text-white whitespace-nowrap"
               variants={fadeInUp}
               initial="hidden"
@@ -141,7 +157,7 @@ const Navigation = () => {
               transition={createTransition(0.15, 0.5)}
             >
               Cinderella&apos;s Cakes
-            </motion.p>
+            </MotionLink>
 
             <motion.nav
               className="flex flex-col gap-4 text-2xl font-semibold"

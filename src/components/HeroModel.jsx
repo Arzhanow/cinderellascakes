@@ -114,6 +114,8 @@ const HeroModel = ({
 }) => {
   const viewport = useViewportCategory()
   const isMobileViewport = viewport === 'mobile'
+  const canvasCleanupRef = useRef(null)
+  const [contextLost, setContextLost] = useState(false)
   const appliedSettings = useMemo(() => {
     const { responsive = {}, ...baseSettings } = modelSettings ?? {}
     const fallbackOverrides =
@@ -172,6 +174,12 @@ const HeroModel = ({
 
   const mobileSizeClass = isMobileViewport ? 'h-[240px]' : ''
 
+  useEffect(() => {
+    return () => {
+      canvasCleanupRef.current?.()
+    }
+  }, [])
+
   return (
     <div className={`${className} ${mobileSizeClass}`.trim()}>
       <div
@@ -180,6 +188,11 @@ const HeroModel = ({
         id={`hero-model-${slideId}`}
       >
         <div className="pointer-events-none absolute inset-0 opacity-0"></div>
+        {contextLost && (
+          <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-black/60 text-center text-xs uppercase tracking-[0.3em] text-white/70">
+            3D визуализацията е паузирана · опресни страницата
+          </div>
+        )}
 
         <Canvas
           key={modelSrc}
@@ -191,6 +204,21 @@ const HeroModel = ({
           gl={{ antialias: true, alpha: true, preserveDrawingBuffer: false, powerPreference: 'high-performance' }}
           shadows
           style={{ background: 'transparent' }}
+          onCreated={({ gl }) => {
+            const handleContextLost = (event) => {
+              event.preventDefault()
+              setContextLost(true)
+            }
+            const handleContextRestored = () => {
+              setContextLost(false)
+            }
+            gl.domElement.addEventListener('webglcontextlost', handleContextLost)
+            gl.domElement.addEventListener('webglcontextrestored', handleContextRestored)
+            canvasCleanupRef.current = () => {
+              gl.domElement.removeEventListener('webglcontextlost', handleContextLost)
+              gl.domElement.removeEventListener('webglcontextrestored', handleContextRestored)
+            }
+          }}
         >
           <ambientLight intensity={0.55} />
           <spotLight

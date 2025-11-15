@@ -67,18 +67,18 @@ const heroSlides = [
           fov: 32,
         },
         desktop: {
-          cameraPosition: [1.95, 2.18, 0.78],
-          modelScale: 0.5,
+          cameraPosition: [1.45, 2.25, 0.95],
+          modelScale: 0.30,
           modelYOffset: -2.45,
           orbitTarget: [0, -2.45, 0],
-          fov: 30,
+          fov: 29,
         },
         desktopXL: {
-          cameraPosition: [1.85, 2.1, 0.68],
-          modelScale: 0.50,
+          cameraPosition: [1.3, 2.15, 0.82],
+          modelScale: 0.42,
           modelYOffset: -2.38,
           orbitTarget: [0, -2.38, 0],
-          fov: 28,
+          fov: 27,
         },
       },
     },
@@ -308,7 +308,7 @@ const HomePage = () => {
           {currentSlide.model && (
             <div className="absolute inset-0">
               <div className="relative h-full w-full">
-                <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:h-[660px] lg:w-[660px] xl:h-[780px] xl:w-[780px] 2xl:h-[920px] 2xl:w-[920px] 3xl:h-[980px] 3xl:w-[980px] 4xl:h-[1080px] 4xl:w-[1080px]">
+                <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
                   <div className="relative h-full w-full">
                     <HeroModel
                       eyebrow={currentSlide.eyebrow}
@@ -318,7 +318,7 @@ const HomePage = () => {
                       modelSettings={currentSlide.modelSettings}
                       className="h-full w-full"
                     />
-                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-4 lg:top-8 xl:top-10 2xl:top-14 3xl:top-16">
+                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-6 lg:top-8 xl:top-10 2xl:top-12 3xl:top-16">
                       <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base 2xl:text-lg">
                         {currentSlide.eyebrow}
                       </span>
@@ -345,7 +345,7 @@ const HomePage = () => {
 
         <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 pt-4 pb-[14rem] text-left sm:pt-8 sm:pb-[18rem] md:pb-10 2xl:gap-12 3xl:pt-12 3xl:pb-20 4xl:pt-16 4xl:pb-24">
           <motion.div
-            className="max-w-2xl text-white -translate-y-6 sm:translate-y-0 2xl:max-w-3xl 4xl:max-w-[60rem]"
+            className="max-w-2xl text-white -translate-y-6 sm:translate-y-0 md:ml-auto md:mr-20 xl:ml-4 2xl:max-w-3xl 2xl:ml-8 3xl:ml-14 3xl:mr-6 4xl:max-w-[60rem] 4xl:ml-22"
             variants={createStagger(0.12)}
             {...heroRevealConfig}
           >
