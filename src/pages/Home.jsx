@@ -16,7 +16,7 @@ const heroSlides = [
     model: '/models/garash.glb',
     modelSettings: {
       cameraPosition: [2, 2.15, 0.8],
-      modelScale: 0.5,
+      modelScale: 0.45,
       modelYOffset: -2.5,
       orbitTarget: [0, -2.5, 0],
     },
