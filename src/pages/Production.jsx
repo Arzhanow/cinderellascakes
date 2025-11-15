@@ -39,7 +39,6 @@ const productionServices = [
       'Опаковки, оптимизирани за бек офис динамика и транспорт.',
       'Възможност за контрол на наличности чрез замразени партиди.',
     ],
-    detailPage: '/hotels',
     contact: CONTACT,
   },
   {
@@ -64,7 +63,6 @@ const productionServices = [
       'Екип за контрол на качеството с международни специализации.',
       'Възможност за разработки, адаптирани към конкретен формат или верига.',
     ],
-    detailPage: '/retail',
     contact: CONTACT,
   },
   {
@@ -89,7 +87,6 @@ const productionServices = [
       'Опаковки, които запазват подредбата дори при сложна логистика.',
       'Възможност за адаптация към конкретна тема или корпоративна идентичност.',
     ],
-    detailPage: '/catering',
     contact: CONTACT,
   },
 ]
@@ -224,20 +221,14 @@ const ProductionPage = () => {
                    </div>
                  </div>
 
-                 <div className="mt-6 flex flex-wrap gap-4">
-                   <Link
-                     className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-sm"
-                     to={selectedService.detailPage}
-                   >
-                     Към страницата
-                   </Link>
-                   <Link
-                     className="rounded-full border border-white/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-sm"
-                     to="/#contact"
-                   >
-                     Изпрати запитване
-                   </Link>
-                 </div>
+                <div className="mt-6 flex flex-wrap gap-4">
+                  <Link
+                    className="rounded-full border border-white/40 px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-sm"
+                    to="/#contact"
+                  >
+                    Изпрати запитване
+                  </Link>
+                </div>
                </motion.article>
              )}
            </AnimatePresence>

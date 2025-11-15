@@ -171,21 +171,18 @@ const businessServices = [
     title: 'Ритейл',
     text: 'Постоянно качество и чиста визия за премиум витрини. Асортимент от торти, монодесерти и сезонни серии.',
     details: ['Опаковка и етикетиране по изискване', 'Доставки по график в Пловдив и региона'],
-    path: '/retail',
   },
   {
     id: 'hotels',
     title: 'Хотели',
     text: 'Закуски, десерти и торти за събития. Визуален стандарт за петзвезден опит.',
     details: ['Гъвкави менюта с опции без захар/брашно', 'Предварително планирани срокове и сервиз'],
-    path: '/hotels',
   },
   {
     id: 'catering',
     title: 'Кетъринг',
     text: 'Скалируеми решения за корпоративни и частни събития.',
     details: ['Мини размери и персонализирани плата', 'Логистика в Пловдив и региона'],
-    path: '/catering',
   },
 ]
 
@@ -553,7 +550,7 @@ const HomePage = () => {
               <div className="mt-6 flex flex-wrap gap-3 3xl:gap-4">
                 <MotionLink
                   className="inline-flex items-center gap-2 rounded-full bg-white/90 px-5 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-0.5 2xl:px-7 2xl:py-3 2xl:text-sm 4xl:px-9 4xl:py-4 4xl:text-base"
-                  to={service.path}
+                  to="/horeca"
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.96 }}
                 >
