@@ -371,18 +371,18 @@ const HomePage = () => {
               variants={fadeInUp}
               transition={createTransition(0.2, 0.7)}
             >
-              Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
+              Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин. Работим с HoReCa партньори в хотели, ресторанти и магазини в цялата страна.
             </motion.p>
             <motion.div className="mt-8 flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.1)}>
               <MotionLink
                 className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
-                to="/production"
+                to="/horeca"
                 variants={popIn}
                 transition={createTransition(0.3, 0.6)}
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.96 }}
               >
-                Услуги
+                HoReCa програми
               </MotionLink>
               <MotionLink
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
