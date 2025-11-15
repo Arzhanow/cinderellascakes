@@ -10,7 +10,7 @@ const heroSlides = [
     eyebrow: 'Какаов пралин · Без брашно',
     description:
       'Ръчната ни интерпретация на класическа торта Гараш – сатенен ганаш, орехов дакоаз и полирано огледално покритие.',
-    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80',
+    image: '/images/cakes/garash/20250128_145950.jpg',
     cta: 'Повече за продукта',
     href: '/#contact',
     model: '/models/garash.glb',
@@ -71,6 +71,84 @@ const heroSlides = [
     model: null,
   },
 ]
+
+const garashGallery = [
+  '/images/cakes/garash/20250128_145931.jpg',
+  '/images/cakes/garash/20250128_145936.jpg',
+  '/images/cakes/garash/20250128_145939.jpg',
+  '/images/cakes/garash/20250128_145942.jpg',
+  '/images/cakes/garash/20250128_145944.jpg',
+  '/images/cakes/garash/20250128_145948.jpg',
+  '/images/cakes/garash/20250128_145950.jpg',
+  '/images/cakes/garash/20250128_145956.jpg',
+  '/images/cakes/garash/20250128_145957.jpg',
+  '/images/cakes/garash/20250128_150003.jpg',
+  '/images/cakes/garash/20250128_150005.jpg',
+  '/images/cakes/garash/20250128_150008.jpg',
+  '/images/cakes/garash/20250128_150015.jpg',
+]
+
+const garashCollageSlots = [
+  {
+    id: 'left',
+    motionOffset: 40,
+    positionClasses:
+      'left-[2%] top-[15%] w-32 sm:w-44 lg:w-56 xl:w-64 h-40 sm:h-56 lg:h-72 rotate-[-9deg]',
+  },
+  {
+    id: 'right',
+    motionOffset: 55,
+    positionClasses:
+      'right-[4%] top-[18%] w-36 sm:w-48 lg:w-64 xl:w-72 h-44 sm:h-64 lg:h-80 rotate-[8deg]',
+  },
+  {
+    id: 'bottom',
+    motionOffset: 30,
+    positionClasses:
+      'left-1/2 bottom-[6%] w-40 sm:w-56 lg:w-72 xl:w-80 h-40 sm:h-60 lg:h-72 -translate-x-1/2 rotate-[2deg]',
+  },
+]
+
+const GarashPhotoCollage = () => {
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOffset((prev) => (prev + 1) % garashGallery.length)
+    }, 3200)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="pointer-events-none absolute inset-0">
+      {garashCollageSlots.map((slot, slotIndex) => {
+        const imageSrc = garashGallery[(offset + slotIndex * 3) % garashGallery.length]
+
+        return (
+          <AnimatePresence key={slot.id} mode="wait">
+            <motion.div
+              key={`${slot.id}-${imageSrc}`}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              className={`absolute ${slot.positionClasses}`}
+              exit={{ opacity: 0, scale: 1.06, y: -slot.motionOffset / 2 }}
+              initial={{ opacity: 0, scale: 0.92, y: slot.motionOffset }}
+              transition={{ duration: 0.9, ease: [0.4, 0.01, 0.2, 1] }}
+            >
+              <div className="relative h-full w-full overflow-hidden rounded-[26px] border border-white/25 bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${imageSrc})` }}
+                ></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-transparent to-white/20 mix-blend-overlay"></div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        )
+      })}
+    </div>
+  )
+}
 
 const principles = [
   {
@@ -162,6 +240,7 @@ const HomePage = () => {
             className="absolute inset-0"
             style={{ backgroundColor: 'var(--hero-overlay)' }}
           ></div>
+          {currentSlide.id === 'garash' && <GarashPhotoCollage />}
         </div>
 
         <div className="relative z-10 layout-shell flex w-full flex-col gap-10 py-16 lg:flex-row lg:items-center 2xl:gap-16 3xl:py-24 4xl:py-32">
