@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import '../styles/production-slider.css'
 
@@ -15,11 +15,8 @@ const backgroundTransition = {
 }
 
 const ProductionSlider = ({ slides = [], initialIndex = 0, onSlideSelect }) => {
-  const [activeIndex, setActiveIndex] = useState(wrapIndex(initialIndex, slides.length || 1))
-
-  useEffect(() => {
-    setActiveIndex(wrapIndex(initialIndex, slides.length || 1))
-  }, [initialIndex, slides.length])
+  const [activeIndex, setActiveIndex] = useState(() => wrapIndex(initialIndex, slides.length || 1))
+  const normalizedIndex = slides.length ? wrapIndex(activeIndex, slides.length) : 0
 
   const selectIndex = (nextIndex) => {
     if (!slides.length) return
@@ -28,22 +25,18 @@ const ProductionSlider = ({ slides = [], initialIndex = 0, onSlideSelect }) => {
     onSlideSelect?.(slides[resolvedIndex], resolvedIndex)
   }
 
-  const activeSlide = slides[activeIndex] ?? null
+  const activeSlide = slides[normalizedIndex] ?? null
 
-  const getState = useMemo(() => {
-    if (!slides.length) {
-      return () => 'rest'
-    }
-    return (index) => {
-      if (index === activeIndex) return 'current'
-      if (index === wrapIndex(activeIndex + 1, slides.length)) return 'next'
-      if (index === wrapIndex(activeIndex - 1, slides.length)) return 'previous'
-      return 'rest'
-    }
-  }, [activeIndex, slides])
+  const getState = (index) => {
+    if (!slides.length) return 'rest'
+    if (index === normalizedIndex) return 'current'
+    if (index === wrapIndex(normalizedIndex + 1, slides.length)) return 'next'
+    if (index === wrapIndex(normalizedIndex - 1, slides.length)) return 'previous'
+    return 'rest'
+  }
 
   const changeSlide = (direction) => {
-    selectIndex(activeIndex + direction)
+    selectIndex(normalizedIndex + direction)
   }
 
   return (
@@ -56,7 +49,7 @@ const ProductionSlider = ({ slides = [], initialIndex = 0, onSlideSelect }) => {
               type="button"
               className="production-slide"
               data-state={getState(index)}
-              aria-current={index === activeIndex}
+              aria-current={index === normalizedIndex}
               onClick={() => selectIndex(index)}
             >
               <div className="production-slide__inner">

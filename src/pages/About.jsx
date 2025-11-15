@@ -150,11 +150,15 @@ const AboutPage = () => {
     setMaxStep((prev) => Math.max(prev, index + 1))
   }
 
-  const modelX = useTransform(scrollYProgress, [0, 1], [-80, 220])
-  const modelY = useTransform(scrollYProgress, [0, 1], [-20, 320])
-  const modelRotate = useTransform(scrollYProgress, [0, 1], [-5, 6])
-  const modelScale = useTransform(scrollYProgress, [0, 1], [0.94, 1.08])
-  const modelGlow = useTransform(scrollYProgress, [0, 1], [0.35, 0.8])
+  const smoothModelProgress = useSpring(scrollYProgress, { stiffness: 95, damping: 28, mass: 0.65 })
+  const pathKeyframes = [0, 0.25, 0.5, 0.75, 1]
+  const modelX = useTransform(smoothModelProgress, pathKeyframes, [-210, -90, 130, 260, 30])
+  const modelY = useTransform(smoothModelProgress, pathKeyframes, [-160, 20, 360, 220, -80])
+  const modelRotate = useTransform(smoothModelProgress, [0, 0.5, 1], [-15, 9, -8])
+  const modelScale = useTransform(smoothModelProgress, [0, 0.35, 0.75, 1], [0.82, 1.04, 1.2, 1.05])
+  const modelGlow = useTransform(smoothModelProgress, [0, 1], [0.35, 0.92])
+  const colorShift = useTransform(smoothModelProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-25deg) saturate(1.25)', 'hue-rotate(12deg) saturate(1.15)'])
+  const trailOpacity = useTransform(smoothModelProgress, [0, 0.5, 1], [0.25, 0.9, 0.65])
 
   return (
     <main className="layout-shell relative space-y-16 pb-20 pt-28 text-white 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
@@ -283,32 +287,62 @@ const AboutPage = () => {
       </motion.section>
 
       <motion.section
-        className="relative"
         ref={portfolioSectionRef}
+        className="relative"
         onViewportEnter={() => handleStepEnter(2)}
         viewport={{ once: false, amount: 0.45 }}
       >
-        <div className="relative min-h-[130vh]">
-          <motion.div
-            className="absolute left-0 top-0 z-20 w-full max-w-[540px] rounded-[44px] border border-white/15 bg-white/5 p-5 shadow-[0_50px_120px_rgba(4,0,22,0.55)] backdrop-blur-3xl sm:left-6 lg:left-12"
-            style={{ x: modelX, y: modelY, rotate: modelRotate, scale: modelScale }}
-          >
-            <motion.span
-              aria-hidden="true"
-              className="pointer-events-none absolute -inset-6 rounded-[50px] bg-gradient-to-br from-brand-blush/35 via-brand-cyan/25 to-transparent blur-3xl"
-              style={{ opacity: modelGlow }}
-            />
-            <HeroModel
-              className="h-[420px] w-full 3xl:h-[520px]"
-              label="Cinderella"
-              modelSrc="/models/cinderella3D.glb"
-              modelSettings={cinderellaModelSettings}
-              slideId="about-cinderella"
-            />
-          </motion.div>
+        <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[minmax(320px,480px)_1fr] lg:items-start lg:gap-16">
+          <div className="order-1 lg:order-1 lg:sticky lg:top-28">
+            <div className="relative h-[420px] sm:h-[520px] lg:h-[620px]">
+              <motion.svg
+                className="pointer-events-none absolute inset-0 -z-10 h-full w-full text-brand-cyan/40"
+                preserveAspectRatio="none"
+                viewBox="0 0 600 600"
+              >
+                <motion.path
+                  d="M40 60 C 30 200, 220 260, 320 360 S 560 520, 500 620"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="2"
+                  strokeDasharray="1"
+                  style={{ pathLength: smoothModelProgress }}
+                />
+              </motion.svg>
+              <motion.span
+                aria-hidden="true"
+                className="absolute -left-16 top-6 h-32 w-32 rounded-full bg-brand-cyan/25 blur-3xl sm:-left-10"
+                style={{ opacity: trailOpacity }}
+              />
+              <motion.span
+                aria-hidden="true"
+                className="absolute -bottom-10 right-4 h-32 w-52 rounded-[120px] bg-brand-blush/20 blur-3xl"
+                style={{ opacity: modelGlow }}
+              />
+              <motion.div
+                className="relative z-10 w-full max-w-[520px]"
+                style={{
+                  x: modelX,
+                  y: modelY,
+                  rotate: modelRotate,
+                  scale: modelScale,
+                  filter: colorShift,
+                }}
+              >
+                <HeroModel
+                  className="h-[360px] w-full sm:h-[420px] lg:h-[520px]"
+                  label="Cinderella"
+                  modelSrc="/models/cinderella3D.glb"
+                  modelSettings={cinderellaModelSettings}
+                  slideId="about-cinderella"
+                />
+              </motion.div>
+            </div>
+          </div>
 
-          <div className="pt-[520px] sm:pt-[560px]">
-            <motion.div className="space-y-10 md:pl-[55%]" variants={createStagger(0.12)} {...repeatRevealConfig}>
+          <div className="order-2 lg:order-2">
+            <motion.div className="space-y-10 lg:space-y-12" variants={createStagger(0.12)} {...repeatRevealConfig}>
               {portfolioMoments.map((moment) => (
                 <motion.article
                   key={moment.title}
