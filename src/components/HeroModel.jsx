@@ -79,10 +79,7 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w
         className="relative isolate h-full w-full text-white"
         id={`hero-model-${slideId}`}
       >
-        <div className="pointer-events-none absolute inset-0">
-          <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-[42%] bg-gradient-to-br from-brand-accent/45 via-brand-lilac/35 to-brand-cyan/40 opacity-90 blur-[130px] sm:h-72 sm:w-72 lg:h-96 lg:w-96"></div>
-          <div className="absolute inset-x-12 bottom-4 h-48 rounded-full bg-gradient-to-t from-white/45 via-white/10 to-transparent blur-[130px] sm:inset-x-16 sm:bottom-6 lg:h-64"></div>
-        </div>
+        <div className="pointer-events-none absolute inset-0 opacity-0"></div>
 
         <Canvas
           key={modelSrc}
@@ -126,11 +123,11 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w
           />
         </Canvas>
 
-        <div className="pointer-events-none absolute left-5 top-5 max-w-xs rounded-full border border-white/40 bg-white/20 px-4 py-2 text-[0.5rem] uppercase tracking-[0.45em] text-white backdrop-blur-md shadow-[0_10px_30px_rgba(255,255,255,0.25)] 2xl:text-[0.55rem]">
+        <div className="pointer-events-none absolute left-5 top-5 max-w-xs rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[0.5rem] uppercase tracking-[0.45em] text-white/90 backdrop-blur-sm shadow-[0_10px_30px_rgba(255,255,255,0.15)] 2xl:text-[0.55rem]">
           {eyebrow}
         </div>
-        <div className="pointer-events-none absolute bottom-4 left-1/2 -translate-x-1/2 text-center sm:left-auto sm:right-6 sm:translate-x-0 sm:text-right">
-          <p className="font-luxury text-2xl text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.35)] sm:text-3xl lg:text-4xl">{label}</p>
+        <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-center sm:left-auto sm:right-6 sm:translate-x-0 sm:text-right">
+          <p className="font-luxury text-2xl text-white/95 drop-shadow-[0_12px_25px_rgba(0,0,0,0.25)] sm:text-3xl lg:text-4xl">{label}</p>
         </div>
       </div>
     </div>

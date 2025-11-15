@@ -90,22 +90,40 @@ const garashGallery = [
 
 const garashCollageSlots = [
   {
-    id: 'left',
-    motionOffset: 22,
-    rotation: -10,
-    positionClasses: 'left-[2%] top-[15%] w-32 sm:w-44 lg:w-56 xl:w-64 h-40 sm:h-56 lg:h-72',
+    id: 'left-diagonal',
+    motionOffset: 24,
+    rotation: -14,
+    positionClasses:
+      'left-[4%] top-[18%] w-32 sm:w-48 lg:w-60 xl:w-72 h-44 sm:h-60 lg:h-72 xl:h-80 z-[3]',
+    mask: 'linear-gradient(115deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.9) 95%)',
+    overlay: 'linear-gradient(125deg, rgba(33,14,23,0.6) 0%, rgba(255,255,255,0.08) 65%, rgba(255,255,255,0.2) 100%)',
   },
   {
-    id: 'right',
-    motionOffset: 30,
-    rotation: 9,
-    positionClasses: 'right-[4%] top-[18%] w-36 sm:w-48 lg:w-64 xl:w-72 h-44 sm:h-64 lg:h-80',
+    id: 'upper-right',
+    motionOffset: 32,
+    rotation: 12,
+    positionClasses:
+      'right-[2%] top-[10%] w-40 sm:w-56 lg:w-72 xl:w-80 h-48 sm:h-64 lg:h-[20.5rem] xl:h-96 z-[2]',
+    mask: 'linear-gradient(255deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.9) 95%)',
+    overlay: 'linear-gradient(240deg, rgba(19,9,19,0.55) 0%, rgba(255,255,255,0.15) 70%, rgba(255,255,255,0.05) 100%)',
+  },
+  {
+    id: 'center',
+    motionOffset: 20,
+    rotation: -4,
+    positionClasses:
+      'left-[25%] top-[48%] w-32 sm:w-48 lg:w-60 xl:w-72 h-36 sm:h-48 lg:h-56 xl:h-64 z-[4]',
+    mask: 'linear-gradient(95deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 25%, rgba(0,0,0,0.85) 90%)',
+    overlay: 'linear-gradient(90deg, rgba(22,10,20,0.4) 0%, rgba(255,255,255,0.14) 60%, rgba(255,255,255,0.05) 100%)',
   },
   {
     id: 'bottom',
     motionOffset: 18,
-    rotation: 3,
-    positionClasses: 'left-1/2 bottom-[6%] w-40 sm:w-56 lg:w-72 xl:w-80 h-40 sm:h-60 lg:h-72 -translate-x-1/2',
+    rotation: 5,
+    positionClasses:
+      'left-1/2 bottom-[2%] w-48 sm:w-64 lg:w-80 xl:w-96 h-40 sm:h-56 lg:h-64 xl:h-72 -translate-x-1/2 z-[5]',
+    mask: 'linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,1) 100%)',
+    overlay: 'linear-gradient(0deg, rgba(20,9,18,0.65) 0%, rgba(255,255,255,0.25) 60%, rgba(255,255,255,0.05) 100%)',
   },
 ]
 
@@ -122,9 +140,17 @@ const GarashPhotoCollage = () => {
 
   return (
     <div className="pointer-events-none absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-x-[-20%] bottom-[-25%] h-[70%] rotate-[-6deg] bg-gradient-to-r from-[#15070f] via-[#320f24] to-[#0c0411] opacity-80 blur-[120px]"></div>
+        <div className="absolute inset-x-[-10%] bottom-[-4%] h-[45%] bg-gradient-to-t from-[#6f2f48]/70 via-[#311221]/40 to-transparent opacity-60"></div>
+        <div className="absolute inset-x-[-15%] top-[4%] h-[35%] rotate-3 bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-30 blur-3xl"></div>
+      </div>
       {garashCollageSlots.map((slot, slotIndex) => {
         const imageSrc = garashGallery[(offset + slotIndex * 3) % garashGallery.length]
         const duration = 6.5 + slotIndex * 1.15
+        const maskStyle = slot.mask
+          ? { WebkitMaskImage: slot.mask, maskImage: slot.mask }
+          : undefined
 
         return (
           <motion.div
@@ -152,8 +178,17 @@ const GarashPhotoCollage = () => {
                     fetchpriority="low"
                     loading="lazy"
                     src={imageSrc}
+                    style={maskStyle}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-transparent to-white/20 mix-blend-overlay"></div>
+                  <div
+                    className="absolute inset-0 mix-blend-screen opacity-70"
+                    style={{
+                      backgroundImage:
+                        slot.overlay ||
+                        'linear-gradient(120deg, rgba(24,10,19,0.6) 0%, rgba(255,255,255,0.1) 70%, rgba(255,255,255,0.25) 100%)',
+                    }}
+                  ></div>
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10 mix-blend-overlay"></div>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -275,7 +310,7 @@ const HomePage = () => {
                 label={currentSlide.label}
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
-                className="pointer-events-none absolute left-1/2 top-[42%] h-[260px] w-[260px] -translate-x-[60%] opacity-85 sm:left-[55%] sm:top-10 sm:h-[320px] sm:w-[320px] sm:-translate-x-1/2 lg:left-[52%] lg:top-6 lg:h-[380px] lg:w-[380px] xl:h-[440px] xl:w-[440px] 2xl:h-[500px] 2xl:w-[500px] 4xl:h-[560px] 4xl:w-[560px]"
+                className="pointer-events-none absolute left-[38%] top-[34%] h-[380px] w-[380px] -translate-x-[65%] opacity-95 sm:left-[50%] sm:top-4 sm:h-[460px] sm:w-[460px] sm:-translate-x-1/2 md:left-[48%] md:top-0 lg:left-[48%] lg:h-[520px] lg:w-[520px] xl:h-[620px] xl:w-[620px] 2xl:h-[720px] 2xl:w-[720px] 4xl:h-[800px] 4xl:w-[800px]"
               />
             </div>
           )}
