@@ -6,15 +6,15 @@ const LoadingOverlay = ({ label }) => (
   <Html center>
     <div className="flex flex-col items-center gap-2 text-white">
       <span className="h-10 w-10 animate-spin rounded-full border-2 border-white/30 border-t-white/80"></span>
-      <p className="text-[0.6rem] uppercase tracking-[0.4em] text-white/70">Зареждаме {label}</p>
+      <p className="text-[0.6rem] uppercase tracking-[0.4em] text-white/70">D-D��?D�DD'D�D�D� {label}</p>
     </div>
   </Html>
 )
 
 const ModelUnavailable = ({ label }) => (
   <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 text-center text-white/80">
-    <span className="text-sm uppercase tracking-[0.45em]">3D модел</span>
-    <p className="text-xs uppercase tracking-[0.4em] text-white/60">{label} е в подготовка</p>
+    <span className="text-sm uppercase tracking-[0.45em]">3D D�D_D'D�D�</span>
+    <p className="text-xs uppercase tracking-[0.4em] text-white/60">{label} D� D� D�D_D'D3D_�,D_D�D�D�</p>
   </div>
 )
 
@@ -47,7 +47,7 @@ const DessertModel = ({ src }) => {
   )
 }
 
-const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
+const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w-full' }) => {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -62,68 +62,76 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
 
   const canRenderModel = mounted && Boolean(modelSrc)
 
+  if (!canRenderModel) {
+    return (
+      <div className={className}>
+        <div className="relative h-full w-full">
+          <ModelUnavailable label={label} />
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex flex-col gap-6 text-white">
+    <div className={className}>
       <div
-        aria-label={`${label} 3D модел`}
-        className="relative isolate h-[360px] w-full overflow-hidden rounded-[28px] border border-white/15 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.25),_transparent_70%)] sm:h-[420px] lg:h-[460px] 2xl:h-[520px] 3xl:h-[600px] 4xl:h-[680px]"
+        aria-label={`${label} 3D D�D_D'D�D�`}
+        className="relative isolate h-full w-full text-white"
         id={`hero-model-${slideId}`}
       >
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.18),transparent_60%)]"></div>
-        <div className="pointer-events-none absolute -bottom-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gradient-to-br from-white/20 to-transparent blur-3xl"></div>
-        <div className="pointer-events-none absolute inset-[22%] sm:inset-[20%] lg:inset-[18%] 3xl:inset-[16%] rounded-[32px] border border-white/10"></div>
-        <div className="pointer-events-none absolute inset-x-1/2 top-10 h-32 w-32 -translate-x-1/2 rounded-full border border-white/30"></div>
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/15 blur-[120px] sm:h-72 sm:w-72 lg:h-96 lg:w-96"></div>
+          <div className="absolute inset-x-10 bottom-0 h-1/2 rounded-full bg-gradient-to-t from-black/60 via-transparent to-transparent blur-[140px]"></div>
+        </div>
 
-        {canRenderModel ? (
-          <Canvas
-            key={modelSrc}
-            camera={{ position: [0, 1.25, 1.65], fov: 28, near: 0.1, far: 15 }}
-            className="absolute inset-0"
-            dpr={[1, 2.2]}
-            shadows
-          >
-            <color attach="background" args={[0, 0, 0, 0]} />
-            <ambientLight intensity={0.55} />
-            <spotLight
-              angle={0.5}
-              castShadow
-              color="#ffefff"
-              intensity={70}
-              penumbra={0.5}
-              position={[4, 7, 3]}
-              shadow-mapSize={1024}
-            />
-            <spotLight
-              angle={0.45}
-              color="#a6f0ff"
-              intensity={30}
-              position={[-5, 6, -2]}
-            />
-            <Suspense fallback={<LoadingOverlay label={label} />}>
-              <DessertModel src={modelSrc} />
-              <Environment preset="studio" />
-              <ContactShadows opacity={0.45} scale={6} blur={2.5} far={4} resolution={512} position={[0, -1.2, 0]} />
-            </Suspense>
-            <OrbitControls
-              autoRotate
-              autoRotateSpeed={0.9}
-              enablePan={false}
-              enableZoom={false}
-              maxDistance={2}
-              minDistance={1.4}
-              minPolarAngle={Math.PI * 0.38}
-              maxPolarAngle={Math.PI * 0.52}
-              target={[0, -0.15, 0]}
-            />
-          </Canvas>
-        ) : (
-          <ModelUnavailable label={label} />
-        )}
-      </div>
+        <Canvas
+          key={modelSrc}
+          camera={{ position: [0, 1.25, 1.65], fov: 28, near: 0.1, far: 15 }}
+          className="absolute inset-0"
+          dpr={[1, 2.2]}
+          shadows
+        >
+          <color attach="background" args={[0, 0, 0, 0]} />
+          <ambientLight intensity={0.55} />
+          <spotLight
+            angle={0.5}
+            castShadow
+            color="#ffefff"
+            intensity={70}
+            penumbra={0.5}
+            position={[4, 7, 3]}
+            shadow-mapSize={1024}
+          />
+          <spotLight
+            angle={0.45}
+            color="#a6f0ff"
+            intensity={30}
+            position={[-5, 6, -2]}
+          />
+          <Suspense fallback={<LoadingOverlay label={label} />}>
+            <DessertModel src={modelSrc} />
+            <Environment preset="studio" />
+            <ContactShadows opacity={0.45} scale={6} blur={2.5} far={4} resolution={512} position={[0, -1.2, 0]} />
+          </Suspense>
+          <OrbitControls
+            autoRotate
+            autoRotateSpeed={0.9}
+            enablePan={false}
+            enableZoom={false}
+            maxDistance={2}
+            minDistance={1.4}
+            minPolarAngle={Math.PI * 0.38}
+            maxPolarAngle={Math.PI * 0.52}
+            target={[0, -0.15, 0]}
+          />
+        </Canvas>
 
-      <div className="text-center">
-        <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">{eyebrow}</p>
-        <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">{label}</h2>
+        <div className="pointer-events-none absolute left-5 top-5 max-w-xs rounded-full border border-white/30 bg-black/30 px-4 py-2 text-[0.5rem] uppercase tracking-[0.45em] text-white/80 backdrop-blur-md 2xl:text-[0.55rem]">
+          {eyebrow}
+        </div>
+        <div className="pointer-events-none absolute bottom-4 right-4 text-right">
+          <p className="font-luxury text-2xl text-white drop-shadow-lg sm:text-3xl lg:text-4xl">{label}</p>
+        </div>
       </div>
     </div>
   )

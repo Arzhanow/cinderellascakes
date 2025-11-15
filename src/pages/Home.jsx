@@ -10,7 +10,7 @@ const heroSlides = [
     eyebrow: 'Какаов пралин · Без брашно',
     description:
       'Ръчната ни интерпретация на класическа торта Гараш – сатенен ганаш, орехов дакоаз и полирано огледално покритие.',
-    image: '/images/cakes/garash/20250128_145950.jpg',
+    image: '/images/cakes/garash/20250128_145936.jpg',
     cta: 'Повече за продукта',
     href: '/#contact',
     model: '/models/garash.glb',
@@ -91,21 +91,21 @@ const garashGallery = [
 const garashCollageSlots = [
   {
     id: 'left',
-    motionOffset: 40,
-    positionClasses:
-      'left-[2%] top-[15%] w-32 sm:w-44 lg:w-56 xl:w-64 h-40 sm:h-56 lg:h-72 rotate-[-9deg]',
+    motionOffset: 22,
+    rotation: -10,
+    positionClasses: 'left-[2%] top-[15%] w-32 sm:w-44 lg:w-56 xl:w-64 h-40 sm:h-56 lg:h-72',
   },
   {
     id: 'right',
-    motionOffset: 55,
-    positionClasses:
-      'right-[4%] top-[18%] w-36 sm:w-48 lg:w-64 xl:w-72 h-44 sm:h-64 lg:h-80 rotate-[8deg]',
+    motionOffset: 30,
+    rotation: 9,
+    positionClasses: 'right-[4%] top-[18%] w-36 sm:w-48 lg:w-64 xl:w-72 h-44 sm:h-64 lg:h-80',
   },
   {
     id: 'bottom',
-    motionOffset: 30,
-    positionClasses:
-      'left-1/2 bottom-[6%] w-40 sm:w-56 lg:w-72 xl:w-80 h-40 sm:h-60 lg:h-72 -translate-x-1/2 rotate-[2deg]',
+    motionOffset: 18,
+    rotation: 3,
+    positionClasses: 'left-1/2 bottom-[6%] w-40 sm:w-56 lg:w-72 xl:w-80 h-40 sm:h-60 lg:h-72 -translate-x-1/2',
   },
 ]
 
@@ -115,7 +115,7 @@ const GarashPhotoCollage = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setOffset((prev) => (prev + 1) % garashGallery.length)
-    }, 3200)
+    }, 3600)
 
     return () => clearInterval(interval)
   }, [])
@@ -124,26 +124,40 @@ const GarashPhotoCollage = () => {
     <div className="pointer-events-none absolute inset-0">
       {garashCollageSlots.map((slot, slotIndex) => {
         const imageSrc = garashGallery[(offset + slotIndex * 3) % garashGallery.length]
+        const duration = 6.5 + slotIndex * 1.15
 
         return (
-          <AnimatePresence key={slot.id} mode="wait">
-            <motion.div
-              key={`${slot.id}-${imageSrc}`}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              className={`absolute ${slot.positionClasses}`}
-              exit={{ opacity: 0, scale: 1.06, y: -slot.motionOffset / 2 }}
-              initial={{ opacity: 0, scale: 0.92, y: slot.motionOffset }}
-              transition={{ duration: 0.9, ease: [0.4, 0.01, 0.2, 1] }}
-            >
-              <div className="relative h-full w-full overflow-hidden rounded-[26px] border border-white/25 bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${imageSrc})` }}
-                ></div>
-                <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-transparent to-white/20 mix-blend-overlay"></div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+          <motion.div
+            key={slot.id}
+            animate={{
+              y: [0, -slot.motionOffset, 0],
+              rotate: [slot.rotation - 1.5, slot.rotation + 1.5, slot.rotation - 1.5],
+            }}
+            className={`absolute ${slot.positionClasses}`}
+            transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`${slot.id}-${imageSrc}`}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 1.05, y: -slot.motionOffset / 2 }}
+                initial={{ opacity: 0, scale: 0.92, y: slot.motionOffset }}
+                transition={{ duration: 0.9, ease: [0.4, 0.01, 0.2, 1] }}
+              >
+                <div className="relative h-full w-full overflow-hidden rounded-[26px] border border-white/25 bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
+                  <img
+                    alt="Garash cake detail"
+                    className="h-full w-full object-cover"
+                    decoding="async"
+                    fetchpriority="low"
+                    loading="lazy"
+                    src={imageSrc}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-tr from-black/35 via-transparent to-white/20 mix-blend-overlay"></div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
         )
       })}
     </div>
@@ -225,22 +239,46 @@ const HomePage = () => {
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentSlide.id}
+              key={`${currentSlide.id}-background`}
               animate={{ opacity: 1 }}
-              className="absolute inset-0 bg-cover bg-center"
+              className="absolute inset-0 overflow-hidden"
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
               transition={{ duration: 0.8 }}
-              style={{
-                backgroundImage: `linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-end)), url(${currentSlide.image})`,
-              }}
-            ></motion.div>
+            >
+              <img
+                alt={currentSlide.label}
+                className="h-full w-full object-cover"
+                decoding="async"
+                fetchpriority="high"
+                loading="eager"
+                src={currentSlide.image}
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: 'linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-end))',
+                  mixBlendMode: 'soft-light',
+                }}
+              ></div>
+            </motion.div>
           </AnimatePresence>
           <div
             className="absolute inset-0"
             style={{ backgroundColor: 'var(--hero-overlay)' }}
           ></div>
           {currentSlide.id === 'garash' && <GarashPhotoCollage />}
+          {currentSlide.model && (
+            <div className="pointer-events-none absolute inset-0">
+              <HeroModel
+                eyebrow={currentSlide.eyebrow}
+                label={currentSlide.label}
+                modelSrc={currentSlide.model}
+                slideId={currentSlide.id}
+                className="pointer-events-none absolute left-1/2 top-[38%] h-[260px] w-[260px] -translate-x-1/2 opacity-80 sm:left-auto sm:right-[-6%] sm:top-16 sm:h-[320px] sm:w-[320px] sm:translate-x-0 sm:opacity-100 lg:h-[380px] lg:w-[380px] xl:h-[440px] xl:w-[440px] 2xl:h-[500px] 2xl:w-[500px] 4xl:h-[580px] 4xl:w-[580px]"
+              />
+            </div>
+          )}
         </div>
 
         <div className="relative z-10 layout-shell flex w-full flex-col gap-10 py-16 lg:flex-row lg:items-center 2xl:gap-16 3xl:py-24 4xl:py-32">
@@ -266,20 +304,6 @@ const HomePage = () => {
             </div>
           </div>
 
-          <motion.div
-            key={currentSlide.label}
-            animate={{ opacity: 1, y: 0 }}
-            className="w-full rounded-[32px] border border-white/15 bg-white/10 p-8 text-white/85 backdrop-blur-xl 2xl:p-10 4xl:p-12"
-            initial={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.5 }}
-          >
-            <HeroModel
-              eyebrow={currentSlide.eyebrow}
-              label={currentSlide.label}
-              modelSrc={currentSlide.model}
-              slideId={currentSlide.id}
-            />
-          </motion.div>
         </div>
 
         <div className="relative z-10 layout-shell mt-6 3xl:mt-10">
