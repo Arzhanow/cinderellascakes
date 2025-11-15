@@ -86,9 +86,10 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w
           camera={{ position: [0, 1.35, 1.95], fov: 32, near: 0.1, far: 15 }}
           className="absolute inset-0"
           dpr={[1, 2.2]}
+          gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
           shadows
+          style={{ background: 'transparent' }}
         >
-          <color attach="background" args={[0, 0, 0, 0]} />
           <ambientLight intensity={0.55} />
           <spotLight
             angle={0.5}

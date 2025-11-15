@@ -72,133 +72,6 @@ const heroSlides = [
   },
 ]
 
-const garashGallery = [
-  '/images/cakes/garash/20250128_145931.jpg',
-  '/images/cakes/garash/20250128_145936.jpg',
-  '/images/cakes/garash/20250128_145939.jpg',
-  '/images/cakes/garash/20250128_145942.jpg',
-  '/images/cakes/garash/20250128_145944.jpg',
-  '/images/cakes/garash/20250128_145948.jpg',
-  '/images/cakes/garash/20250128_145950.jpg',
-  '/images/cakes/garash/20250128_145956.jpg',
-  '/images/cakes/garash/20250128_145957.jpg',
-  '/images/cakes/garash/20250128_150003.jpg',
-  '/images/cakes/garash/20250128_150005.jpg',
-  '/images/cakes/garash/20250128_150008.jpg',
-  '/images/cakes/garash/20250128_150015.jpg',
-]
-
-const garashCollageSlots = [
-  {
-    id: 'left-diagonal',
-    motionOffset: 24,
-    rotation: -14,
-    positionClasses:
-      'left-[4%] top-[18%] w-32 sm:w-48 lg:w-60 xl:w-72 h-44 sm:h-60 lg:h-72 xl:h-80 z-[3]',
-    mask: 'linear-gradient(115deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.1) 30%, rgba(0,0,0,0.9) 95%)',
-    overlay: 'linear-gradient(125deg, rgba(33,14,23,0.6) 0%, rgba(255,255,255,0.08) 65%, rgba(255,255,255,0.2) 100%)',
-  },
-  {
-    id: 'upper-right',
-    motionOffset: 32,
-    rotation: 12,
-    positionClasses:
-      'right-[2%] top-[10%] w-40 sm:w-56 lg:w-72 xl:w-80 h-48 sm:h-64 lg:h-[20.5rem] xl:h-96 z-[2]',
-    mask: 'linear-gradient(255deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.15) 30%, rgba(0,0,0,0.9) 95%)',
-    overlay: 'linear-gradient(240deg, rgba(19,9,19,0.55) 0%, rgba(255,255,255,0.15) 70%, rgba(255,255,255,0.05) 100%)',
-  },
-  {
-    id: 'center',
-    motionOffset: 20,
-    rotation: -4,
-    positionClasses:
-      'left-[25%] top-[48%] w-32 sm:w-48 lg:w-60 xl:w-72 h-36 sm:h-48 lg:h-56 xl:h-64 z-[4]',
-    mask: 'linear-gradient(95deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 25%, rgba(0,0,0,0.85) 90%)',
-    overlay: 'linear-gradient(90deg, rgba(22,10,20,0.4) 0%, rgba(255,255,255,0.14) 60%, rgba(255,255,255,0.05) 100%)',
-  },
-  {
-    id: 'bottom',
-    motionOffset: 18,
-    rotation: 5,
-    positionClasses:
-      'left-1/2 bottom-[2%] w-48 sm:w-64 lg:w-80 xl:w-96 h-40 sm:h-56 lg:h-64 xl:h-72 -translate-x-1/2 z-[5]',
-    mask: 'linear-gradient(270deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,1) 100%)',
-    overlay: 'linear-gradient(0deg, rgba(20,9,18,0.65) 0%, rgba(255,255,255,0.25) 60%, rgba(255,255,255,0.05) 100%)',
-  },
-]
-
-const GarashPhotoCollage = () => {
-  const [offset, setOffset] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setOffset((prev) => (prev + 1) % garashGallery.length)
-    }, 3600)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  return (
-    <div className="pointer-events-none absolute inset-0">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-x-[-20%] bottom-[-25%] h-[70%] rotate-[-6deg] bg-gradient-to-r from-[#15070f] via-[#320f24] to-[#0c0411] opacity-80 blur-[120px]"></div>
-        <div className="absolute inset-x-[-10%] bottom-[-4%] h-[45%] bg-gradient-to-t from-[#6f2f48]/70 via-[#311221]/40 to-transparent opacity-60"></div>
-        <div className="absolute inset-x-[-15%] top-[4%] h-[35%] rotate-3 bg-gradient-to-r from-white/10 via-transparent to-white/5 opacity-30 blur-3xl"></div>
-      </div>
-      {garashCollageSlots.map((slot, slotIndex) => {
-        const imageSrc = garashGallery[(offset + slotIndex * 3) % garashGallery.length]
-        const duration = 6.5 + slotIndex * 1.15
-        const maskStyle = slot.mask
-          ? { WebkitMaskImage: slot.mask, maskImage: slot.mask }
-          : undefined
-
-        return (
-          <motion.div
-            key={slot.id}
-            animate={{
-              y: [0, -slot.motionOffset, 0],
-              rotate: [slot.rotation - 1.5, slot.rotation + 1.5, slot.rotation - 1.5],
-            }}
-            className={`absolute ${slot.positionClasses}`}
-            transition={{ duration, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`${slot.id}-${imageSrc}`}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 1.05, y: -slot.motionOffset / 2 }}
-                initial={{ opacity: 0, scale: 0.92, y: slot.motionOffset }}
-                transition={{ duration: 0.9, ease: [0.4, 0.01, 0.2, 1] }}
-              >
-                <div className="relative h-full w-full overflow-hidden rounded-[26px] border border-white/25 bg-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.45)] backdrop-blur-md">
-                  <img
-                    alt="Garash cake detail"
-                    className="h-full w-full object-cover"
-                    decoding="async"
-                    fetchpriority="low"
-                    loading="lazy"
-                    src={imageSrc}
-                    style={maskStyle}
-                  />
-                  <div
-                    className="absolute inset-0 mix-blend-screen opacity-70"
-                    style={{
-                      backgroundImage:
-                        slot.overlay ||
-                        'linear-gradient(120deg, rgba(24,10,19,0.6) 0%, rgba(255,255,255,0.1) 70%, rgba(255,255,255,0.25) 100%)',
-                    }}
-                  ></div>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-black/25 via-transparent to-white/10 mix-blend-overlay"></div>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </motion.div>
-        )
-      })}
-    </div>
-  )
-}
-
 const principles = [
   {
     title: 'Качество',
@@ -302,7 +175,6 @@ const HomePage = () => {
             className="absolute inset-0"
             style={{ backgroundColor: 'var(--hero-overlay)' }}
           ></div>
-          {currentSlide.id === 'garash' && <GarashPhotoCollage />}
           {currentSlide.model && (
             <div className="pointer-events-none absolute inset-0">
               <HeroModel
@@ -310,13 +182,13 @@ const HomePage = () => {
                 label={currentSlide.label}
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
-                className="pointer-events-none absolute left-[38%] top-[34%] h-[380px] w-[380px] -translate-x-[65%] opacity-95 sm:left-[50%] sm:top-4 sm:h-[460px] sm:w-[460px] sm:-translate-x-1/2 md:left-[48%] md:top-0 lg:left-[48%] lg:h-[520px] lg:w-[520px] xl:h-[620px] xl:w-[620px] 2xl:h-[720px] 2xl:w-[720px] 4xl:h-[800px] 4xl:w-[800px]"
+                className="pointer-events-none absolute left-[45%] top-[38%] h-[360px] w-[360px] -translate-x-[55%] opacity-95 sm:left-[55%] sm:top-[35%] sm:h-[440px] sm:w-[440px] sm:-translate-x-1/2 md:left-[56%] md:top-[33%] lg:left-[58%] lg:top-[30%] lg:h-[520px] lg:w-[520px] xl:left-[60%] xl:top-[28%] xl:h-[620px] xl:w-[620px] 2xl:left-[60%] 2xl:top-[26%] 2xl:h-[700px] 2xl:w-[700px] 4xl:h-[780px] 4xl:w-[780px]"
               />
             </div>
           )}
         </div>
 
-        <div className="relative z-10 layout-shell flex w-full flex-col gap-10 py-16 lg:flex-row lg:items-center 2xl:gap-16 3xl:py-24 4xl:py-32">
+        <div className="relative z-10 layout-shell flex w-full flex-col gap-8 py-12 lg:flex-row lg:items-center 2xl:gap-14 3xl:py-18 4xl:py-24">
           <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
             <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
@@ -341,21 +213,25 @@ const HomePage = () => {
 
         </div>
 
-        <div className="relative z-10 layout-shell mt-6 3xl:mt-10">
-          <div className="flex flex-wrap gap-3 3xl:gap-4">
-            {heroSlides.map((slide, index) => (
-              <button
-                key={slide.id}
-                className={`flex items-center gap-3 rounded-full border px-4 py-2 text-sm transition hover:border-white hover:text-white 2xl:px-5 2xl:py-2.5 2xl:text-base 4xl:px-6 4xl:py-3 4xl:text-lg ${
-                  activeSlide === index ? 'border-white bg-white/20 text-white' : 'border-white/30 text-white/70'
-                }`}
-                onClick={() => setActiveSlide(index)}
-                type="button"
-              >
-                <span className="text-[0.7rem] uppercase tracking-[0.3em] 3xl:text-sm 4xl:text-base">0{index + 1}</span>
-                <span className="text-sm 2xl:text-base 4xl:text-lg">{slide.label}</span>
-              </button>
-            ))}
+        <div className="pointer-events-none absolute inset-x-0 bottom-14 z-20 sm:bottom-16 lg:bottom-20">
+          <div className="layout-shell pointer-events-auto">
+            <div className="flex flex-wrap gap-3 3xl:gap-4">
+              {heroSlides.map((slide, index) => (
+                <button
+                  key={slide.id}
+                  className={`flex items-center gap-3 rounded-full border px-4 py-2 text-sm transition hover:border-white hover:text-white 2xl:px-5 2xl:py-2.5 2xl:text-base 4xl:px-6 4xl:py-3 4xl:text-lg ${
+                    activeSlide === index ? 'border-white bg-white/20 text-white' : 'border-white/30 text-white/70'
+                  }`}
+                  onClick={() => setActiveSlide(index)}
+                  type="button"
+                >
+                  <span className="text-[0.7rem] uppercase tracking-[0.3em] 3xl:text-sm 4xl:text-base">
+                    0{index + 1}
+                  </span>
+                  <span className="text-sm 2xl:text-base 4xl:text-lg">{slide.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
