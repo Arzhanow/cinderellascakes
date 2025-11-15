@@ -195,6 +195,15 @@ const HomePage = () => {
   const [showIntroLoader, setShowIntroLoader] = useState(true)
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual'
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    }
+  }, [])
+
+  useEffect(() => {
     const timer = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % heroSlides.length)
     }, sliderDuration)
