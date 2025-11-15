@@ -19,6 +19,29 @@ const heroSlides = [
       modelScale: 0.45,
       modelYOffset: -2.5,
       orbitTarget: [0, -2.5, 0],
+      responsive: {
+        mobile: {
+          cameraPosition: [2.55, 2.65, 1.35],
+          modelScale: 0.6,
+          modelYOffset: -2.75,
+          orbitTarget: [0, -2.7, 0],
+          fov: 36,
+        },
+        tablet: {
+          cameraPosition: [2.3, 2.4, 1.05],
+          modelScale: 0.4,
+          modelYOffset: -2.62,
+          orbitTarget: [0, -2.58, 0],
+          fov: 34,
+        },
+        laptop: {
+          cameraPosition: [2.1, 2.25, 0.92],
+          modelScale: 0.43,
+          modelYOffset: -2.55,
+          orbitTarget: [0, -2.5, 0],
+          fov: 32,
+        },
+      },
     },
   },
   {
@@ -194,13 +217,13 @@ const HomePage = () => {
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
                 modelSettings={currentSlide.modelSettings}
-                className="pointer-events-auto absolute right-[6%] top-1/2 z-30 h-[420px] w-[420px] -translate-y-1/2 opacity-95 sm:h-[520px] sm:w-[520px] md:h-[580px] md:w-[580px] lg:h-[640px] lg:w-[640px] xl:h-[760px] xl:w-[760px] 2xl:h-[820px] 2xl:w-[820px] 4xl:h-[880px] 4xl:w-[880px]"
+                className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(220px,55vw,340px)] w-[clamp(220px,55vw,340px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(240px,52vw,380px)] sm:w-[clamp(240px,52vw,380px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[420px] md:w-[420px] md:-translate-y-1/2 md:translate-x-0 lg:h-[520px] lg:w-[520px] xl:h-[600px] xl:w-[600px] 2xl:h-[700px] 2xl:w-[700px] 3xl:h-[760px] 3xl:w-[760px] 4xl:h-[820px] 4xl:w-[820px]"
               />
             </div>
           )}
         </div>
 
-        <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 py-12 text-left 2xl:gap-12 3xl:py-16 4xl:py-20">
+        <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 py-12 pb-[18rem] text-left sm:pb-[20rem] md:pb-12 2xl:gap-12 3xl:py-16 4xl:py-20">
           <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
             <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · лукс сладкарство</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>

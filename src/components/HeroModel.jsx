@@ -110,7 +110,7 @@ const HeroModel = ({
 
     return {
       modelScale: 0.92,
-      modelYOffset = -0.9,
+      modelYOffset: -0.9,
       cameraPosition: [0, 1.35, 1.95],
       orbitTarget: [0, -0.28, 0],
       fov: 32,
@@ -203,4 +203,3 @@ const HeroModel = ({
 }
 
 export default HeroModel
-
