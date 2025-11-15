@@ -8,68 +8,68 @@ const MotionLink = motion.create(Link)
 
 const storyHighlights = [
   {
-    period: '2004 — 2008',
-    title: 'Началото в семейната кухня',
+    period: '2024 · Hell’s Kitchen България',
+    title: 'Телевизионният пробив на Полина',
     description:
-      'Мария изпича първите дванадесет блата в малкия апартамент в Овча купел. Всеки пласт се записва прецизно в тефтер, а тестовите дегустации с приятели се превръщат в ритуал.',
+      'Полина Петрова Алатинова от Пловдив впечатлява в сезон 6 на Hell’s Kitchen, където е наречена „майсторка на сладкишите и печивата“, въпреки че се определя като хоби готвач без формално образование.',
   },
   {
-    period: '2009 — 2015',
-    title: 'Първото ателие и смелите поръчки',
+    period: 'Средата на 2024 · Пловдив, кв. Остромила',
+    title: 'Раждането на Cinderella’s Cakes',
     description:
-      'Отваряме собствено пространство с две пещи и витрина, в която се редуват лимитирани колекции. Създаваме 3D макети и въвеждаме печат върху кадифен шоколадов велур.',
+      'След шоуто тя изпълнява обещанието си и отваря първата бутикова сладкарница. Клиентите споделят, че изборът от вкусове е толкова голям, че „решението кое парче да опиташ е истинско предизвикателство“.',
   },
   {
-    period: '2016 — днес',
-    title: 'Партньор на топ хотели и дворци',
+    period: '2025 · Медии и отличия',
+    title: 'Черешката на тортата и First Lady Awards',
     description:
-      'Работим съвместно с екипите на бутик хотели, организираме дегустации на място и внедряваме устойчиви опаковки за международни доставки.',
+      'Полина е гост-готвач в „Черешката на тортата“ и става носител на наградата „Първа дама“ 2025 в категория „Храни – сладкарство“, затвърждавайки своето име извън Пловдив.',
   },
 ]
 
 const portfolioMoments = [
   {
-    title: 'Royal Waltz',
-    caption: 'Сватба в Торонто, 2023',
+    title: 'Бутичната витрина в Остромила',
+    caption: 'Пловдив · средата на 2024',
     details:
-      'Шестетажна торта с ръчно рисувани перли и мус от шампанско розе. Изискването беше „да изглежда като движение“. Отне 92 часа моделиране на кралските гънки.',
+      'Първият обект на Cinderella’s Cakes бързо печели репутация със свой богат асортимент и лично отношение – Полина посреща гостите, препоръчва вкусове и доказва, че домашните рецепти могат да изградят общност.',
   },
   {
-    title: 'Midnight Garden',
-    caption: 'Гранд хотел София, 2022',
+    title: 'Halloween Street Food',
+    caption: 'Благотворително събитие · октомври 2025',
     details:
-      'Концепция за корпоративен гала бал – триизмерна композиция от шоколадово огледало, теменужен гриляж и живи цветя в захарен купол.',
+      'Сладкарницата организира двудневен празник с тематични десерти, работилници и музика, като 100% от приходите се даряват за кауза в партньорство с местни бизнеси.',
   },
   {
-    title: 'Bas-Relief Couture',
-    caption: 'Ателие колекция 2024',
+    title: 'Star Model 2025',
+    caption: 'Vartane Models · домакин Cinderella’s Cakes',
     details:
-      'Серия от 3D стенописи върху торти за персонални събития. Използвахме сканиране на платове и създадохме дигитални релефи, които отпечатахме в какаово кадифе.',
+      'Обектът на Полина е избран за церемонията на модния клуб Vartane Models. Гостите приемат наградите си сред витрини с десерти, което показва доверието към бранда.',
   },
 ]
 
 const atelierPrinciples = [
   {
-    label: 'Вкус преди всичко',
+    label: 'Домашни рецепти и качество',
     description:
-      'Комбинираме френски техники с български сезонни продукти. След всяка нова рецепта правим слепи дегустации с външни майстори.',
+      'Cinderella’s Cakes залага на изцяло домашни рецепти и висококачествени съставки, както личи от отзивите на клиентите в Пловдив.',
   },
   {
-    label: 'Чиста технология',
+    label: 'Учене чрез практика',
     description:
-      'Проследяваме всеки слой чрез дигитално досие – от произхода на какаото до последната глазура. Така можем да възпроизведем всяка торта след години.',
+      'Полина е самоук майстор-сладкар, който усъвършенства уменията си чрез работа, експерименти и интензивния опит в Hell’s Kitchen.',
   },
   {
-    label: 'Екип & семейство',
+    label: 'Общност и кауза',
     description:
-      'Нашето ядро е от 12 души – дизайнери, сладкари и сценограф. Учим се взаимно, пътуваме заедно и споделяме всеки успех с клиентите.',
+      'Сладкарницата е домакин на благотворителни събития, модни вечери и локални фестивали, за да подкрепя хората и бизнеса в града.',
   },
 ]
 
 const atelierStats = [
-  { label: 'Бутикови торти годишно', value: '312' },
-  { label: 'Сватбени двойки, които ни повериха деня си', value: '148' },
-  { label: 'Партньорски хотела и бутикови пространства', value: '24' },
+  { label: 'Година на старта', value: '2024 · Пловдив' },
+  { label: 'Телевизионни участия', value: 'Hell’s Kitchen 6 · Черешката на тортата 2025' },
+  { label: 'Награди и общност', value: 'First Lady Awards 2025 · 500+ Facebook последователи' },
 ]
 
 const cinderellaModelSettings = {
@@ -143,25 +143,26 @@ const AboutPage = () => {
           variants={glowIn}
         >
           <motion.p className="text-xs uppercase tracking-[0.65em] text-brand-cyan/80" variants={fadeInUp}>
-            За нас
+            Полина Алатинова
           </motion.p>
           <motion.h1 className="mt-4 font-luxury text-4xl text-white 2xl:text-5xl 4xl:text-6xl" variants={fadeInUp}>
-            Историята на Cinderella&apos;s Cakes е движение – като 3D торта, която оживява пред гостите.
+            От Hell’s Kitchen до собствена сладкарница в Пловдив.
           </motion.h1>
           <motion.p className="mt-6 text-base leading-relaxed text-white/80 2xl:text-lg" variants={fadeInUp}>
-            Създаваме торти, които съчетават висока сладкария, моден дизайн и технологии. Всеки слой е документиран,
-            за да можем да повторим магията където и да е по света.
+            Полина Петрова Алатинова е самоук майстор-сладкар, която спечели вниманието на цяла България в сезон 6 на
+            Hell’s Kitchen. През 2024 г. тя превръща опита от шоуто в реалност и създава Cinderella’s Cakes – място за
+            домашни рецепти, усмивки и персонално отношение.
           </motion.p>
 
           <motion.ul className="mt-8 flex flex-wrap gap-3 text-xs uppercase tracking-[0.35em] text-white/60" variants={createStagger(0.08)}>
             <motion.li className="rounded-full border border-white/15 px-4 py-2" variants={fadeInUp}>
-              Авторски рецепти
+              Hell’s Kitchen 6 · 2024
             </motion.li>
             <motion.li className="rounded-full border border-white/15 px-4 py-2" variants={fadeInUp}>
-              3D моделиране
+              Черешката на тортата 2025
             </motion.li>
             <motion.li className="rounded-full border border-white/15 px-4 py-2" variants={fadeInUp}>
-              Сезонни вкусове
+              First Lady Awards 2025
             </motion.li>
           </motion.ul>
         </motion.div>
@@ -171,11 +172,12 @@ const AboutPage = () => {
           variants={fadeInUp}
           transition={createTransition(0.1, 0.9)}
         >
-          <p className="text-xs uppercase tracking-[0.55em] text-white/60">Нашият подпис</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white">Женска сила, прецизност и технологии</h2>
+          <p className="text-xs uppercase tracking-[0.55em] text-white/60">Cinderella’s Cakes</p>
+          <h2 className="mt-3 font-luxury text-3xl text-white">Домашни рецепти, усмивки и лично отношение</h2>
           <p className="mt-4 text-sm leading-relaxed text-white/80 2xl:text-base">
-            Работим с motion дизайнери, за да превръщаме скиците в триизмерни макети. Екипът ни планира всяка торта като
-            мини спектакъл – от светлината до аромата, в който гостите се потапят.
+            Първата бутикова сладкарница на Полина отваря в кв. Остромила през 2024 г. и бързо печели репутация на място
+            с богат асортимент и превъзходен вкус. Клиентите споделят, че „решението кое парче да опиташ е истинско
+            предизвикателство“, а самата Поли лично препоръчва любимите си десерти.
           </p>
           <div className="mt-8 grid gap-6 sm:grid-cols-2">
             {atelierStats.map((stat) => (
@@ -191,10 +193,11 @@ const AboutPage = () => {
       <motion.section className="space-y-8" variants={createStagger(0.08)} {...revealConfig}>
         <motion.div className="max-w-3xl" variants={fadeInUp}>
           <p className="text-xs uppercase tracking-[0.55em] text-white/60">Линия на времето</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl">От тетрадката на мама до 3D ателието</h2>
+          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl">От телевизионния старт до собствен бранд</h2>
           <p className="mt-4 text-white/75">
-            Историите ни са писани от хората, които ни довериха най-важните си поводи. Всеки нов проект добавя още един
-            ред в архивата ни, съхраняван в дигитално портфолио.
+            Историята на Cinderella’s Cakes е разказана от местните медии – от Hell’s Kitchen и „Черешката на тортата“ до
+            репортажите на localstore.bg, nova.bg и marica.bg. Всяко участие води Полина към собствения ѝ адрес за
+            сладки изкушения в Пловдив.
           </p>
         </motion.div>
 
@@ -254,10 +257,10 @@ const AboutPage = () => {
       <motion.section className="space-y-8" variants={createStagger(0.08)} {...revealConfig}>
         <motion.div className="max-w-2xl" variants={fadeInUp}>
           <p className="text-xs uppercase tracking-[0.55em] text-white/60">Ателие</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white">Принципи, които защитаваме всеки ден</h2>
+          <h2 className="mt-3 font-luxury text-3xl text-white">Философията на Полина и екипа ѝ</h2>
           <p className="mt-4 text-white/70">
-            Тортите ни са резултат от много разговори – с производители, клиенти и помежду ни. Ето какво никога не
-            пропускаме.
+            Полина вярва, че талантът се развива с постоянство, обич към занаята и доверие в хората около теб. Така
+            Cinderella’s Cakes комбинира домашни рецепти, нови експерименти и общностни инициативи в Пловдив.
           </p>
         </motion.div>
 
@@ -284,11 +287,12 @@ const AboutPage = () => {
           Следваща глава
         </motion.p>
         <motion.h2 className="mt-4 font-luxury text-4xl text-white 2xl:text-5xl" variants={fadeInUp}>
-          Нека построим следващия ви сладкарски спомен – в 3D, със светлина и с много вкус.
+          Разкажете ни за вашия повод – Полина и екипът са на един разговор разстояние.
         </motion.h2>
         <motion.p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/75" variants={fadeInUp}>
-          Създаваме лимитирани проекти всеки сезон. Разкажете ни за вашето събитие, за да моделираме персонален десерт,
-          който говори на езика на вашия бранд или семейство.
+          Cinderella’s Cakes приема поръчки на 0885 493040 и 0889 979565, а Полина лично отговаря в Instagram
+          (@cinderellas_cakes и @polina_alatinova). Следващата глава на тази приказка може да бъде вашето тържество в
+          Пловдив или на път.
         </motion.p>
         <MotionLink
           className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-10 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-button-contrast shadow-glow-cta transition hover:-translate-y-1"
