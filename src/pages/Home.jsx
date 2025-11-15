@@ -67,7 +67,7 @@ const heroSlides = [
         },
         desktopXL: {
           cameraPosition: [1.85, 2.1, 0.68],
-          modelScale: 0.56,
+          modelScale: 0.50,
           modelYOffset: -2.38,
           orbitTarget: [0, -2.38, 0],
           fov: 28,
@@ -259,17 +259,25 @@ const HomePage = () => {
           {currentSlide.model && (
             <div className="absolute inset-0">
               <div className="relative h-full w-full">
-                <HeroModel
-                  eyebrow={currentSlide.eyebrow}
-                  label={currentSlide.label}
-                  modelSrc={currentSlide.model}
-                  slideId={currentSlide.id}
-                  modelSettings={currentSlide.modelSettings}
-                  className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:h-[660px] lg:w-[660px] xl:h-[780px] xl:w-[780px] 2xl:h-[920px] 2xl:w-[920px] 3xl:h-[980px] 3xl:w-[980px] 4xl:h-[1080px] 4xl:w-[1080px]"
-                />
-                <div className="pointer-events-none absolute left-1/2 bottom-[clamp(280px,65vw,460px)] z-30 hidden -translate-x-1/2 text-center text-white drop-shadow-2xl sm:bottom-[clamp(320px,52vw,520px)] md:right-[10%] md:top-[16%] md:block md:translate-x-0 md:text-right md:drop-shadow-[0_15px_35px_rgba(0,0,0,0.45)] lg:right-[12%] xl:right-[14%] 3xl:right-[16%] 4xl:right-[18%]">
-                  <span className="text-xs uppercase tracking-[0.6em] text-white/60">{currentSlide.eyebrow}</span>
-                  <p className="mt-3 font-script text-4xl text-white lg:text-6xl">{currentSlide.label}</p>
+                <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:h-[660px] lg:w-[660px] xl:h-[780px] xl:w-[780px] 2xl:h-[920px] 2xl:w-[920px] 3xl:h-[980px] 3xl:w-[980px] 4xl:h-[1080px] 4xl:w-[1080px]">
+                  <div className="relative h-full w-full">
+                    <HeroModel
+                      eyebrow={currentSlide.eyebrow}
+                      label={currentSlide.label}
+                      modelSrc={currentSlide.model}
+                      slideId={currentSlide.id}
+                      modelSettings={currentSlide.modelSettings}
+                      className="h-full w-full"
+                    />
+                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:bottom-16 lg:bottom-20 xl:bottom-24 2xl:bottom-28">
+                      <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base">
+                        {currentSlide.eyebrow}
+                      </span>
+                      <p className="mt-4 font-script text-5xl text-white md:text-6xl lg:text-7xl 2xl:text-[5.5rem]">
+                        {currentSlide.label}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -336,8 +344,12 @@ const HomePage = () => {
             {...heroRevealConfig}
             transition={createTransition(0.6, 0.5)}
           >
-            <span className="text-[0.6rem] uppercase tracking-[0.5em] text-white/60">{currentSlide.eyebrow}</span>
-            <p className="mt-2 font-script text-4xl leading-none text-white drop-shadow-lg">{currentSlide.label}</p>
+            <span className="text-[0.7rem] uppercase tracking-[0.55em] text-white/60">
+              {currentSlide.eyebrow}
+            </span>
+            <p className="mt-3 font-script text-5xl leading-none text-white drop-shadow-lg sm:text-6xl">
+              {currentSlide.label}
+            </p>
           </motion.div>
           <motion.div
             className="pointer-events-auto inline-flex items-center gap-4 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-white shadow-lg backdrop-blur-lg"
