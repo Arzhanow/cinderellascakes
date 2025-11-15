@@ -68,7 +68,7 @@ const Navigation = () => {
             className="rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-6 py-2 text-xs font-semibold uppercase tracking-[0.15em] text-button-contrast shadow-glow-cta transition hover:-translate-y-0.5 xl:px-8 xl:py-3 xl:text-sm 3xl:px-10 3xl:py-3.5 3xl:text-base 4xl:px-12 4xl:py-4 4xl:text-lg"
             to="/#contact"
           >
-            Запази дегустация
+            Направи запитване
           </Link>
         </div>
 
@@ -123,7 +123,7 @@ const Navigation = () => {
           onClick={closeMenu}
           to="/#contact"
         >
-          Запази дегустация
+          Направи запитване
         </Link>
       </div>
     </header>

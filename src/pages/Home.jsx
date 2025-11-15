@@ -6,73 +6,51 @@ import HeroModel from '../components/HeroModel'
 const heroSlides = [
   {
     id: 'garash',
-    label: 'Signature Garash',
-    eyebrow: 'Какаов пралин · Без брашно',
+    label: 'Гараш',
+    eyebrow: 'Какаов пралин · без брашно',
     description:
-      'Ръчната ни интерпретация на класическа торта Гараш - сатенен ганаш, орехов дакоаз и полирано огледално покритие.',
+      'Класически орехов блат с тъмен ганаш и полирано огледално покритие - любимата ни торта за ценители.',
     image: '/images/cakes/garash/20250128_150003.jpg',
-    cta: 'Повече за продукта',
+    cta: 'Поръчай Garash',
     href: '/#contact',
     model: '/models/garash.glb',
     modelSettings: {
       cameraPosition: [2, 2.15, 0.8],
-      modelScale: 0.40,
+      modelScale: 0.5,
       modelYOffset: -2.5,
       orbitTarget: [0, -2.5, 0],
     },
   },
   {
-    id: 'midnight',
-    label: 'Midnight Velvet',
-    eyebrow: 'Тъмен шоколад · Без брашно',
+    id: 'yadesh',
+    label: 'Ядеш и ревеш',
+    eyebrow: 'Фъстъчен карамел и мус',
     description:
-      'Пет слоя белгийски шоколад, карамел с морска сол и сатенен ганаш. Вариантът без брашно запазва чистия силует и дълбокия вкус.',
-    image: 'https://images.unsplash.com/photo-1475856034132-877a997f29d7?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Повече за продукта',
+      'Слоеста торта с печени ядки, карамелен мус и солен карамел - толкова богата, че оставя без думи.',
+    image: 'https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Резервирай парче',
     href: '/#contact',
     model: null,
   },
   {
-    id: 'cloudberry',
-    label: 'Cloudberry Silk',
-    eyebrow: 'С протеин · Ядково мляко',
+    id: 'carrot',
+    label: 'Морковена',
+    eyebrow: 'Подправки и крем сирене',
     description:
-      'Леки блатове от ядково мляко, мус от бяла пралина и розов грейпфрут. Подходяща за спортуващи гости и утринни дегустации.',
-    image: 'https://images.unsplash.com/photo-1504753793650-d4a2b783c15e?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Повече за продукта',
+      'Сочни блатове с морков, портокал и канела, комбинирани с лек крем сирене и цитрусова кора.',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Поръчай торта',
     href: '/#contact',
     model: null,
   },
   {
-    id: 'arabella',
-    label: 'Arabella Rose',
-    eyebrow: 'Розов грейпфрут · Без захар',
+    id: 'no-sugar-choco',
+    label: 'Шоколадова без захар и брашно',
+    eyebrow: '70% какао · кето',
     description:
-      'Крем от розов грейпфрут, шамфъстък и ръчно моделирани листа. Версията без захар се подслажда с йерусалимски артишок и стевия.',
-    image: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Повече за продукта',
-    href: '/#contact',
-    model: null,
-  },
-  {
-    id: 'opera',
-    label: 'Pistachio Opera',
-    eyebrow: 'Разделено порциониране',
-    description:
-      'Торта тип “opera” с бадемов дакоаз, крем от пиемонтски шамфъстък и нежен кафеен сироп. Изглежда идентично независимо от порцията.',
-    image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Повече за продукта',
-    href: '/#contact',
-    model: null,
-  },
-  {
-    id: 'citrus',
-    label: 'Citrus Muse',
-    eyebrow: 'Сезонна лимитирана серия',
-    description:
-      'Марокански портокал, лайм и прахообразен йогурт създават свежа текстура. Идеален избор за летни събития и хотели с богата закуска.',
-    image: 'https://images.unsplash.com/photo-1464349153735-7db50ed83c84?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Повече за продукта',
+      'Интензивен шоколадов мус без рафинирана захар и без брашно - чист вкус за хората на специален режим.',
+    image: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?auto=format&fit=crop&w=1600&q=80',
+    cta: 'Попитай за наличности',
     href: '/#contact',
     model: null,
   },
@@ -195,41 +173,41 @@ const HomePage = () => {
                 loading="eager"
                 src={currentSlide.image}
               />
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: 'linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-end))',
-                  mixBlendMode: 'soft-light',
-                }}
-              ></div>
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage: 'linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-end))',
+              mixBlendMode: 'soft-light',
+            }}
+          ></div>
             </motion.div>
           </AnimatePresence>
           <div
-            className="absolute inset-0"
+            className="pointer-events-none absolute inset-0"
             style={{ backgroundColor: 'var(--hero-overlay)' }}
           ></div>
           {currentSlide.model && (
-            <div className="pointer-events-none absolute inset-0">
+            <div className="absolute inset-0">
               <HeroModel
                 eyebrow={currentSlide.eyebrow}
                 label={currentSlide.label}
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
                 modelSettings={currentSlide.modelSettings}
-                className="pointer-events-none absolute left-[55%] top-[18%] h-[460px] w-[460px] -translate-x-[40%] opacity-95 sm:left-[62%] sm:top-[17%] sm:h-[560px] sm:w-[560px] sm:-translate-x-[32%] md:left-[64%] md:top-[16%] md:h-[620px] md:w-[620px] lg:left-[66%] lg:top-[15%] lg:h-[700px] lg:w-[700px] xl:left-[68%] xl:top-[14%] xl:h-[800px] xl:w-[800px] 2xl:left-[68%] 2xl:top-[13%] 2xl:h-[860px] 2xl:w-[860px] 4xl:left-[69%] 4xl:top-[12%] 4xl:h-[920px] 4xl:w-[920px]"
+                className="pointer-events-auto absolute right-[6%] top-1/2 z-30 h-[420px] w-[420px] -translate-y-1/2 opacity-95 sm:h-[520px] sm:w-[520px] md:h-[580px] md:w-[580px] lg:h-[640px] lg:w-[640px] xl:h-[760px] xl:w-[760px] 2xl:h-[820px] 2xl:w-[820px] 4xl:h-[880px] 4xl:w-[880px]"
               />
             </div>
           )}
         </div>
 
-        <div className="relative z-10 layout-shell flex w-full flex-col items-center gap-8 py-12 text-center 2xl:gap-12 3xl:py-16 4xl:py-20">
-          <div className="max-w-2xl text-white text-center 2xl:max-w-3xl 4xl:max-w-[60rem]">
+        <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 py-12 text-left 2xl:gap-12 3xl:py-16 4xl:py-20">
+          <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
             <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
             <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl">
               Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
             </p>
-            <div className="mt-8 flex flex-wrap justify-center gap-4 3xl:gap-6">
+            <div className="mt-8 flex flex-wrap gap-4 3xl:gap-6">
               <Link
                 className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to="/#products"
@@ -459,6 +437,18 @@ const HomePage = () => {
 }
 
 export default HomePage
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
