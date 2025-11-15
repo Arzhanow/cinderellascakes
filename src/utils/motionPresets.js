@@ -1,11 +1,13 @@
 const baseEase = [0.22, 1, 0.36, 1]
 const tempoScale = 1.15
 
-export const createTransition = (delay = 0, duration = 0.8) => ({
-  duration: duration * tempoScale,
-  delay,
-  ease: baseEase,
-})
+export const createTransition = (delay = 0, duration = 0.8, ease = baseEase) => {
+  return {
+    duration: duration * tempoScale,
+    delay,
+    ease,
+  }
+}
 
 export const revealConfig = {
   initial: 'hidden',

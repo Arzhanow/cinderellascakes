@@ -95,7 +95,6 @@ const DessertModel = ({ src, groupScale = 0.92, yOffset = -0.9 }) => {
 }
 
 const HeroModel = ({
-  eyebrow,
   label,
   modelSrc,
   slideId,
@@ -121,11 +120,6 @@ const HeroModel = ({
   }, [modelSettings, viewport])
 
   const { modelScale, modelYOffset, cameraPosition, orbitTarget, fov } = appliedSettings
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
 
   useEffect(() => {
     if (modelSrc) {
@@ -133,7 +127,7 @@ const HeroModel = ({
     }
   }, [modelSrc])
 
-  const canRenderModel = mounted && Boolean(modelSrc)
+  const canRenderModel = typeof window !== 'undefined' && Boolean(modelSrc)
 
   if (!canRenderModel) {
     return (

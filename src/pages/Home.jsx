@@ -210,7 +210,7 @@ const HomePage = () => {
         id="home"
         initial={{ opacity: 0 }}
         animate={{ opacity: showIntroLoader ? 0 : 1 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
+        transition={createTransition(0, 0.8, 'easeOut')}
         style={{ pointerEvents: showIntroLoader ? 'none' : 'auto' }}
       >
       <section className="relative min-h-[90vh] w-full overflow-hidden" data-surface="dark" id="hero">
@@ -222,7 +222,7 @@ const HomePage = () => {
               className="absolute inset-0 overflow-hidden"
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
-              transition={{ duration: 0.8 }}
+              transition={createTransition(0, 0.8)}
             >
               <img
                 alt=""
@@ -606,7 +606,6 @@ const HomePage = () => {
 }
 
 export default HomePage
-
 
 
 
