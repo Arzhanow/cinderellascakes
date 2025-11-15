@@ -275,7 +275,7 @@ const HomePage = () => {
                 label={currentSlide.label}
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
-                className="pointer-events-none absolute left-1/2 top-[38%] h-[260px] w-[260px] -translate-x-1/2 opacity-80 sm:left-auto sm:right-[-6%] sm:top-16 sm:h-[320px] sm:w-[320px] sm:translate-x-0 sm:opacity-100 lg:h-[380px] lg:w-[380px] xl:h-[440px] xl:w-[440px] 2xl:h-[500px] 2xl:w-[500px] 4xl:h-[580px] 4xl:w-[580px]"
+                className="pointer-events-none absolute left-1/2 top-[42%] h-[260px] w-[260px] -translate-x-[60%] opacity-85 sm:left-[55%] sm:top-10 sm:h-[320px] sm:w-[320px] sm:-translate-x-1/2 lg:left-[52%] lg:top-6 lg:h-[380px] lg:w-[380px] xl:h-[440px] xl:w-[440px] 2xl:h-[500px] 2xl:w-[500px] 4xl:h-[560px] 4xl:w-[560px]"
               />
             </div>
           )}
