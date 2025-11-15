@@ -16,7 +16,7 @@ const MainLayout = () => {
       </div>
 
       <div
-        className="relative z-10 pb-16"
+        className="relative z-0 pb-16"
         style={{ paddingTop: 'calc(var(--topbar-height) + var(--navigation-height))' }}
       >
         <TopBar />

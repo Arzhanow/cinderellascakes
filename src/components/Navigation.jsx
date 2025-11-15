@@ -41,11 +41,11 @@ const Navigation = () => {
       initial="hidden"
       animate="visible"
       transition={createTransition(0.35, 0.9)}
-      className="fixed inset-x-0 z-40 w-full px-0"
+      className="fixed inset-x-0 z-50 w-full px-0"
       style={{ top: 'var(--topbar-height)' }}
     >
       <motion.div
-        className="flex w-full items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8 xl:px-12 3xl:px-20 4xl:px-28"
+        className="flex w-full items-center justify-between gap-3 border border-white/15 bg-brand-dusk px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.65)] sm:px-8 xl:px-12 3xl:px-20 4xl:px-28"
         variants={glowIn}
         initial="hidden"
         animate="visible"
@@ -121,7 +121,7 @@ const Navigation = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={createTransition(0, 0.4)}
-            className="fixed inset-0 z-40 flex min-h-screen flex-col items-center justify-center gap-10 bg-brand-night/95 px-8 py-12 text-center text-white lg:hidden"
+            className="fixed inset-0 z-50 flex min-h-screen flex-col items-center justify-center gap-10 bg-brand-night/95 px-8 py-12 text-center text-white lg:hidden"
           >
             <motion.button
               aria-label="Затвори меню"
@@ -179,4 +179,3 @@ const Navigation = () => {
 }
 
 export default Navigation
-
