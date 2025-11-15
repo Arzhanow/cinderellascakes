@@ -566,114 +566,120 @@ const HomePage = () => {
         </motion.div>
       </motion.section>
 
-      <motion.section className="layout-shell max-w-4xl 3xl:max-w-[1100px]" id="contact" variants={scaleIn} {...revealConfig}>
+      <motion.section className="layout-shell" id="contact" variants={scaleIn} {...revealConfig}>
         <motion.div className={`rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-12 4xl:py-16 ${panelHoverClasses}`} variants={createStagger(0.12)}>
-          <motion.p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base" variants={slideIn('down', 30)}>
-            Свържи се с нас
-          </motion.p>
-          <motion.h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl" variants={glowIn}>
-            Запази своето сладко изживяване
-          </motion.h2>
-          <motion.p className="mt-2 text-white/80 2xl:text-lg 4xl:text-xl" variants={fadeInUp}>
-            Двата адреса на Cinderella's Cakes в Пловдив работят паралелно като уютни салони и работилници, а Полина лично
-            консултира всяка торта - от домашни рецепти до здравословни алтернативи без захар или глутен.
-          </motion.p>
-          <motion.div className="mt-8 grid gap-6 lg:grid-cols-2" variants={createStagger(0.08)}>
-            <motion.div variants={slideIn('left', 40)}>
-              <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Локации</p>
-              <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
-                <li>
-                  <span className="font-semibold text-white">Остромила ·</span> ул. Остромила 6 - първият бутиков салон и
-                  производствена база.
-                </li>
-                <li>
-                  <span className="font-semibold text-white">Център ·</span> ул. Белград 19 (до Гранд Хотел Пловдив) - Cinderella's
-                  Cakes 2 за бързи дегустации.
-                </li>
-              </ul>
+          <motion.div className="grid gap-10 lg:grid-cols-[1.15fr,0.95fr] 2xl:gap-14" variants={createStagger(0.12)}>
+            <motion.div className="space-y-8 2xl:space-y-10" variants={createStagger(0.08)}>
+              <motion.div className="space-y-3" variants={createStagger(0.06)}>
+                <motion.p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base" variants={slideIn('down', 30)}>
+                  Свържи се с нас
+                </motion.p>
+                <motion.h2 className="font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl" variants={glowIn}>
+                  Запази своето сладко изживяване
+                </motion.h2>
+                <motion.p className="text-white/80 2xl:text-lg 4xl:text-xl" variants={fadeInUp}>
+                  Двата адреса на Cinderella's Cakes в Пловдив работят паралелно като уютни салони и работилници, а Полина лично
+                  консултира всяка торта - от домашни рецепти до здравословни алтернативи без захар или глутен.
+                </motion.p>
+              </motion.div>
+              <motion.div className="grid gap-6 lg:grid-cols-2" variants={createStagger(0.08)}>
+                <motion.div variants={slideIn('left', 40)}>
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Локации</p>
+                  <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
+                    <li>
+                      <span className="font-semibold text-white">Остромила ·</span> ул. Остромила 6 - първият бутиков салон и
+                      производствена база.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-white">Център ·</span> ул. Белград 19 (до Гранд Хотел Пловдив) - Cinderella's
+                      Cakes 2 за бързи дегустации.
+                    </li>
+                  </ul>
+                </motion.div>
+                <motion.div variants={slideIn('right', 40)}>
+                  <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Контакти</p>
+                  <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
+                    <li>
+                      <span className="font-semibold text-white">Поръчки:</span> 0885 493 040
+                    </li>
+                    <li>
+                      <span className="font-semibold text-white">Кетъринг и събития:</span> 0889 979 565
+                    </li>
+                    <li>
+                      <span className="font-semibold text-white">Имейл:</span> polinaalatinova@bigenergy.bg
+                    </li>
+                  </ul>
+                </motion.div>
+              </motion.div>
+              <motion.div className="grid gap-4 sm:grid-cols-2" variants={createStagger(0.05)}>
+                {mapLocations.map((location) => (
+                  <motion.button
+                    key={location.id}
+                    aria-label={`Отвори карта за ${location.name}`}
+                    className="rounded-2xl border border-white/15 bg-white/5 px-6 py-5 text-left text-white/85 backdrop-blur-lg transition hover:-translate-y-1 hover:border-white/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan/60"
+                    onClick={() => setActiveMap(location.id)}
+                    type="button"
+                    variants={fadeInUp}
+                    whileHover={{ y: -4 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <span className="text-xs uppercase tracking-[0.4em] text-white/60">Карта</span>
+                    <span className="mt-2 block font-semibold text-white">{location.name}</span>
+                    <span className="text-sm text-white/70">{location.street}</span>
+                  </motion.button>
+                ))}
+              </motion.div>
             </motion.div>
-            <motion.div variants={slideIn('right', 40)}>
-              <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Контакти</p>
-              <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
-                <li>
-                  <span className="font-semibold text-white">Поръчки:</span> 0885 493 040
-                </li>
-                <li>
-                  <span className="font-semibold text-white">Кетъринг и събития:</span> 0889 979 565
-                </li>
-                <li>
-                  <span className="font-semibold text-white">Имейл:</span> polinaalatinova@bigenergy.bg
-                </li>
-              </ul>
-            </motion.div>
-          </motion.div>
-          <motion.form className="mt-8 space-y-4 2xl:space-y-6 4xl:space-y-8" variants={createStagger(0.08)}>
-            <motion.div variants={fadeInUp}>
-              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Вашето име</label>
-              <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="Име и фамилия" type="text" />
-            </motion.div>
-            <motion.div className="grid gap-4 sm:grid-cols-2 2xl:gap-6 4xl:gap-8" variants={createStagger(0.05)}>
+            <motion.form className="space-y-4 2xl:space-y-6 4xl:space-y-8" variants={createStagger(0.08)}>
               <motion.div variants={fadeInUp}>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Имейл</label>
-                <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="example@domain.com" type="email" />
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Вашето име</label>
+                <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="Име и фамилия" type="text" />
+              </motion.div>
+              <motion.div className="grid gap-4 sm:grid-cols-2 2xl:gap-6 4xl:gap-8" variants={createStagger(0.05)}>
+                <motion.div variants={fadeInUp}>
+                  <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Имейл</label>
+                  <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="example@domain.com" type="email" />
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Телефон</label>
+                  <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="+359 ..." type="tel" />
+                </motion.div>
               </motion.div>
               <motion.div variants={fadeInUp}>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Телефон</label>
-                <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="+359 ..." type="tel" />
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Събитие / повод / детайли</label>
+                <textarea
+                  className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
+                  placeholder="Опишете тортата, брой порции или специални изисквания."
+                  rows={4}
+                ></textarea>
               </motion.div>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Събитие / повод / детайли</label>
-              <textarea
-                className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
-                placeholder="Опишете тортата, брой порции или специални изисквания."
-                rows={4}
-              ></textarea>
-            </motion.div>
-            <motion.div variants={fadeInUp}>
-              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Интересува ме</label>
-              <div className="mt-2 flex flex-wrap gap-3 text-sm 2xl:gap-4 2xl:text-base 4xl:text-lg">
-                <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
-                  <input className="accent-brand-blush" type="checkbox" />
-                  Торти за вкъщи
-                </label>
-                <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
-                  <input className="accent-brand-blush" type="checkbox" />
-                  Кетъринг
-                </label>
-                <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
-                  <input className="accent-brand-blush" type="checkbox" />
-                  Дегустация на място
-                </label>
-              </div>
-            </motion.div>
-            <motion.button
-              className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-12 4xl:py-5 4xl:text-lg"
-              variants={popIn}
-              whileHover={{ y: -4 }}
-              whileTap={{ scale: 0.94 }}
-              type="submit"
-            >
-              Изпрати запитване
-            </motion.button>
-          </motion.form>
-          <motion.div className="mt-8 grid gap-4 sm:grid-cols-2" variants={createStagger(0.05)}>
-            {mapLocations.map((location) => (
+              <motion.div variants={fadeInUp}>
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Интересува ме</label>
+                <div className="mt-2 flex flex-wrap gap-3 text-sm 2xl:gap-4 2xl:text-base 4xl:text-lg">
+                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                    <input className="accent-brand-blush" type="checkbox" />
+                    Торти за вкъщи
+                  </label>
+                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                    <input className="accent-brand-blush" type="checkbox" />
+                    Кетъринг
+                  </label>
+                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                    <input className="accent-brand-blush" type="checkbox" />
+                    Дегустация на място
+                  </label>
+                </div>
+              </motion.div>
               <motion.button
-                key={location.id}
-                aria-label={`Отвори карта за ${location.name}`}
-                className="rounded-2xl border border-white/15 bg-white/5 px-6 py-5 text-left text-white/85 backdrop-blur-lg transition hover:-translate-y-1 hover:border-white/40 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan/60"
-                onClick={() => setActiveMap(location.id)}
-                type="button"
-                variants={fadeInUp}
+                className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-12 4xl:py-5 4xl:text-lg"
+                variants={popIn}
                 whileHover={{ y: -4 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{ scale: 0.94 }}
+                type="submit"
               >
-                <span className="text-xs uppercase tracking-[0.4em] text-white/60">Карта</span>
-                <span className="mt-2 block font-semibold text-white">{location.name}</span>
-                <span className="text-sm text-white/70">{location.street}</span>
+                Изпрати запитване
               </motion.button>
-            ))}
+            </motion.form>
           </motion.div>
         </motion.div>
       </motion.section>
