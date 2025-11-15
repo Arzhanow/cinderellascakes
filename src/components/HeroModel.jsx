@@ -40,14 +40,14 @@ const DessertModel = ({ src }) => {
 
   return (
     <Float speed={1.8} rotationIntensity={0.65} floatIntensity={1.1} position={[0, 0, 0]}>
-      <group ref={groupRef} position={[0, -0.72, 0]} scale={[0.82, 0.82, 0.82]}>
+      <group ref={groupRef} position={[0, -0.9, 0]} scale={[0.92, 0.92, 0.92]}>
         <primitive object={clonedScene} />
       </group>
     </Float>
   )
 }
 
-const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w-full' }) => {
+const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[320px] w-full' }) => {
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -124,12 +124,6 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w
           />
         </Canvas>
 
-        <div className="pointer-events-none absolute left-5 top-5 max-w-xs rounded-full border border-white/30 bg-white/10 px-4 py-2 text-[0.5rem] uppercase tracking-[0.45em] text-white/90 backdrop-blur-sm shadow-[0_10px_30px_rgba(255,255,255,0.15)] 2xl:text-[0.55rem]">
-          {eyebrow}
-        </div>
-        <div className="pointer-events-none absolute bottom-2 left-1/2 -translate-x-1/2 text-center sm:left-auto sm:right-6 sm:translate-x-0 sm:text-right">
-          <p className="font-luxury text-2xl text-white/95 drop-shadow-[0_12px_25px_rgba(0,0,0,0.25)] sm:text-3xl lg:text-4xl">{label}</p>
-        </div>
       </div>
     </div>
   )

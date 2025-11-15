@@ -33,10 +33,10 @@ const Navigation = () => {
   return (
     <header
       ref={headerRef}
-      className="sticky z-30 w-screen max-w-[100vw] px-0"
+      className="sticky z-30 w-full px-0"
       style={{ top: 'var(--topbar-height)' }}
     >
-      <div className="flex w-screen max-w-[100vw] items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8 xl:px-12 3xl:px-20 4xl:px-28">
+      <div className="flex w-full items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8 xl:px-12 3xl:px-20 4xl:px-28">
         <div className="flex items-center gap-3 text-white">
           <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-base font-bold tracking-[0.08em] text-button-contrast 3xl:h-16 3xl:w-16 3xl:text-lg 4xl:h-20 4xl:w-20 4xl:text-xl">
             CC
