@@ -54,12 +54,9 @@ const Navigation = () => {
       >
         <div className="flex items-center gap-3 text-white">
           <LogoBadge />
-          <div className="leading-tight text-white">
-            <span className="block font-script text-2xl tracking-[0.02em] text-white 3xl:text-3xl 4xl:text-4xl">
-              Cinderella&apos;s
-            </span>
-            <span className="block font-script text-3xl text-white/90 3xl:text-4xl 4xl:text-[2.75rem]">Cakes</span>
-          </div>
+          <span className="inline-flex items-center font-script text-3xl tracking-[0.02em] text-white/90 whitespace-nowrap leading-tight self-center relative top-1 3xl:text-[2.75rem] 4xl:text-[3.25rem]">
+            Cinderella&apos;s Cakes
+          </span>
         </div>
 
         <motion.nav
@@ -138,7 +135,7 @@ const Navigation = () => {
             </motion.button>
 
             <motion.p
-              className="font-script text-4xl text-white"
+              className="font-script text-4xl text-white whitespace-nowrap"
               variants={fadeInUp}
               initial="hidden"
               animate="visible"
