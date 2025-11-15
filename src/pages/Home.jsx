@@ -228,11 +228,9 @@ const HomePage = () => {
                   modelSettings={currentSlide.modelSettings}
                   className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(220px,55vw,340px)] w-[clamp(220px,55vw,340px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(240px,52vw,380px)] sm:w-[clamp(240px,52vw,380px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[420px] md:w-[420px] md:-translate-y-1/2 md:translate-x-0 lg:h-[520px] lg:w-[520px] xl:h-[600px] xl:w-[600px] 2xl:h-[700px] 2xl:w-[700px] 3xl:h-[760px] 3xl:w-[760px] 4xl:h-[820px] 4xl:w-[820px]"
                 />
-                <div className="pointer-events-none absolute left-1/2 bottom-[clamp(280px,65vw,460px)] z-30 -translate-x-1/2 text-center text-white drop-shadow-2xl sm:bottom-[clamp(320px,52vw,520px)] md:bottom-auto md:left-auto md:right-[10%] md:top-[16%] md:translate-x-0 md:text-right">
-                  <span className="text-[0.6rem] uppercase tracking-[0.6em] text-white/60 sm:text-xs">
-                    {currentSlide.eyebrow}
-                  </span>
-                  <p className="mt-3 font-script text-4xl text-white sm:text-5xl lg:text-6xl">{currentSlide.label}</p>
+                <div className="pointer-events-none absolute left-1/2 bottom-[clamp(280px,65vw,460px)] z-30 hidden -translate-x-1/2 text-center text-white drop-shadow-2xl sm:bottom-[clamp(320px,52vw,520px)] md:right-[10%] md:top-[16%] md:block md:translate-x-0 md:text-right md:drop-shadow-[0_15px_35px_rgba(0,0,0,0.45)] lg:right-[12%] xl:right-[14%] 3xl:right-[16%] 4xl:right-[18%]">
+                  <span className="text-xs uppercase tracking-[0.6em] text-white/60">{currentSlide.eyebrow}</span>
+                  <p className="mt-3 font-script text-4xl text-white lg:text-6xl">{currentSlide.label}</p>
                 </div>
               </div>
             </div>
@@ -264,7 +262,11 @@ const HomePage = () => {
 
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex justify-center sm:bottom-10 lg:bottom-12">
+        <div className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex flex-col items-center gap-4 sm:bottom-10 lg:bottom-12 md:flex-col md:gap-5">
+          <div className="text-center text-white md:hidden">
+            <span className="text-[0.6rem] uppercase tracking-[0.5em] text-white/60">{currentSlide.eyebrow}</span>
+            <p className="mt-2 font-script text-4xl leading-none text-white drop-shadow-lg">{currentSlide.label}</p>
+          </div>
           <div className="pointer-events-auto inline-flex items-center gap-4 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-white shadow-lg backdrop-blur-lg">
             <button
               aria-label="Предишна торта"
