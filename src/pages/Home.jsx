@@ -200,14 +200,14 @@ const mapLocations = [
     name: 'Остромила',
     street: 'ул. Остромила 6',
     iframeSrc:
-      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93.1754255197011!2d24.747196832376392!3d42.15703068009086!2m3!1f250.68440604797843!2f54.21000084914744!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x14acd1c04d8bb463%3A0x46c404a293c347c7!2sCinderella%27s%20cakes%20by%20Polina%20Alatinova!5e1!3m2!1sbg!2sbg!4v1763227386930!5m2!1sbg!2sbg',
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44.66049509984441!2d24.723269230712667!3d42.11549187073368!2m3!1f41.3262054833626!2f46.62220418710541!3f0!3m2!1i1024!2i768!4f54.002700629379184!3m3!1m2!1s0x14acd10017adc899%3A0x89418724d4acc8f4!2sCinderella%27s%20cakes%20by%20Polina%20Alatinova!5e1!3m2!1sbg!2sbg!4v1763227593142!5m2!1sbg!2sbg',
   },
   {
     id: 'belgrad',
     name: 'Център · Белград 19',
     street: 'ул. Белград 19 (до Гранд Хотел Пловдив)',
     iframeSrc:
-      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44.66049509984441!2d24.723269230712667!3d42.11549187073368!2m3!1f41.3262054833626!2f46.62220418710541!3f0!3m2!1i1024!2i768!4f54.002700629379184!3m3!1m2!1s0x14acd10017adc899%3A0x89418724d4acc8f4!2sCinderella%27s%20cakes%20by%20Polina%20Alatinova!5e1!3m2!1sbg!2sbg!4v1763227593142!5m2!1sbg!2sbg',
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93.1754255197011!2d24.747196832376392!3d42.15703068009086!2m3!1f250.68440604797843!2f54.21000084914744!3f0!3m2!1i1024!2i768!4f35!3m3!1m2!1s0x14acd1c04d8bb463%3A0x46c404a293c347c7!2sCinderella%27s%20cakes%20by%20Polina%20Alatinova!5e1!3m2!1sbg!2sbg!4v1763227386930!5m2!1sbg!2sbg',
   },
 ]
 
