@@ -171,7 +171,6 @@ const businessServices = [
     title: 'Ритейл',
     text: 'Постоянно качество и чиста визия за премиум витрини. Асортимент от торти, монодесерти и сезонни серии.',
     details: ['Опаковка и етикетиране по изискване', 'Доставки по график в Пловдив и региона'],
-    cta: 'Запитване за договор',
     path: '/retail',
   },
   {
@@ -179,7 +178,6 @@ const businessServices = [
     title: 'Хотели',
     text: 'Закуски, десерти и торти за събития. Визуален стандарт за петзвезден опит.',
     details: ['Гъвкави менюта с опции без захар/брашно', 'Предварително планирани срокове и сервиз'],
-    cta: 'Получете оферта',
     path: '/hotels',
   },
   {
@@ -187,7 +185,6 @@ const businessServices = [
     title: 'Кетъринг',
     text: 'Скалируеми решения за корпоративни и частни събития.',
     details: ['Мини размери и персонализирани плата', 'Логистика в Пловдив и региона'],
-    cta: 'Заяви дата',
     path: '/catering',
   },
 ]
@@ -527,31 +524,11 @@ const HomePage = () => {
       >
         <motion.div className="flex flex-col gap-4 text-white 3xl:gap-6" variants={createStagger(0.1)}>
           <motion.div variants={slideIn('up', 40)}>
-            <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">B2B</p>
+            <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">Производство</p>
             <h2 className="mt-2 font-luxury text-3xl 2xl:text-4xl 4xl:text-5xl">Магазини · Хотели · Кетъринг</h2>
             <p className="mt-2 text-white/80 2xl:text-xl 4xl:text-2xl">
-              Един и същ стандарт - независимо дали десертът стои във витрина, сервира се в стая или украсява сцена.
+              Един и същ стандарт - независимо дали десертът стои във витрина, сервира се или украсява сцена.
             </p>
-          </motion.div>
-          <motion.div className="flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.08)}>
-            <motion.a
-              className="rounded-full bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
-              href="#contact"
-              variants={popIn}
-              whileHover={{ y: -4 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Искам оферта
-            </motion.a>
-            <motion.a
-              className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
-              href="/catalog.pdf"
-              variants={popIn}
-              whileHover={{ y: -4 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Каталог (PDF)
-            </motion.a>
           </motion.div>
         </motion.div>
         <motion.div className="grid gap-6 md:grid-cols-3 2xl:gap-8 4xl:gap-12" variants={createStagger(0.08)}>
@@ -581,15 +558,6 @@ const HomePage = () => {
                   whileTap={{ scale: 0.96 }}
                 >
                   Научи повече
-                  <span aria-hidden="true">→</span>
-                </MotionLink>
-                <MotionLink
-                  className="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
-                  to="/#contact"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.96 }}
-                >
-                  {service.cta}
                   <span aria-hidden="true">→</span>
                 </MotionLink>
               </div>
