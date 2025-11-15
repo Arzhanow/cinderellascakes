@@ -38,10 +38,10 @@ const heroSlides = [
       orbitTarget: [0, -2.5, 0],
       responsive: {
         mobile: {
-          cameraPosition: [2.55, 2.65, 1.35],
+          cameraPosition: [3.55, 3.65, 2.35],
           modelScale: 0.44,
-          modelYOffset: -2.5,
-          orbitTarget: [0, -2.5, 0],
+          modelYOffset: -4.2,
+          orbitTarget: [0, -4.1, 0],
           fov: 36,
         },
         tablet: {
