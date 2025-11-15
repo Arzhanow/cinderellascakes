@@ -140,8 +140,10 @@ const HeroModel = ({
     )
   }
 
+  const mobileSizeClass = isMobileViewport ? 'h-[240px]' : ''
+
   return (
-    <div className={className}>
+    <div className={`${className} ${mobileSizeClass}`.trim()}>
       <div
         aria-label={`${label} 3D D�D_D'D�D�`}
         className="relative isolate h-full w-full overflow-hidden text-white"

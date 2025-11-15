@@ -262,9 +262,9 @@ const HomePage = () => {
           )}
         </div>
 
-        <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 py-12 pb-[18rem] text-left sm:pb-[20rem] md:pb-12 2xl:gap-12 3xl:py-16 4xl:py-20">
+        <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 pt-4 pb-[14rem] text-left sm:pt-8 sm:pb-[18rem] md:pb-10 2xl:gap-12 3xl:pt-12 3xl:pb-20 4xl:pt-16 4xl:pb-24">
           <motion.div
-            className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]"
+            className="max-w-2xl text-white -translate-y-6 sm:translate-y-0 2xl:max-w-3xl 4xl:max-w-[60rem]"
             variants={createStagger(0.12)}
             {...heroRevealConfig}
           >
@@ -315,7 +315,7 @@ const HomePage = () => {
 
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex flex-col items-center gap-4 sm:bottom-10 lg:bottom-12 md:flex-col md:gap-5">
+        <div className="pointer-events-none absolute inset-x-0 bottom-18 z-30 flex flex-col items-center gap-4 sm:bottom-20 lg:bottom-24 md:flex-col md:gap-5">
           <motion.div
             className="text-center text-white md:hidden"
             variants={fadeIn}
