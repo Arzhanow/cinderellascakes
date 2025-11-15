@@ -15,10 +15,10 @@ const heroSlides = [
     href: '/#contact',
     model: '/models/garash.glb',
     modelSettings: {
-      cameraPosition: [0, 1.15, 2.8],
-      modelScale: 0.6,
-      modelYOffset: -1.4,
-      orbitTarget: [0, -0.45, 0],
+      cameraPosition: [2, 2.15, 0.8],
+      modelScale: 0.5,
+      modelYOffset: -2.5,
+      orbitTarget: [0, -2.5, 0],
     },
   },
   {
@@ -459,8 +459,6 @@ const HomePage = () => {
 }
 
 export default HomePage
-
-
 
 
 
