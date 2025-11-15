@@ -1,4 +1,6 @@
+import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
+import { createStagger, createTransition, scaleIn } from '../utils/motionPresets'
 
 const options = [
   {
@@ -22,13 +24,22 @@ const ThemeSwitcher = ({ layout = 'inline' }) => {
   const { theme, setTheme } = useTheme()
 
   return (
-    <div className={`flex ${layout === 'stack' ? 'flex-col gap-3' : 'items-center gap-3'}`}>
+    <motion.div
+      className={`flex ${layout === 'stack' ? 'flex-col gap-3' : 'items-center gap-3'}`}
+      variants={createStagger(0.05)}
+      initial="hidden"
+      animate="visible"
+    >
       {options.map((option) => (
-        <button
+        <motion.button
           key={option.id}
           aria-pressed={theme === option.id}
           className="group flex flex-col items-center gap-1"
           onClick={() => setTheme(option.id)}
+          variants={scaleIn}
+          transition={createTransition(0, 0.5)}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.94 }}
           type="button"
         >
           <span className="inline-flex h-8 w-8 items-center justify-center">
@@ -41,9 +52,9 @@ const ThemeSwitcher = ({ layout = 'inline' }) => {
             ></span>
           </span>
           <span className="sr-only">{option.label}</span>
-        </button>
+        </motion.button>
       ))}
-    </div>
+    </motion.div>
   )
 }
 

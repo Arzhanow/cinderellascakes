@@ -2,12 +2,28 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
+import {
+  blurIn,
+  createStagger,
+  createTransition,
+  fadeIn,
+  fadeInUp,
+  floatIn,
+  glowIn,
+  heroRevealConfig,
+  popIn,
+  revealConfig,
+  scaleIn,
+  slideIn,
+  tiltIn,
+} from '../utils/motionPresets'
+
+const MotionLink = motion(Link)
 
 const heroSlides = [
   {
     id: 'garash',
     label: 'Гараш',
-    eyebrow: 'Гараш · без брашно',
     description:
       'Класически орехов блат с тъмен ганаш и полирано огледално покритие - любимата ни торта за ценители.',
     image: '/images/cakes/garash/20250128_150003.jpg',
@@ -238,47 +254,85 @@ const HomePage = () => {
         </div>
 
         <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 py-12 pb-[18rem] text-left sm:pb-[20rem] md:pb-12 2xl:gap-12 3xl:py-16 4xl:py-20">
-          <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
-            <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · лукс сладкарство</p>
-            <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
-            <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl">
+          <motion.div
+            className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]"
+            variants={createStagger(0.12)}
+            {...heroRevealConfig}
+          >
+            <motion.p
+              className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base"
+              variants={slideIn('down', 40)}
+              transition={createTransition(0, 0.7)}
+            >
+              Пловдив · лукс сладкарство
+            </motion.p>
+            <motion.h1
+              className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]"
+              variants={glowIn}
+              transition={createTransition(0.1, 0.85)}
+            >
+              Приказка за ценители.
+            </motion.h1>
+            <motion.p
+              className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl"
+              variants={fadeInUp}
+              transition={createTransition(0.2, 0.7)}
+            >
               Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-4 3xl:gap-6">
-              <Link
+            </motion.p>
+            <motion.div className="mt-8 flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.1)}>
+              <MotionLink
                 className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to="/#products"
+                variants={popIn}
+                transition={createTransition(0.3, 0.6)}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.96 }}
               >
                 Виж най-търсените
-              </Link>
-              <Link
+              </MotionLink>
+              <MotionLink
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to={currentSlide.href}
+                variants={popIn}
+                transition={createTransition(0.35, 0.6)}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.96 }}
               >
                 Повече за продукта
-              </Link>
-            </div>
-          </div>
+              </MotionLink>
+            </motion.div>
+          </motion.div>
 
         </div>
 
         <div className="pointer-events-none absolute inset-x-0 bottom-8 z-30 flex flex-col items-center gap-4 sm:bottom-10 lg:bottom-12 md:flex-col md:gap-5">
-          <div className="text-center text-white md:hidden">
+          <motion.div
+            className="text-center text-white md:hidden"
+            variants={fadeIn}
+            {...heroRevealConfig}
+            transition={createTransition(0.6, 0.5)}
+          >
             <span className="text-[0.6rem] uppercase tracking-[0.5em] text-white/60">{currentSlide.eyebrow}</span>
             <p className="mt-2 font-script text-4xl leading-none text-white drop-shadow-lg">{currentSlide.label}</p>
-          </div>
-          <div className="pointer-events-auto inline-flex items-center gap-4 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-white shadow-lg backdrop-blur-lg">
-            <button
+          </motion.div>
+          <motion.div
+            className="pointer-events-auto inline-flex items-center gap-4 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-white shadow-lg backdrop-blur-lg"
+            variants={createStagger(0.05)}
+            {...heroRevealConfig}
+          >
+            <motion.button
               aria-label="Предишна торта"
               className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-2xl transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               onClick={goToPrev}
+              whileTap={{ scale: 0.85 }}
               type="button"
             >
               <span aria-hidden="true">←</span>
-            </button>
+            </motion.button>
             <div className="flex items-center gap-3">
               {heroSlides.map((slide, index) => (
-                <button
+                <motion.button
                   key={slide.id}
                   aria-label={`Показване на ${slide.label}`}
                   className={`h-3 w-3 rounded-full border transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
@@ -287,65 +341,80 @@ const HomePage = () => {
                       : 'border-white/40 bg-white/10 hover:border-white/70'
                   }`}
                   onClick={() => setActiveSlide(index)}
+                  whileTap={{ scale: 0.8 }}
                   type="button"
                 >
                   <span className="sr-only">{slide.label}</span>
-                </button>
+                </motion.button>
               ))}
             </div>
-            <button
+            <motion.button
               aria-label="Следваща торта"
               className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-2xl transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               onClick={goToNext}
+              whileTap={{ scale: 0.85 }}
               type="button"
             >
               <span aria-hidden="true">→</span>
-            </button>
-          </div>
+            </motion.button>
+          </motion.div>
         </div>
       </section>
 
-      <section className="layout-shell" id="principles">
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 2xl:gap-8 4xl:gap-10">
+      <motion.section className="layout-shell" id="principles" variants={createStagger(0.08)} {...revealConfig}>
+        <motion.div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 2xl:gap-8 4xl:gap-10" variants={createStagger(0.1)}>
           {principles.map((principle) => (
-            <article
+            <motion.article
               key={principle.title}
               className="rounded-[28px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 backdrop-blur-lg 2xl:px-8 2xl:py-10 4xl:px-10 4xl:py-12"
+              variants={tiltIn}
+              transition={createTransition(0, 0.65)}
             >
               <p className="text-xs uppercase tracking-[0.4em] text-white/60 2xl:text-sm 4xl:text-base">Основни принципи</p>
               <h3 className="mt-2 font-luxury text-2xl text-white 2xl:text-3xl 4xl:text-4xl">{principle.title}</h3>
               <p className="mt-4 text-sm leading-relaxed text-white/80 2xl:text-base 4xl:text-lg">{principle.description}</p>
-            </article>
+            </motion.article>
           ))}
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
 
-      <section className="layout-shell" id="about">
-        <div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-14 4xl:py-16">
-          <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">История</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">{storyTeaser.title}</h2>
-          <p className="mt-4 text-base leading-relaxed 2xl:text-xl 4xl:text-2xl">{storyTeaser.text}</p>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 2xl:gap-6">
+      <motion.section className="layout-shell" id="about" variants={scaleIn} {...revealConfig} transition={createTransition(0.1, 0.8)}>
+        <motion.div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-14 4xl:py-16" variants={createStagger(0.1)}>
+          <motion.p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base" variants={slideIn('down', 35)}>
+            История
+          </motion.p>
+          <motion.h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl" variants={glowIn}>
+            {storyTeaser.title}
+          </motion.h2>
+          <motion.p className="mt-4 text-base leading-relaxed 2xl:text-xl 4xl:text-2xl" variants={fadeInUp}>
+            {storyTeaser.text}
+          </motion.p>
+          <motion.div className="mt-8 grid gap-4 md:grid-cols-2 2xl:gap-6" variants={createStagger(0.08)}>
             {founderHighlights.map((highlight) => (
-              <article
+              <motion.article
                 key={`${highlight.label}-${highlight.title}`}
                 className="rounded-3xl border border-white/10 bg-white/5 px-5 py-5 text-white/85 backdrop-blur"
+                variants={floatIn}
+                transition={createTransition(0, 0.6)}
               >
                 <p className="text-[0.65rem] uppercase tracking-[0.4em] text-white/50 2xl:text-xs">{highlight.label}</p>
                 <h3 className="mt-2 font-semibold text-white 2xl:text-xl">{highlight.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-white/80 2xl:text-base">{highlight.description}</p>
-              </article>
+              </motion.article>
             ))}
-          </div>
-          <Link
+          </motion.div>
+          <MotionLink
             className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
             to="/#about"
+            variants={popIn}
+            whileHover={{ y: -3 }}
+            whileTap={{ scale: 0.95 }}
           >
             {storyTeaser.cta}
             <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-      </section>
+          </MotionLink>
+        </motion.div>
+      </motion.section>
 
       <section className="layout-shell space-y-8 2xl:space-y-10 4xl:space-y-12" id="products">
         <div className="flex flex-col gap-4 text-white 3xl:gap-6">
@@ -494,12 +563,6 @@ const HomePage = () => {
 }
 
 export default HomePage
-
-
-
-
-
-
 
 
 
