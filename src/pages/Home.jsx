@@ -126,7 +126,7 @@ const businessServices = [
   },
 ]
 
-const sliderDuration = 9000
+const sliderDuration = 14000
 
 const HomePage = () => {
   const [activeSlide, setActiveSlide] = useState(0)

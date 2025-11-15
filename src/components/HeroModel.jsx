@@ -1,6 +1,6 @@
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Float, Html, OrbitControls, useGLTF } from '@react-three/drei'
-import { Suspense, useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 
 const LoadingOverlay = ({ label }) => (
   <Html center>
@@ -21,6 +21,7 @@ const ModelUnavailable = ({ label }) => (
 const DessertModel = ({ src }) => {
   const { scene } = useGLTF(src)
   const clonedScene = useMemo(() => scene.clone(true), [scene])
+  const groupRef = useRef(null)
 
   useEffect(() => {
     clonedScene.traverse((child) => {
@@ -31,9 +32,17 @@ const DessertModel = ({ src }) => {
     })
   }, [clonedScene])
 
+  useFrame((_, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.35
+    }
+  })
+
   return (
-    <Float speed={1.5} rotationIntensity={0.4} floatIntensity={0.9} position={[0, 0, 0]}>
-      <primitive object={clonedScene} position={[0, -0.5, 0]} />
+    <Float speed={1.8} rotationIntensity={0.65} floatIntensity={1.1} position={[0, 0, 0]}>
+      <group ref={groupRef} position={[0, -0.55, 0]}>
+        <primitive object={clonedScene} />
+      </group>
     </Float>
   )
 }
@@ -62,13 +71,13 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.18),transparent_60%)]"></div>
         <div className="pointer-events-none absolute -bottom-24 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-gradient-to-br from-white/20 to-transparent blur-3xl"></div>
-        <div className="pointer-events-none absolute inset-8 rounded-[32px] border border-white/10"></div>
+        <div className="pointer-events-none absolute inset-[22%] sm:inset-[20%] lg:inset-[18%] 3xl:inset-[16%] rounded-[32px] border border-white/10"></div>
         <div className="pointer-events-none absolute inset-x-1/2 top-10 h-32 w-32 -translate-x-1/2 rounded-full border border-white/30"></div>
 
         {canRenderModel ? (
           <Canvas
             key={modelSrc}
-            camera={{ position: [0, 0.9, 3], fov: 35, near: 0.1, far: 20 }}
+            camera={{ position: [0, 1.25, 1.65], fov: 28, near: 0.1, far: 15 }}
             className="absolute inset-0"
             dpr={[1, 2.2]}
             shadows
@@ -97,11 +106,14 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId }) => {
             </Suspense>
             <OrbitControls
               autoRotate
-              autoRotateSpeed={0.8}
+              autoRotateSpeed={0.9}
               enablePan={false}
-              maxDistance={4}
-              minDistance={2}
-              enableZoom
+              enableZoom={false}
+              maxDistance={2}
+              minDistance={1.4}
+              minPolarAngle={Math.PI * 0.38}
+              maxPolarAngle={Math.PI * 0.52}
+              target={[0, -0.15, 0]}
             />
           </Canvas>
         ) : (
