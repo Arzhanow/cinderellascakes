@@ -16,7 +16,7 @@ const heroSlides = [
     model: '/models/garash.glb',
     modelSettings: {
       cameraPosition: [2, 2.15, 0.8],
-      modelScale: 0.5,
+      modelScale: 0.40,
       modelYOffset: -2.5,
       orbitTarget: [0, -2.5, 0],
     },
@@ -188,7 +188,7 @@ const HomePage = () => {
               transition={{ duration: 0.8 }}
             >
               <img
-                alt={currentSlide.label}
+                alt=""
                 className="h-full w-full object-cover"
                 decoding="async"
                 fetchpriority="high"
@@ -222,14 +222,14 @@ const HomePage = () => {
           )}
         </div>
 
-        <div className="relative z-10 layout-shell flex w-full flex-col gap-6 py-10 lg:flex-row lg:items-center 2xl:gap-12 3xl:py-16 4xl:py-20">
-          <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
+        <div className="relative z-10 layout-shell flex w-full flex-col items-center gap-8 py-12 text-center 2xl:gap-12 3xl:py-16 4xl:py-20">
+          <div className="max-w-2xl text-white text-center 2xl:max-w-3xl 4xl:max-w-[60rem]">
             <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
             <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl">
               Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4 3xl:gap-6">
+            <div className="mt-8 flex flex-wrap justify-center gap-4 3xl:gap-6">
               <Link
                 className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to="/#products"
@@ -459,6 +459,7 @@ const HomePage = () => {
 }
 
 export default HomePage
+
 
 
 
