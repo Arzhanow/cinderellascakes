@@ -9,7 +9,7 @@ const MotionLink = motion.create(Link)
 const repeatRevealConfig = {
   initial: 'hidden',
   whileInView: 'visible',
-  viewport: { once: false, amount: 0.3 },
+  viewport: { once: true, amount: 0.3 },
 }
 
 const storyHighlights = [
@@ -222,7 +222,6 @@ const progressRoadmap = [
 
 const AboutPage = () => {
   const pageRef = useRef(null)
-  const portfolioSectionRef = useRef(null)
   const [maxStep, setMaxStep] = useState(0)
   const totalSections = progressRoadmap.length
   const progressSpring = useSpring(0, { stiffness: 120, damping: 24, mass: 0.8 })
@@ -233,11 +232,6 @@ const AboutPage = () => {
 
   const { scrollYProgress: pageScroll } = useScroll({
     target: pageRef,
-    offset: ['start start', 'end end'],
-  })
-
-  const { scrollYProgress } = useScroll({
-    target: portfolioSectionRef,
     offset: ['start start', 'end end'],
   })
 
@@ -289,16 +283,14 @@ const AboutPage = () => {
   const modelGlow = useTransform(stageProgress, [0, 1], [0.2, 0.6])
   const colorShift = useTransform(stageProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-35deg) saturate(1.3)', 'hue-rotate(18deg) saturate(1.1)'])
   const trailOpacity = useTransform(stageProgress, [0, 0.5, 1], [0.08, 0.4, 0.2])
-  const stageOpacity = useTransform(stageProgress, [0, 0.05, 0.95, 1], [0.08, 0.45, 0.45, 0.15])
+  const stageOpacity = useTransform(stageProgress, [0, 0.05, 0.95, 1], [0.04, 0.3, 0.3, 0.1])
 
-  const cardsReveal = useTransform(scrollYProgress, [0.05, 0.35], [0, 1])
-  const cardsBlur = useTransform(cardsReveal, [0, 1], ['blur(18px)', 'blur(0px)'])
 
   return (
     <main ref={pageRef} className="relative min-h-screen overflow-hidden bg-transparent text-white">
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
+        className="pointer-events-none fixed left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
         style={{ x: modelX, y: modelY, scale: modelScale, opacity: stageOpacity, filter: colorShift }}
       >
         <motion.span
@@ -318,7 +310,7 @@ const AboutPage = () => {
             modelScale: 0.38,
             modelYOffset: -1.75,
             lockOrientation: true,
-            orbitAzimuthRange: [-0.25, 0.25],
+            orbitAzimuthRange: [-0.45, 0.45],
             modelRotationY: 0,
             responsive: {
               ...cinderellaModelSettings.responsive,
@@ -374,7 +366,7 @@ const AboutPage = () => {
           animate="visible"
           variants={createStagger(0.12)}
           onViewportEnter={() => handleStepEnter(0)}
-          viewport={{ once: false, amount: 0.45 }}
+          viewport={{ once: true, amount: 0.45 }}
         >
         <motion.div
           className="rounded-[40px] border border-white/15 bg-white/5 px-8 py-10 text-white/90 shadow-[0_35px_80px_rgba(6,10,34,0.45)] backdrop-blur-3xl 2xl:px-12 2xl:py-14"
@@ -465,18 +457,12 @@ const AboutPage = () => {
       </motion.section>
 
       <motion.section
-        ref={portfolioSectionRef}
         className="relative snap-start py-16"
         style={portfolioSpacing}
           onViewportEnter={() => handleStepEnter(2)}
-          viewport={{ once: false, amount: 0.45 }}
+          viewport={{ once: true, amount: 0.45 }}
         >
-          <motion.div
-            className="space-y-10 lg:space-y-12"
-            style={{ opacity: cardsReveal, filter: cardsBlur }}
-            variants={createStagger(0.12)}
-            {...repeatRevealConfig}
-          >
+          <motion.div className="space-y-10 lg:space-y-12" variants={createStagger(0.12)} {...repeatRevealConfig}>
             {portfolioMoments.map((moment) => (
               <motion.article
                 key={moment.title}
