@@ -40,7 +40,7 @@ const signatureSets = [
   'Fitness-friendly закуски с протеин и без рафинирана захар',
 ]
 
-const MotionLink = motion(Link)
+const MotionLink = motion.create(Link)
 
 const HotelsPage = () => {
   return (

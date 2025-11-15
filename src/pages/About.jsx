@@ -132,10 +132,16 @@ const progressRoadmap = [
 ]
 
 const AboutPage = () => {
+  const pageRef = useRef(null)
   const portfolioSectionRef = useRef(null)
   const [maxStep, setMaxStep] = useState(0)
   const totalSections = progressRoadmap.length
   const progressSpring = useSpring(0, { stiffness: 120, damping: 24, mass: 0.8 })
+
+  const { scrollYProgress: pageScroll } = useScroll({
+    target: pageRef,
+    offset: ['start start', 'end end'],
+  })
 
   const { scrollYProgress } = useScroll({
     target: portfolioSectionRef,
@@ -150,27 +156,54 @@ const AboutPage = () => {
     setMaxStep((prev) => Math.max(prev, index + 1))
   }
 
-  const smoothModelProgress = useSpring(scrollYProgress, { stiffness: 95, damping: 28, mass: 0.65 })
-  const pathKeyframes = [0, 0.25, 0.5, 0.75, 1]
-  const modelX = useTransform(smoothModelProgress, pathKeyframes, [-210, -90, 130, 260, 30])
-  const modelY = useTransform(smoothModelProgress, pathKeyframes, [-160, 20, 360, 220, -80])
-  const modelRotate = useTransform(smoothModelProgress, [0, 0.5, 1], [-15, 9, -8])
-  const modelScale = useTransform(smoothModelProgress, [0, 0.35, 0.75, 1], [0.82, 1.04, 1.2, 1.05])
-  const modelGlow = useTransform(smoothModelProgress, [0, 1], [0.35, 0.92])
-  const colorShift = useTransform(smoothModelProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-25deg) saturate(1.25)', 'hue-rotate(12deg) saturate(1.15)'])
-  const trailOpacity = useTransform(smoothModelProgress, [0, 0.5, 1], [0.25, 0.9, 0.65])
+  const stageProgress = useSpring(pageScroll, { stiffness: 100, damping: 30, mass: 0.65 })
+  const stageKeyframes = [0, 0.33, 0.66, 1]
+  const modelX = useTransform(stageProgress, stageKeyframes, [-180, 70, 140, -60])
+  const modelY = useTransform(stageProgress, stageKeyframes, [-260, -20, 220, 420])
+  const modelRotate = useTransform(stageProgress, [0, 0.5, 1], [-20, 10, -8])
+  const modelScale = useTransform(stageProgress, [0, 0.4, 0.8, 1], [0.82, 1.04, 1.22, 1.05])
+  const modelGlow = useTransform(stageProgress, [0, 1], [0.35, 0.92])
+  const colorShift = useTransform(stageProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-35deg) saturate(1.3)', 'hue-rotate(18deg) saturate(1.1)'])
+  const trailOpacity = useTransform(stageProgress, [0, 0.5, 1], [0.15, 0.9, 0.45])
+  const stageOpacity = useTransform(stageProgress, [0, 0.05, 0.95, 1], [0.2, 1, 1, 0.4])
+
+  const cardsReveal = useTransform(scrollYProgress, [0.05, 0.35], [0, 1])
+  const cardsBlur = useTransform(cardsReveal, [0, 1], ['blur(18px)', 'blur(0px)'])
 
   return (
-    <main className="layout-shell relative space-y-16 pb-20 pt-28 text-white 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
-      <div
+    <main ref={pageRef} className="relative min-h-screen overflow-hidden bg-transparent text-white">
+      <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute left-[-2.5rem] top-24 hidden h-[calc(100%-6rem)] w-2 md:block lg:left-[-3rem]"
+        className="pointer-events-none fixed left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2"
+        style={{ x: modelX, y: modelY, rotate: modelRotate, scale: modelScale, opacity: stageOpacity, filter: colorShift }}
       >
-        <div className="relative h-full w-px overflow-visible rounded-full bg-white/10">
-          <motion.span
-            className="absolute inset-0 origin-top rounded-full bg-gradient-to-b from-brand-blush via-brand-cyan to-brand-accent"
-            style={{ scaleY: progressSpring, transformOrigin: 'top' }}
-          />
+        <motion.span
+          className="absolute -top-32 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-brand-cyan/30 blur-3xl"
+          style={{ opacity: trailOpacity }}
+        />
+        <motion.span
+          className="absolute -bottom-24 right-0 h-60 w-40 rounded-[120px] bg-brand-blush/25 blur-3xl"
+          style={{ opacity: modelGlow }}
+        />
+        <HeroModel
+          className="h-[360px] w-[320px] sm:h-[420px] sm:w-[360px] lg:h-[520px] lg:w-[460px]"
+          label="Cinderella"
+          modelSrc="/models/cinderella3D.glb"
+          modelSettings={cinderellaModelSettings}
+          slideId="about-floating"
+        />
+      </motion.div>
+
+      <div className="layout-shell relative z-10 space-y-16 pb-20 pt-28 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute left-[-2.5rem] top-24 hidden h-[calc(100%-6rem)] w-2 md:block lg:left-[-3rem]"
+        >
+          <div className="relative h-full w-px overflow-visible rounded-full bg-white/10">
+            <motion.span
+              className="absolute inset-0 origin-top rounded-full bg-gradient-to-b from-brand-blush via-brand-cyan to-brand-accent"
+              style={{ scaleY: progressSpring, transformOrigin: 'top' }}
+            />
           <div className="absolute -left-6 top-0 flex h-full flex-col justify-between text-[0.55rem] font-semibold uppercase tracking-[0.35em] text-white/45">
             {progressRoadmap.map((step, index) => (
               <motion.div key={step.id} className="flex items-center gap-2">
@@ -195,14 +228,14 @@ const AboutPage = () => {
         </div>
       </div>
 
-      <motion.section
-        className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr]"
-        initial="hidden"
-        animate="visible"
-        variants={createStagger(0.12)}
-        onViewportEnter={() => handleStepEnter(0)}
-        viewport={{ once: false, amount: 0.45 }}
-      >
+        <motion.section
+          className="grid min-h-screen content-center gap-10 lg:grid-cols-[1.05fr_0.95fr]"
+          initial="hidden"
+          animate="visible"
+          variants={createStagger(0.12)}
+          onViewportEnter={() => handleStepEnter(0)}
+          viewport={{ once: false, amount: 0.45 }}
+        >
         <motion.div
           className="rounded-[40px] border border-white/15 bg-white/5 px-8 py-10 text-white/90 shadow-[0_35px_80px_rgba(6,10,34,0.45)] backdrop-blur-3xl 2xl:px-12 2xl:py-14"
           variants={glowIn}
@@ -255,12 +288,12 @@ const AboutPage = () => {
         </motion.div>
       </motion.section>
 
-      <motion.section
-        className="space-y-8"
-        variants={createStagger(0.08)}
-        {...repeatRevealConfig}
-        onViewportEnter={() => handleStepEnter(1)}
-      >
+        <motion.section
+          className="space-y-8 snap-start"
+          variants={createStagger(0.08)}
+          {...repeatRevealConfig}
+          onViewportEnter={() => handleStepEnter(1)}
+        >
         <motion.div className="max-w-3xl" variants={fadeInUp}>
           <p className="text-xs uppercase tracking-[0.55em] text-white/60">Линия на времето</p>
           <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl">От телевизионния старт до собствен бранд</h2>
@@ -286,85 +319,38 @@ const AboutPage = () => {
         </div>
       </motion.section>
 
-      <motion.section
-        ref={portfolioSectionRef}
-        className="relative"
-        onViewportEnter={() => handleStepEnter(2)}
-        viewport={{ once: false, amount: 0.45 }}
-      >
-        <div className="flex flex-col gap-10 lg:grid lg:grid-cols-[minmax(320px,480px)_1fr] lg:items-start lg:gap-16">
-          <div className="order-1 lg:order-1 lg:sticky lg:top-28">
-            <div className="relative h-[420px] sm:h-[520px] lg:h-[620px]">
-              <motion.svg
-                className="pointer-events-none absolute inset-0 -z-10 h-full w-full text-brand-cyan/40"
-                preserveAspectRatio="none"
-                viewBox="0 0 600 600"
+        <motion.section
+          ref={portfolioSectionRef}
+          className="relative snap-start py-16"
+          onViewportEnter={() => handleStepEnter(2)}
+          viewport={{ once: false, amount: 0.45 }}
+        >
+          <motion.div
+            className="space-y-10 lg:space-y-12"
+            style={{ opacity: cardsReveal, filter: cardsBlur }}
+            variants={createStagger(0.12)}
+            {...repeatRevealConfig}
+          >
+            {portfolioMoments.map((moment) => (
+              <motion.article
+                key={moment.title}
+                className="rounded-[32px] border border-white/10 bg-brand-night/40 p-8 text-white/85 shadow-[0_25px_60px_rgba(0,0,0,0.4)]"
+                variants={fadeInUp}
               >
-                <motion.path
-                  d="M40 60 C 30 200, 220 260, 320 360 S 560 520, 500 620"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  strokeDasharray="1"
-                  style={{ pathLength: smoothModelProgress }}
-                />
-              </motion.svg>
-              <motion.span
-                aria-hidden="true"
-                className="absolute -left-16 top-6 h-32 w-32 rounded-full bg-brand-cyan/25 blur-3xl sm:-left-10"
-                style={{ opacity: trailOpacity }}
-              />
-              <motion.span
-                aria-hidden="true"
-                className="absolute -bottom-10 right-4 h-32 w-52 rounded-[120px] bg-brand-blush/20 blur-3xl"
-                style={{ opacity: modelGlow }}
-              />
-              <motion.div
-                className="relative z-10 w-full max-w-[520px]"
-                style={{
-                  x: modelX,
-                  y: modelY,
-                  rotate: modelRotate,
-                  scale: modelScale,
-                  filter: colorShift,
-                }}
-              >
-                <HeroModel
-                  className="h-[360px] w-full sm:h-[420px] lg:h-[520px]"
-                  label="Cinderella"
-                  modelSrc="/models/cinderella3D.glb"
-                  modelSettings={cinderellaModelSettings}
-                  slideId="about-cinderella"
-                />
-              </motion.div>
-            </div>
-          </div>
+                <p className="text-[0.7rem] uppercase tracking-[0.45em] text-white/50">{moment.caption}</p>
+                <h3 className="mt-3 text-2xl text-white">{moment.title}</h3>
+                <p className="mt-4 text-base leading-relaxed text-white/75">{moment.details}</p>
+              </motion.article>
+            ))}
+          </motion.div>
+        </motion.section>
 
-          <div className="order-2 lg:order-2">
-            <motion.div className="space-y-10 lg:space-y-12" variants={createStagger(0.12)} {...repeatRevealConfig}>
-              {portfolioMoments.map((moment) => (
-                <motion.article
-                  key={moment.title}
-                  className="rounded-[32px] border border-white/10 bg-brand-night/40 p-8 text-white/85 shadow-[0_25px_60px_rgba(0,0,0,0.4)]"
-                  variants={fadeInUp}
-                >
-                  <p className="text-[0.7rem] uppercase tracking-[0.45em] text-white/50">{moment.caption}</p>
-                  <h3 className="mt-3 text-2xl text-white">{moment.title}</h3>
-                  <p className="mt-4 text-base leading-relaxed text-white/75">{moment.details}</p>
-                </motion.article>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
-
-      <motion.section
-        className="space-y-8"
-        variants={createStagger(0.08)}
-        {...repeatRevealConfig}
-        onViewportEnter={() => handleStepEnter(3)}
-      >
+        <motion.section
+          className="space-y-8 snap-start"
+          variants={createStagger(0.08)}
+          {...repeatRevealConfig}
+          onViewportEnter={() => handleStepEnter(3)}
+        >
         <motion.div className="max-w-2xl" variants={fadeInUp}>
           <p className="text-xs uppercase tracking-[0.55em] text-white/60">Ателие</p>
           <h2 className="mt-3 font-luxury text-3xl text-white">Философията на Полина и екипа ѝ</h2>
@@ -388,12 +374,12 @@ const AboutPage = () => {
         </div>
       </motion.section>
 
-      <motion.section
-        className="rounded-[48px] border border-white/10 bg-gradient-to-r from-brand-dusk/80 via-brand-night/80 to-brand-dusk/70 px-10 py-12 text-center shadow-[0_40px_90px_rgba(5,0,25,0.55)] backdrop-blur-3xl"
-        variants={scaleIn}
-        {...repeatRevealConfig}
-        onViewportEnter={() => handleStepEnter(4)}
-      >
+        <motion.section
+          className="rounded-[48px] border border-white/10 bg-gradient-to-r from-brand-dusk/80 via-brand-night/80 to-brand-dusk/70 px-10 py-12 text-center shadow-[0_40px_90px_rgba(5,0,25,0.55)] backdrop-blur-3xl"
+          variants={scaleIn}
+          {...repeatRevealConfig}
+          onViewportEnter={() => handleStepEnter(4)}
+        >
         <motion.p className="text-xs uppercase tracking-[0.65em] text-white/55" variants={fadeInUp}>
           Следваща глава
         </motion.p>
@@ -413,7 +399,8 @@ const AboutPage = () => {
         >
           Свържете се с нас
         </MotionLink>
-      </motion.section>
+        </motion.section>
+      </div>
     </main>
   )
 }

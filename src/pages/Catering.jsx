@@ -36,7 +36,7 @@ const logisticsNotes = [
 
 const preparationSteps = ['Консултация за тема и брой гости', 'Moodboard + бюджет', 'Дегустация (по желание)', 'Финален план и тайминг', 'Изработка + инсталация на място']
 
-const MotionLink = motion(Link)
+const MotionLink = motion.create(Link)
 
 const CateringPage = () => {
   return (

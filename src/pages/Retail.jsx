@@ -36,7 +36,7 @@ const logistics = [
 
 const processSteps = ['Консултация за асортимент и оборот', 'Пробни мостри (по желание)', 'Договор и график', 'Производство + доставка', 'Актуализации според сезона']
 
-const MotionLink = motion(Link)
+const MotionLink = motion.create(Link)
 
 const RetailPage = () => {
   return (
