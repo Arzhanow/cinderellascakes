@@ -123,17 +123,96 @@ const cinderellaModelSettings = {
   },
 }
 
-const heroPathPoints = [
-  { progress: 0, x: 280, y: -340 },
-  { progress: 0.15, x: 300, y: -60 },
-  { progress: 0.33, x: 220, y: 160 },
-  { progress: 0.5, x: 120, y: 420 },
-  { progress: 0.7, x: -80, y: 520 },
-  { progress: 0.88, x: -280, y: 360 },
-  { progress: 1, x: -320, y: 80 },
-]
+const useViewportBreakpoint = () => {
+  const [bp, setBp] = useState('desktop')
 
-const pathViewBox = '-420 -420 840 1080'
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const queries = [
+      { name: 'mobile', query: '(max-width: 767px)' },
+      { name: 'tablet', query: '(min-width: 768px) and (max-width: 1279px)' },
+      { name: 'desktop', query: '(min-width: 1280px) and (max-width: 1599px)' },
+      { name: 'wide', query: '(min-width: 1600px)' },
+    ]
+
+    const registry = queries.map((entry) => ({ ...entry, mql: window.matchMedia(entry.query) }))
+
+    const evaluate = () => {
+      const active = registry.find(({ mql }) => mql.matches)
+      setBp(active?.name ?? 'desktop')
+    }
+
+    evaluate()
+
+    registry.forEach(({ mql }) => {
+      if (mql.addEventListener) {
+        mql.addEventListener('change', evaluate)
+      } else {
+        mql.addListener(evaluate)
+      }
+    })
+
+    return () => {
+      registry.forEach(({ mql }) => {
+        if (mql.removeEventListener) {
+          mql.removeEventListener('change', evaluate)
+        } else {
+          mql.removeListener(evaluate)
+        }
+      })
+    }
+  }, [])
+
+  return bp
+}
+
+const heroPathVariants = {
+  mobile: [
+    { progress: 0, x: 80, y: -260 },
+    { progress: 0.3, x: 120, y: -40 },
+    { progress: 0.6, x: -20, y: 220 },
+    { progress: 1, x: -60, y: 420 },
+  ],
+  tablet: [
+    { progress: 0, x: 180, y: -320 },
+    { progress: 0.2, x: 200, y: -40 },
+    { progress: 0.45, x: 120, y: 220 },
+    { progress: 0.7, x: -40, y: 380 },
+    { progress: 1, x: -160, y: 220 },
+  ],
+  desktop: [
+    { progress: 0, x: 280, y: -340 },
+    { progress: 0.15, x: 300, y: -60 },
+    { progress: 0.33, x: 220, y: 160 },
+    { progress: 0.5, x: 120, y: 420 },
+    { progress: 0.7, x: -80, y: 520 },
+    { progress: 0.88, x: -280, y: 360 },
+    { progress: 1, x: -320, y: 80 },
+  ],
+  wide: [
+    { progress: 0, x: 360, y: -360 },
+    { progress: 0.2, x: 330, y: -40 },
+    { progress: 0.4, x: 260, y: 220 },
+    { progress: 0.6, x: 120, y: 460 },
+    { progress: 0.8, x: -80, y: 520 },
+    { progress: 1, x: -320, y: 160 },
+  ],
+}
+
+const heroPathViewBoxes = {
+  mobile: '-220 -320 480 820',
+  tablet: '-320 -360 700 980',
+  desktop: '-420 -420 840 1080',
+  wide: '-520 -420 1040 1080',
+}
+
+const layoutOffsets = {
+  mobile: { introRight: 0, timelineRight: 0, portfolioRight: 0, principlesLeft: 0, ctaLeft: 0, spacer: false },
+  tablet: { introRight: 80, timelineRight: 60, portfolioRight: 40, principlesLeft: 0, ctaLeft: 0, spacer: false },
+  desktop: { introRight: 260, timelineRight: 230, portfolioRight: 220, principlesLeft: 180, ctaLeft: 180, spacer: true },
+  wide: { introRight: 360, timelineRight: 320, portfolioRight: 300, principlesLeft: 220, ctaLeft: 220, spacer: true },
+}
 
 const progressRoadmap = [
   { id: 'intro', label: 'Старт' },
@@ -149,6 +228,10 @@ const AboutPage = () => {
   const [maxStep, setMaxStep] = useState(0)
   const totalSections = progressRoadmap.length
   const progressSpring = useSpring(0, { stiffness: 120, damping: 24, mass: 0.8 })
+  const breakpoint = useViewportBreakpoint()
+  const heroPathPoints = heroPathVariants[breakpoint] ?? heroPathVariants.desktop
+  const pathViewBox = heroPathViewBoxes[breakpoint] ?? heroPathViewBoxes.desktop
+  const sectionSpacing = layoutOffsets[breakpoint] ?? layoutOffsets.desktop
 
   const { scrollYProgress: pageScroll } = useScroll({
     target: pageRef,
@@ -164,6 +247,20 @@ const AboutPage = () => {
     progressSpring.set(maxStep / totalSections)
   }, [maxStep, totalSections, progressSpring])
 
+  const introSpacing = sectionSpacing.introRight
+    ? { paddingRight: `${sectionSpacing.introRight}px` }
+    : undefined
+  const timelineSpacing = sectionSpacing.timelineRight
+    ? { paddingRight: `${sectionSpacing.timelineRight}px` }
+    : undefined
+  const portfolioSpacing = sectionSpacing.portfolioRight
+    ? { paddingRight: `${sectionSpacing.portfolioRight}px` }
+    : undefined
+  const principlesSpacing = sectionSpacing.principlesLeft
+    ? { marginLeft: `${sectionSpacing.principlesLeft}px` }
+    : undefined
+  const ctaSpacing = sectionSpacing.ctaLeft ? { marginLeft: `${sectionSpacing.ctaLeft}px` } : undefined
+
   const handleStepEnter = (index) => {
     setMaxStep((prev) => Math.max(prev, index + 1))
   }
@@ -171,7 +268,7 @@ const AboutPage = () => {
   const stageProgress = useSpring(pageScroll, { stiffness: 100, damping: 30, mass: 0.65 })
   const heroPathD = useMemo(() => {
     return heroPathPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ')
-  }, [])
+  }, [heroPathPoints])
 
   const computePathCoordinate = (axis, progressValue) => {
     const clamped = Math.min(Math.max(progressValue, 0), 1)
@@ -303,7 +400,8 @@ const AboutPage = () => {
       </div>
 
         <motion.section
-          className="grid min-h-screen content-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:pr-[320px]"
+          className="grid min-h-screen content-center gap-10 lg:grid-cols-[1.05fr_0.95fr]"
+          style={introSpacing}
           initial="hidden"
           animate="visible"
           variants={createStagger(0.12)}
@@ -363,7 +461,8 @@ const AboutPage = () => {
       </motion.section>
 
       <motion.section
-        className="space-y-8 snap-start lg:pr-[300px]"
+        className="space-y-8 snap-start"
+        style={timelineSpacing}
           variants={createStagger(0.08)}
           {...repeatRevealConfig}
           onViewportEnter={() => handleStepEnter(1)}
@@ -395,7 +494,8 @@ const AboutPage = () => {
 
       <motion.section
         ref={portfolioSectionRef}
-        className="relative snap-start py-16 lg:pr-[280px]"
+        className="relative snap-start py-16"
+        style={portfolioSpacing}
           onViewportEnter={() => handleStepEnter(2)}
           viewport={{ once: false, amount: 0.45 }}
         >
@@ -420,7 +520,8 @@ const AboutPage = () => {
         </motion.section>
 
       <motion.section
-        className="space-y-8 snap-start lg:ml-[260px]"
+        className="space-y-8 snap-start"
+        style={principlesSpacing}
           variants={createStagger(0.08)}
           {...repeatRevealConfig}
           onViewportEnter={() => handleStepEnter(3)}
@@ -449,7 +550,8 @@ const AboutPage = () => {
       </motion.section>
 
       <motion.section
-        className="rounded-[48px] border border-white/10 bg-gradient-to-r from-brand-dusk/80 via-brand-night/80 to-brand-dusk/70 px-10 py-12 text-center shadow-[0_40px_90px_rgba(5,0,25,0.55)] backdrop-blur-3xl lg:ml-[260px]"
+        className="rounded-[48px] border border-white/10 bg-gradient-to-r from-brand-dusk/80 via-brand-night/80 to-brand-dusk/70 px-10 py-12 text-center shadow-[0_40px_90px_rgba(5,0,25,0.55)] backdrop-blur-3xl"
+        style={ctaSpacing}
           variants={scaleIn}
           {...repeatRevealConfig}
           onViewportEnter={() => handleStepEnter(4)}
@@ -474,7 +576,7 @@ const AboutPage = () => {
         Свържете се с нас
       </MotionLink>
       </motion.section>
-      <div className="hidden lg:block lg:h-[30vh]"></div>
+      {sectionSpacing.spacer && <div className="hidden lg:block lg:h-[30vh]"></div>}
     </div>
   </main>
 )

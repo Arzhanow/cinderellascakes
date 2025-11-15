@@ -7,7 +7,6 @@ import { createStagger, createTransition, fadeInUp, glowIn, slideIn } from '../u
 
 const navLinks = [
   { label: 'Начало', href: '/' },
-  { label: 'Принципи', href: '/#principles' },
   { label: 'За нас', href: '/about' },
   { label: 'Продукти', href: '/#hero' },
   { label: 'HoReCa', href: '/horeca' },
