@@ -7,11 +7,11 @@ const heroSlides = [
   {
     id: 'garash',
     label: 'Гараш',
-    eyebrow: 'Какаов пралин · без брашно',
+    eyebrow: 'Гараш · без брашно',
     description:
       'Класически орехов блат с тъмен ганаш и полирано огледално покритие - любимата ни торта за ценители.',
     image: '/images/cakes/garash/20250128_150003.jpg',
-    cta: 'Поръчай Garash',
+    cta: 'Поръчай Гараш',
     href: '/#contact',
     model: '/models/garash.glb',
     modelSettings: {
@@ -169,7 +169,7 @@ const HomePage = () => {
                 alt=""
                 className="h-full w-full object-cover"
                 decoding="async"
-                fetchpriority="high"
+                fetchPriority="high"
                 loading="eager"
                 src={currentSlide.image}
               />
@@ -202,7 +202,7 @@ const HomePage = () => {
 
         <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 py-12 text-left 2xl:gap-12 3xl:py-16 4xl:py-20">
           <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
-            <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
+            <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · лукс сладкарство</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
             <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl">
               Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.

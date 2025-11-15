@@ -1,6 +1,53 @@
-﻿import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Float, Html, OrbitControls, useGLTF } from '@react-three/drei'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+
+const viewportQueries = [
+  { name: 'mobile', query: '(max-width: 639px)' },
+  { name: 'tablet', query: '(min-width: 640px) and (max-width: 1023px)' },
+  { name: 'laptop', query: '(min-width: 1024px) and (max-width: 1439px)' },
+  { name: 'desktop', query: '(min-width: 1440px)' },
+]
+
+const useViewportCategory = () => {
+  const [viewport, setViewport] = useState('desktop')
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) {
+      return
+    }
+
+    const entries = viewportQueries.map((bp) => ({
+      name: bp.name,
+      mql: window.matchMedia(bp.query),
+    }))
+
+    const getActiveViewport = () => entries.find(({ mql }) => mql.matches)?.name ?? 'desktop'
+    const updateViewport = () => setViewport(getActiveViewport())
+
+    updateViewport()
+
+    const cleanups = entries.map(({ mql }) => {
+      const handler = () => updateViewport()
+      if (mql.addEventListener) {
+        mql.addEventListener('change', handler)
+      } else {
+        mql.addListener(handler)
+      }
+      return () => {
+        if (mql.removeEventListener) {
+          mql.removeEventListener('change', handler)
+        } else {
+          mql.removeListener(handler)
+        }
+      }
+    })
+
+    return () => cleanups.forEach((cleanup) => cleanup())
+  }, [])
+
+  return viewport
+}
 
 const LoadingOverlay = ({ label }) => (
   <Html center>
@@ -55,12 +102,25 @@ const HeroModel = ({
   className = 'h-[320px] w-full',
   modelSettings = {},
 }) => {
-  const {
-    modelScale = 0.92,
-    modelYOffset = -0.9,
-    cameraPosition = [0, 1.35, 1.95],
-    orbitTarget = [0, -0.28, 0],
-  } = modelSettings
+  const viewport = useViewportCategory()
+  const appliedSettings = useMemo(() => {
+    const { responsive = {}, ...baseSettings } = modelSettings ?? {}
+    const fallbackOverrides =
+      responsive.desktop || responsive.laptop || responsive.tablet || responsive.mobile || {}
+
+    return {
+      modelScale: 0.92,
+      modelYOffset = -0.9,
+      cameraPosition: [0, 1.35, 1.95],
+      orbitTarget: [0, -0.28, 0],
+      fov: 32,
+      ...baseSettings,
+      ...fallbackOverrides,
+      ...(responsive[viewport] ?? {}),
+    }
+  }, [modelSettings, viewport])
+
+  const { modelScale, modelYOffset, cameraPosition, orbitTarget, fov } = appliedSettings
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -96,7 +156,7 @@ const HeroModel = ({
 
         <Canvas
           key={modelSrc}
-          camera={{ position: cameraPosition, fov: 32, near: 0.1, far: 15 }}
+          camera={{ position: cameraPosition, fov, near: 0.1, far: 15 }}
           className="absolute inset-0"
           dpr={[1, 2.2]}
           gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
