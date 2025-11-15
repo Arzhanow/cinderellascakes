@@ -269,11 +269,11 @@ const HomePage = () => {
                       modelSettings={currentSlide.modelSettings}
                       className="h-full w-full"
                     />
-                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:bottom-16 lg:bottom-20 xl:bottom-24 2xl:bottom-28">
-                      <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base">
+                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-4 lg:top-8 xl:top-10 2xl:top-14 3xl:top-16">
+                      <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base 2xl:text-lg">
                         {currentSlide.eyebrow}
                       </span>
-                      <p className="mt-4 font-script text-5xl text-white md:text-6xl lg:text-7xl 2xl:text-[5.5rem]">
+                      <p className="mt-4 font-script text-5xl text-white lg:text-6xl xl:text-[4.75rem] 2xl:text-[5.5rem] 3xl:text-[6rem] 4xl:text-[6.75rem]">
                         {currentSlide.label}
                       </p>
                     </div>
@@ -344,10 +344,10 @@ const HomePage = () => {
             {...heroRevealConfig}
             transition={createTransition(0.6, 0.5)}
           >
-            <span className="text-[0.7rem] uppercase tracking-[0.55em] text-white/60">
+            <span className="text-[0.6rem] uppercase tracking-[0.5em] text-white/60">
               {currentSlide.eyebrow}
             </span>
-            <p className="mt-3 font-script text-5xl leading-none text-white drop-shadow-lg sm:text-6xl">
+            <p className="mt-2 font-script text-4xl leading-none text-white drop-shadow-lg sm:text-5xl">
               {currentSlide.label}
             </p>
           </motion.div>
