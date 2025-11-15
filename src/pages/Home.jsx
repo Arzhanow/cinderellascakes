@@ -10,7 +10,7 @@ const heroSlides = [
     eyebrow: 'Какаов пралин · Без брашно',
     description:
       'Ръчната ни интерпретация на класическа торта Гараш - сатенен ганаш, орехов дакоаз и полирано огледално покритие.',
-    image: '/images/cakes/garash/20250128_145936.jpg',
+    image: '/images/cakes/garash/20250128_150003.jpg',
     cta: 'Повече за продукта',
     href: '/#contact',
     model: '/models/garash.glb',
@@ -216,7 +216,7 @@ const HomePage = () => {
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
                 modelSettings={currentSlide.modelSettings}
-                className="pointer-events-none absolute left-[55%] top-[18%] h-[420px] w-[420px] -translate-x-[40%] opacity-95 sm:left-[62%] sm:top-[17%] sm:h-[520px] sm:w-[520px] sm:-translate-x-[32%] md:left-[64%] md:top-[16%] md:h-[580px] md:w-[580px] lg:left-[66%] lg:top-[15%] lg:h-[660px] lg:w-[660px] xl:left-[68%] xl:top-[14%] xl:h-[760px] xl:w-[760px] 2xl:left-[68%] 2xl:top-[13%] 2xl:h-[820px] 2xl:w-[820px] 4xl:left-[69%] 4xl:top-[12%] 4xl:h-[880px] 4xl:w-[880px]"
+                className="pointer-events-none absolute left-[55%] top-[18%] h-[460px] w-[460px] -translate-x-[40%] opacity-95 sm:left-[62%] sm:top-[17%] sm:h-[560px] sm:w-[560px] sm:-translate-x-[32%] md:left-[64%] md:top-[16%] md:h-[620px] md:w-[620px] lg:left-[66%] lg:top-[15%] lg:h-[700px] lg:w-[700px] xl:left-[68%] xl:top-[14%] xl:h-[800px] xl:w-[800px] 2xl:left-[68%] 2xl:top-[13%] 2xl:h-[860px] 2xl:w-[860px] 4xl:left-[69%] 4xl:top-[12%] 4xl:h-[920px] 4xl:w-[920px]"
               />
             </div>
           )}

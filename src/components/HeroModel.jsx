@@ -1,4 +1,4 @@
-import { Canvas, useFrame } from '@react-three/fiber'
+﻿import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Float, Html, OrbitControls, useGLTF } from '@react-three/drei'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 
@@ -89,7 +89,7 @@ const HeroModel = ({
     <div className={className}>
       <div
         aria-label={`${label} 3D D�D_D'D�D�`}
-        className="relative isolate h-full w-full text-white"
+        className="relative isolate h-full w-full overflow-hidden text-white"
         id={`hero-model-${slideId}`}
       >
         <div className="pointer-events-none absolute inset-0 opacity-0"></div>
@@ -143,3 +143,4 @@ const HeroModel = ({
 }
 
 export default HeroModel
+
