@@ -213,7 +213,7 @@ const HomePage = () => {
 
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-10 z-20 sm:bottom-12 lg:bottom-14">
+        <div className="pointer-events-none absolute inset-x-0 bottom-16 z-20 sm:bottom-18 lg:bottom-20">
           <div className="layout-shell pointer-events-auto">
             <div className="flex flex-wrap gap-3 3xl:gap-4">
               {heroSlides.map((slide, index) => (
