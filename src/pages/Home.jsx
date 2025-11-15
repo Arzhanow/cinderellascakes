@@ -379,13 +379,13 @@ const HomePage = () => {
             <motion.div className="mt-8 flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.1)}>
               <MotionLink
                 className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
-                to="/#products"
+                to="/production"
                 variants={popIn}
                 transition={createTransition(0.3, 0.6)}
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.96 }}
               >
-                Виж най-търсените
+                Услуги
               </MotionLink>
               <MotionLink
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
