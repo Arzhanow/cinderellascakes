@@ -2,6 +2,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
+import LoadingScreen from '../components/LoadingScreen'
 import {
   blurIn,
   createStagger,
@@ -180,6 +181,7 @@ const sliderDuration = 14000
 
 const HomePage = () => {
   const [activeSlide, setActiveSlide] = useState(0)
+  const [showIntroLoader, setShowIntroLoader] = useState(true)
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -200,7 +202,19 @@ const HomePage = () => {
   }
 
   return (
-    <main className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36" id="home">
+    <>
+      <AnimatePresence>
+        {showIntroLoader && <LoadingScreen onComplete={() => setShowIntroLoader(false)} />}
+      </AnimatePresence>
+      <motion.main
+        aria-hidden={showIntroLoader}
+        className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36"
+        id="home"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showIntroLoader ? 0 : 1 }}
+        transition={{ duration: 0.8, ease: 'easeOut' }}
+        style={{ pointerEvents: showIntroLoader ? 'none' : 'auto' }}
+      >
       <section className="relative min-h-[90vh] w-full overflow-hidden" data-surface="dark" id="hero">
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
@@ -588,16 +602,12 @@ const HomePage = () => {
           </motion.form>
         </motion.div>
       </motion.section>
-    </main>
+    </motion.main>
+    </>
   )
 }
 
 export default HomePage
-
-
-
-
-
 
 
 

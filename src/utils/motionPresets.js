@@ -1,7 +1,8 @@
 const baseEase = [0.22, 1, 0.36, 1]
+const tempoScale = 1.15
 
 export const createTransition = (delay = 0, duration = 0.8) => ({
-  duration,
+  duration: duration * tempoScale,
   delay,
   ease: baseEase,
 })
