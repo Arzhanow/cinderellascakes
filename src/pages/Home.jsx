@@ -182,7 +182,7 @@ const HomePage = () => {
                 label={currentSlide.label}
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
-                className="pointer-events-none absolute left-[45%] top-[38%] h-[360px] w-[360px] -translate-x-[55%] opacity-95 sm:left-[55%] sm:top-[35%] sm:h-[440px] sm:w-[440px] sm:-translate-x-1/2 md:left-[56%] md:top-[33%] lg:left-[58%] lg:top-[30%] lg:h-[520px] lg:w-[520px] xl:left-[60%] xl:top-[28%] xl:h-[620px] xl:w-[620px] 2xl:left-[60%] 2xl:top-[26%] 2xl:h-[700px] 2xl:w-[700px] 4xl:h-[780px] 4xl:w-[780px]"
+                className="pointer-events-none absolute left-[58%] top-[35%] h-[420px] w-[420px] -translate-x-[45%] opacity-95 sm:left-[65%] sm:top-[32%] sm:h-[500px] sm:w-[500px] sm:-translate-x-[40%] md:left-[68%] md:top-[30%] lg:left-[70%] lg:top-[28%] lg:h-[580px] lg:w-[580px] xl:left-[72%] xl:top-[26%] xl:h-[680px] xl:w-[680px] 2xl:left-[72%] 2xl:top-[24%] 2xl:h-[760px] 2xl:w-[760px] 4xl:left-[72%] 4xl:top-[22%] 4xl:h-[840px] 4xl:w-[840px]"
               />
             </div>
           )}
