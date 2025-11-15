@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
@@ -15,10 +15,10 @@ const heroSlides = [
     href: '/#contact',
     model: '/models/garash.glb',
     modelSettings: {
-      cameraPosition: [0, 1.2, 2.6],
-      modelScale: 0.7,
-      modelYOffset: -0.6,
-      orbitTarget: [0, -0.15, 0],
+      cameraPosition: [0, 1.15, 2.8],
+      modelScale: 0.6,
+      modelYOffset: -1.4,
+      orbitTarget: [0, -0.45, 0],
     },
   },
   {
@@ -100,10 +100,37 @@ const principles = [
 ]
 
 const storyTeaser = {
-  title: 'От малка работилница до премиум марка.',
-  text: 'Започнахме с няколко форми и убеждението, че фината сладкария е характер, не декор. Днес създаваме десерти за хора, които търсят повече от „нещо сладко“.',
-  cta: 'Прочети нашата история',
+  title: 'От Hell’s Kitchen до собствена сладкарница в Пловдив',
+  text: 'Полина Петрова Алатинова стъпи под светлините на Hell’s Kitchen България (сезон 6, 2024) като самоук любител, но впечатли журито със сладкарските си умения и получи похвали от шеф Виктор Ангелов. Събраната увереност прерасна в Cinderella’s Cakes – бутикова работилница за домашни торти, която тя управлява лично в родния си Пловдив.',
+  cta: 'Научи повече за историята ни',
 }
+
+const founderHighlights = [
+  {
+    label: '2024',
+    title: 'Hell’s Kitchen България',
+    description:
+      'Полина блести като „майсторка на сладкишите“ – участието ѝ в сезон 6 дава силен старт на професионалния ѝ път.',
+  },
+  {
+    label: 'юни 2024',
+    title: 'Първа локация · ул. Остромила 6',
+    description:
+      'Бутикова сладкарница в квартал Остромила, която е едновременно витрина с десерти и производствена база за всички поръчки.',
+  },
+  {
+    label: 'юли 2025',
+    title: 'Cinderella’s Cakes 2 · ул. Белград 19',
+    description:
+      'Втори салон в центъра на Пловдив – до Гранд Хотел Пловдив, за бързи дегустации и срещи с почитателите на десерта.',
+  },
+  {
+    label: 'Признание',
+    title: 'Награда „Първа дама“ 2025',
+    description:
+      'Полина е отличена в категория „Храни – сладкарство“ за авторските си десерти и социални инициативи като Halloween Street Food.',
+  },
+]
 
 const businessServices = [
   {
@@ -263,6 +290,18 @@ const HomePage = () => {
           <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">История</p>
           <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">{storyTeaser.title}</h2>
           <p className="mt-4 text-base leading-relaxed 2xl:text-xl 4xl:text-2xl">{storyTeaser.text}</p>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 2xl:gap-6">
+            {founderHighlights.map((highlight) => (
+              <article
+                key={`${highlight.label}-${highlight.title}`}
+                className="rounded-3xl border border-white/10 bg-white/5 px-5 py-5 text-white/85 backdrop-blur"
+              >
+                <p className="text-[0.65rem] uppercase tracking-[0.4em] text-white/50 2xl:text-xs">{highlight.label}</p>
+                <h3 className="mt-2 font-semibold text-white 2xl:text-xl">{highlight.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-white/80 2xl:text-base">{highlight.description}</p>
+              </article>
+            ))}
+          </div>
           <Link
             className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
             to="/#about"
@@ -400,3 +439,5 @@ const HomePage = () => {
 }
 
 export default HomePage
+
+
