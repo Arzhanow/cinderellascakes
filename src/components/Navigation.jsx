@@ -14,7 +14,7 @@ const navLinks = [
   { label: 'Контакт', href: '/#contact' },
 ]
 
-const MotionLink = motion(Link)
+const MotionLink = motion.create(Link)
 
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false)

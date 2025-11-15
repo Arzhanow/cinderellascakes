@@ -152,7 +152,9 @@ const HeroModel = ({
         <Canvas
           key={modelSrc}
           camera={{ position: cameraPosition, fov, near: 0.1, far: 15 }}
-          className={`absolute inset-0 ${isMobileViewport ? '-translate-y-10' : ''}`}
+          className={`absolute inset-0 transform transition-transform duration-500 ${
+            isMobileViewport ? '-translate-y-24' : ''
+          }`}
           dpr={[1, 2.2]}
           gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
           shadows
