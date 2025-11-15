@@ -43,7 +43,7 @@ const LoadingScreen = ({ onComplete }) => {
         }
         return nextValue
       })
-    }, 28)
+    }, 20)
 
     return () => clearInterval(interval)
   }, [])
@@ -109,9 +109,7 @@ const LoadingScreen = ({ onComplete }) => {
             <div className="pointer-events-none absolute inset-1 rounded-full border border-white/10"></div>
           </div>
           <p className="text-[0.75rem] uppercase tracking-[0.5em] text-white/60">Зареждане</p>
-          <p className="max-w-xs text-sm text-white/70">
-            Приказката се подготвя...
-          </p>
+          <p className="max-w-xs text-sm text-white/70">Приказката започва...</p>
         </div>
       </div>
     </div>
