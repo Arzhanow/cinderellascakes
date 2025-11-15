@@ -16,83 +16,83 @@ import {
    phone: '+359 88 412 34 56',
  }
 
- const productionServices = [
-   {
-     id: 'catering',
-     eyebrow: 'Събития · 30-300 гости',
-     title: 'Кетъринг спектакъл',
-     subtitle: 'Moodboard, live plating и pop-up tasting бар.',
-     detailHeading: 'Кетъринг, който разказва история.',
-     summary:
-       'Създаваме десертни инсталации за събития, в които всеки слой е куриран според темата. Комбинираме шоу елемент (live plating, дегустационна станция) с меню за специални режими и безкомпромисна визия.',
-     highlight: 'Moodboard и дегустация до 5 работни дни след запитването.',
-     image: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&w=900&q=80',
-     backdrop: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&w=1600&q=80',
-     chips: ['3D визуализации', 'Екип на място', 'Меню без захар / с протеин'],
-     process: [
-       'Изпратете тема, дата и брой гости.',
-       'Получавате moodboard, вкусове и бюджет за одобрение.',
-       'Назначаваме дегустация или изпращаме мостри.',
-     ],
-     benefits: [
-       'Екип за сервиз и декор, който работи под нашия стандарт.',
-       'Сегментирано меню (kids, vegan, high-protein) в рамките на една станция.',
-       'Опция за персонализирани подаръци или take-away кутийки.',
-     ],
-     detailPage: '/catering',
-     contact: CONTACT,
-   },
-   {
-     id: 'retail',
-     eyebrow: 'За магазини · daily stock',
-     title: 'Витрина с подпис',
-     subtitle: 'Стабилно производство + сезонни серии.',
-     detailHeading: 'Ритейл партньорство с повторяем вкус.',
-     summary:
-       'Подготвяме селекция от торти, монодесерти и мини сладкиши, които издържат във витрина и пристигат с инструкции за сервиране. Следим продажбите и адаптираме сезонно без компромис в визуалния стандарт.',
-     highlight: 'Достъп до лимитирани серии и дегустации за екипа ви всеки сезон.',
-     image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80',
-     backdrop: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80',
-     chips: ['Температурно контролиран транспорт', 'Документация и алергени', 'Private label'],
-     process: [
-       'Споделяте оборот и предпочитани формати.',
-       'Получавате дегустационен сет и предложен асортимент.',
-       'Синхронизираме график за доставки и поддръжка.',
-     ],
-     benefits: [
-       'Brand book за начин на подреждане и сервиране.',
-       'Документи за произход и списък с алергени за всяка партида.',
-       'Възможност за съвместен бранд и опаковки.',
-     ],
-     detailPage: '/retail',
-     contact: CONTACT,
-   },
-   {
-     id: 'hotels',
-     eyebrow: 'За хотели · premium rooms',
-     title: 'Room service десерти',
-     subtitle: 'Signature сетове за VIP гости.',
-     detailHeading: 'Хотелски услуги с впечатляващ финал.',
-     summary:
-       'Изграждаме сладки сетове за room service, afternoon tea или welcome amenities. Комбинираме лек десерт за индивидуално сервиране с по-щедър акцент и добавяме инструкции за екипа ви.',
-     highlight: 'Възможност за персонализиран печат и послание към гостите.',
-     image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80',
-     backdrop: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80',
-     chips: ['Welcome amenities', 'Room service set menus', 'Afternoon tea'],
-     process: [
-       'Споделяте стандартите на марката и капацитета.',
-       'Получавате tasting box и инструкции за сервиране.',
-       'Подготвяме постоянен график + emergency буфер.',
-     ],
-     benefits: [
-       'Персонализирани послания, монограми или QR кодове към услуга на хотела.',
-       'Вариации без глутен/лактоза за VIP гости при заявка до 24 ч.',
-       'Набор от снимки и copy за вашите комуникации.',
-     ],
-     detailPage: '/hotels',
-     contact: CONTACT,
-   },
- ]
+const productionServices = [
+  {
+    id: 'catering',
+    eyebrow: 'Събития · 30-300 гости',
+    title: 'Кетъринг с подпис',
+    subtitle: 'Дизайн на десертни станции и live plating.',
+    detailHeading: 'Авторски кетъринг за тържества и корпоративни сцени.',
+    summary:
+      'Поемаме креативния процес от стратегическа консултация и moodboard до изработка на инсталации, live plating и координация на сервизния екип. Въвеждаме ясни стандарти за сервиране и изграждане на опит, така че всяка дегустация да кореспондира с темата на събитието и да отговаря на специални режими – от безглутенови десерти до high-protein сетове.',
+    highlight: 'Moodboard, бюджет и дегустация до 5 работни дни след запитване.',
+    image: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&w=900&q=80',
+    backdrop: 'https://images.unsplash.com/photo-1528712306091-ed0763094c98?auto=format&fit=crop&w=1600&q=80',
+    chips: ['Концептуален борд', 'Екип на място', 'Меню по режими'],
+    process: [
+      'Получаваме информация за повод, локация и брой гости.',
+      'Представяме moodboard, вкусове и оферта с ясно разписани роли.',
+      'Организираме дегустация и финализираме график за монтаж/сервиз.',
+    ],
+    benefits: [
+      'Ангажиран координатор за връзка с агенция, сценография и логистика.',
+      'Разделени станции за VIP, kids, vegan или функционални режими.',
+      'Интерактивни елементи – engraved toppers, персонални послания, take-away boxes.',
+    ],
+    detailPage: '/catering',
+    contact: CONTACT,
+  },
+  {
+    id: 'retail',
+    eyebrow: 'За магазини · Daily Stock',
+    title: 'Премиум витрина',
+    subtitle: 'Стабилен асортимент и сезонни лимитки.',
+    detailHeading: 'Дистрибуция за магазини с гарантиран стандарт.',
+    summary:
+      'Работим като удължение на вашия екип – анализираме оборот, препоръчваме оптимален микс от торти, монодесерти и grab-and-go предложения, подготвяме температурно контролиран транспорт и документи за произход и алергени. Поддържаме комуникация с мениджъра на обекта и актуализираме селекцията според сезон и промоционален календар.',
+    highlight: 'Личен акаунт мениджър и дегустационни сетове за персонала всеки сезон.',
+    image: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=900&q=80',
+    backdrop: 'https://images.unsplash.com/photo-1470337458703-46ad1756a187?auto=format&fit=crop&w=1600&q=80',
+    chips: ['Температурен транспорт', 'QA протоколи', 'Private label'],
+    process: [
+      'Споделяте целеви оборот, капацитет и нужди по категории.',
+      'Курираме дегустационен сет и представяме асортимент с препоръчани количества.',
+      'Подписваме график за доставки, витрина и merchandising указания.',
+    ],
+    benefits: [
+      'Brand book за подредба и комуникация + готови POS материали.',
+      'Протоколи за приемане, проследимост и обратна връзка за всяка партида.',
+      'Опция за съвместен branding и лимитирани collab серии.',
+    ],
+    detailPage: '/retail',
+    contact: CONTACT,
+  },
+  {
+    id: 'hotels',
+    eyebrow: 'За хотели · Premium Rooms',
+    title: 'Room service десерти',
+    subtitle: 'Подпис за VIP гости и welcome amenities.',
+    detailHeading: 'Хотелски програми с гурме довършек.',
+    summary:
+      'Изграждаме сладкарска програма за room service, lounge и special amenities. Създаваме дву- или триелементни сетове с контраст в текстурите, персонализирани монограми и ясни инструкции за сервиране, включително shelf life и препоръки за plating на място.',
+    highlight: 'Ключови варианти без глутен/лактоза и експресен буфер при VIP заявки.',
+    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80',
+    backdrop: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80',
+    chips: ['Welcome amenities', 'Room service menus', 'Afternoon tea'],
+    process: [
+      'Дефинираме опита – повод, тип гости и очакван стил на сервиране.',
+      'Изпращаме tasting box с инструкции и ценови параметри.',
+      'Настройваме регулярен график + emergency протокол за кратки срокове.',
+    ],
+    benefits: [
+      'Персонализирани картички, QR код към хотелски услуги или монограми върху десерта.',
+      'Протокол за работа с room service екипа – сервиране, температура, история.',
+      'Галерия от снимки и текстове, готови за включване в комуникационни канали.',
+    ],
+    detailPage: '/hotels',
+    contact: CONTACT,
+  },
+]
 
  const detailTransition = {
    duration: 0.45,
@@ -102,8 +102,6 @@ import {
 const ProductionPage = () => {
   const memoizedServices = useMemo(() => productionServices, [])
   const [selectedService, setSelectedService] = useState(null)
-  const hasSelection = Boolean(selectedService)
-  const gridColumns = hasSelection ? 'lg:grid-cols-[minmax(0,520px)_minmax(0,1fr)]' : ''
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-brand-night text-white">
@@ -146,7 +144,7 @@ const ProductionPage = () => {
            </motion.p>
          </motion.header>
 
-        <div className={`grid gap-10 ${gridColumns}`}>
+        <div className="flex flex-col gap-10">
           <ProductionSlider slides={memoizedServices} onSlideSelect={setSelectedService} />
 
           <AnimatePresence mode="wait">
