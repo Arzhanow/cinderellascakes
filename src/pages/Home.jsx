@@ -495,16 +495,20 @@ const HomePage = () => {
         </motion.div>
       </motion.section>
 
-      <section className="layout-shell max-w-4xl 3xl:max-w-[1100px]" id="contact">
-        <div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-12 4xl:py-16">
-          <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">Свържи се с нас</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">Запази своето сладко изживяване</h2>
-          <p className="mt-2 text-white/80 2xl:text-lg 4xl:text-xl">
+      <motion.section className="layout-shell max-w-4xl 3xl:max-w-[1100px]" id="contact" variants={scaleIn} {...revealConfig}>
+        <motion.div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-12 4xl:py-16" variants={createStagger(0.12)}>
+          <motion.p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base" variants={slideIn('down', 30)}>
+            Свържи се с нас
+          </motion.p>
+          <motion.h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl" variants={glowIn}>
+            Запази своето сладко изживяване
+          </motion.h2>
+          <motion.p className="mt-2 text-white/80 2xl:text-lg 4xl:text-xl" variants={fadeInUp}>
             Двата адреса на Cinderella's Cakes в Пловдив работят паралелно като уютни салони и работилници, а Полина лично
             консултира всяка торта - от домашни рецепти до здравословни алтернативи без захар или глутен.
-          </p>
-          <div className="mt-8 grid gap-6 lg:grid-cols-2">
-            <div>
+          </motion.p>
+          <motion.div className="mt-8 grid gap-6 lg:grid-cols-2" variants={createStagger(0.08)}>
+            <motion.div variants={slideIn('left', 40)}>
               <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Локации</p>
               <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
                 <li>
@@ -516,8 +520,8 @@ const HomePage = () => {
                   Cakes 2 за бързи дегустации.
                 </li>
               </ul>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div variants={slideIn('right', 40)}>
               <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Контакти</p>
               <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
                 <li>
@@ -530,32 +534,32 @@ const HomePage = () => {
                   <span className="font-semibold text-white">Имейл:</span> polinaalatinova@bigenergy.bg
                 </li>
               </ul>
-            </div>
-          </div>
-          <form className="mt-8 space-y-4 2xl:space-y-6 4xl:space-y-8">
-            <div>
+            </motion.div>
+          </motion.div>
+          <motion.form className="mt-8 space-y-4 2xl:space-y-6 4xl:space-y-8" variants={createStagger(0.08)}>
+            <motion.div variants={fadeInUp}>
               <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Вашето име</label>
               <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="Име и фамилия" type="text" />
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2 2xl:gap-6 4xl:gap-8">
-              <div>
+            </motion.div>
+            <motion.div className="grid gap-4 sm:grid-cols-2 2xl:gap-6 4xl:gap-8" variants={createStagger(0.05)}>
+              <motion.div variants={fadeInUp}>
                 <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Имейл</label>
                 <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="example@domain.com" type="email" />
-              </div>
-              <div>
+              </motion.div>
+              <motion.div variants={fadeInUp}>
                 <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Телефон</label>
                 <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="+359 ..." type="tel" />
-              </div>
-            </div>
-            <div>
+              </motion.div>
+            </motion.div>
+            <motion.div variants={fadeInUp}>
               <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Събитие / повод / детайли</label>
               <textarea
                 className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
                 placeholder="Опишете тортата, брой порции или специални изисквания."
                 rows={4}
               ></textarea>
-            </div>
-            <div>
+            </motion.div>
+            <motion.div variants={fadeInUp}>
               <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Интересува ме</label>
               <div className="mt-2 flex flex-wrap gap-3 text-sm 2xl:gap-4 2xl:text-base 4xl:text-lg">
                 <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
@@ -571,19 +575,24 @@ const HomePage = () => {
                   Дегустация на място
                 </label>
               </div>
-            </div>
-            <button className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-12 4xl:py-5 4xl:text-lg">
+            </motion.div>
+            <motion.button
+              className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-12 4xl:py-5 4xl:text-lg"
+              variants={popIn}
+              whileHover={{ y: -4 }}
+              whileTap={{ scale: 0.94 }}
+              type="submit"
+            >
               Изпрати запитване
-            </button>
-          </form>
-        </div>
-      </section>
+            </motion.button>
+          </motion.form>
+        </motion.div>
+      </motion.section>
     </main>
   )
 }
 
 export default HomePage
-
 
 
 
