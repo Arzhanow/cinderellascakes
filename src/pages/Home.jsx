@@ -131,35 +131,26 @@ const principles = [
 ]
 
 const storyTeaser = {
-  title: "От Hell's Kitchen до собствена сладкарница в Пловдив",
-  text: "Полина Петрова Алатинова стъпи под светлините на Hell's Kitchen България (сезон 6, 2024) като самоук любител, но впечатли журито със сладкарските си умения и получи похвали от шеф Виктор Ангелов. Събраната увереност прерасна в Cinderella's Cakes - бутикова работилница за домашни торти, която тя управлява лично в родния си Пловдив.",
-  cta: 'Научи повече за историята ни',
+  title: 'Историята на Полина и Cinderella’s Cakes',
+  text: 'От Hell’s Kitchen България до уютната витрина в Пловдив – това е само началото...',
+  cta: 'Прочети цялата история',
 }
 
 const founderHighlights = [
   {
     label: '2024',
-    title: "Hell's Kitchen България",
-    description:
-      'Полина блести като ,,майсторка на сладкишите" - участието ѝ в сезон 6 дава силен старт на професионалния ѝ път.',
+    title: "Hell's Kitchen · сезон 6",
+    description: 'Полина впечатлява като „майсторка на сладкишите“ и получава увереност за следващата стъпка...',
   },
   {
-    label: 'юни 2024',
-    title: 'Първа локация · ул. Остромила 6',
-    description:
-      'Бутикова сладкарница в квартал Остромила, която е едновременно витрина с десерти и производствена база за всички поръчки.',
+    label: 'Остромила',
+    title: 'Първата сладкарница',
+    description: 'Бутиковият обект в Пловдив посреща клиенти с домашни рецепти и лично отношение от Поли...',
   },
   {
-    label: 'юли 2025',
-    title: "Cinderella's Cakes 2 · ул. Белград 19",
-    description:
-      'Втори салон в центъра на Пловдив - до Гранд Хотел Пловдив, за бързи дегустации и срещи с почитателите на десерта.',
-  },
-  {
-    label: 'Признание',
-    title: 'Награда ,,Първа дама" 2025',
-    description:
-      'Полина е отличена в категория ,,Храни - сладкарство" за авторските си десерти и социални инициативи като Halloween Street Food.',
+    label: '2025',
+    title: 'First Lady Awards',
+    description: 'Отличието в категория „Храни – сладкарство“ доказва, че приказката тепърва се пише...',
   },
 ]
 
@@ -449,14 +440,14 @@ const HomePage = () => {
               </motion.article>
             ))}
           </motion.div>
-          <MotionLink
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
-            to="/#about"
-            variants={popIn}
-            whileHover={{ y: -3 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {storyTeaser.cta}
+            <MotionLink
+              className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.25em] text-white transition hover:text-brand-cyan 2xl:text-base 4xl:text-lg"
+              to="/about"
+              variants={popIn}
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {storyTeaser.cta}
             <span aria-hidden="true">→</span>
           </MotionLink>
         </motion.div>
