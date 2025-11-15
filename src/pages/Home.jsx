@@ -143,7 +143,7 @@ const HomePage = () => {
 
   return (
     <main className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36" id="home">
-      <section className="relative min-h-screen w-full overflow-hidden" data-surface="dark" id="hero">
+      <section className="relative min-h-[90vh] w-full overflow-hidden" data-surface="dark" id="hero">
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
             <motion.div
@@ -182,13 +182,13 @@ const HomePage = () => {
                 label={currentSlide.label}
                 modelSrc={currentSlide.model}
                 slideId={currentSlide.id}
-                className="pointer-events-none absolute left-[62%] top-[26%] h-[420px] w-[420px] -translate-x-[45%] opacity-95 sm:left-[68%] sm:top-[25%] sm:h-[500px] sm:w-[500px] sm:-translate-x-[40%] md:left-[70%] md:top-[23%] lg:left-[72%] lg:top-[22%] lg:h-[580px] lg:w-[580px] xl:left-[73%] xl:top-[20%] xl:h-[660px] xl:w-[660px] 2xl:left-[73%] 2xl:top-[19%] 2xl:h-[740px] 2xl:w-[740px] 4xl:left-[74%] 4xl:top-[18%] 4xl:h-[800px] 4xl:w-[800px]"
+                className="pointer-events-none absolute left-[58%] top-[25%] h-[320px] w-[320px] -translate-x-[45%] opacity-95 sm:left-[64%] sm:top-[24%] sm:h-[380px] sm:w-[380px] sm:-translate-x-[36%] md:left-[66%] md:top-[23%] lg:left-[68%] lg:top-[21%] lg:h-[460px] lg:w-[460px] xl:left-[70%] xl:top-[20%] xl:h-[540px] xl:w-[540px] 2xl:left-[70%] 2xl:top-[19%] 2xl:h-[600px] 2xl:w-[600px] 4xl:left-[71%] 4xl:top-[18%] 4xl:h-[660px] 4xl:w-[660px]"
               />
             </div>
           )}
         </div>
 
-        <div className="relative z-10 layout-shell flex w-full flex-col gap-8 py-12 lg:flex-row lg:items-center 2xl:gap-14 3xl:py-18 4xl:py-24">
+        <div className="relative z-10 layout-shell flex w-full flex-col gap-6 py-10 lg:flex-row lg:items-center 2xl:gap-12 3xl:py-16 4xl:py-20">
           <div className="max-w-2xl text-white 2xl:max-w-3xl 4xl:max-w-[60rem]">
             <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
@@ -213,7 +213,7 @@ const HomePage = () => {
 
         </div>
 
-        <div className="pointer-events-none absolute inset-x-0 bottom-14 z-20 sm:bottom-16 lg:bottom-20">
+        <div className="pointer-events-none absolute inset-x-0 bottom-10 z-20 sm:bottom-12 lg:bottom-14">
           <div className="layout-shell pointer-events-auto">
             <div className="flex flex-wrap gap-3 3xl:gap-4">
               {heroSlides.map((slide, index) => (

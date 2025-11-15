@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ThemeSwitcher from './ThemeSwitcher'
+import LogoBadge from './LogoBadge'
 
 const navLinks = [
   { label: 'Начало', href: '/' },
@@ -38,9 +39,7 @@ const Navigation = () => {
     >
       <div className="flex w-full items-center justify-between gap-3 border border-white/15 bg-brand-dusk/85 px-5 py-4 text-white shadow-[0_20px_45px_rgba(4,0,22,0.55)] backdrop-blur-2xl sm:px-8 xl:px-12 3xl:px-20 4xl:px-28">
         <div className="flex items-center gap-3 text-white">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-brand-blush to-brand-lilac text-base font-bold tracking-[0.08em] text-button-contrast 3xl:h-16 3xl:w-16 3xl:text-lg 4xl:h-20 4xl:w-20 4xl:text-xl">
-            CC
-          </span>
+          <LogoBadge />
           <div className="text-[0.65rem] uppercase leading-tight tracking-[0.35em] text-white/70 3xl:text-sm 4xl:text-base">
             <span className="block">Cinderella&apos;s</span>
             <span className="text-sm font-semibold tracking-[0.15em] text-white 3xl:text-base 4xl:text-lg">Cakes</span>
