@@ -160,7 +160,6 @@ const AboutPage = () => {
   const stageKeyframes = [0, 0.33, 0.66, 1]
   const modelX = useTransform(stageProgress, stageKeyframes, [-180, 70, 140, -60])
   const modelY = useTransform(stageProgress, stageKeyframes, [-260, -20, 220, 420])
-  const modelRotate = useTransform(stageProgress, [0, 0.5, 1], [-20, 10, -8])
   const modelScale = useTransform(stageProgress, [0, 0.4, 0.8, 1], [0.82, 1.04, 1.22, 1.05])
   const modelGlow = useTransform(stageProgress, [0, 1], [0.35, 0.92])
   const colorShift = useTransform(stageProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-35deg) saturate(1.3)', 'hue-rotate(18deg) saturate(1.1)'])
@@ -174,22 +173,34 @@ const AboutPage = () => {
     <main ref={pageRef} className="relative min-h-screen overflow-hidden bg-transparent text-white">
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2"
-        style={{ x: modelX, y: modelY, rotate: modelRotate, scale: modelScale, opacity: stageOpacity, filter: colorShift }}
+        className="pointer-events-none fixed left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
+        style={{ x: modelX, y: modelY, scale: modelScale, opacity: stageOpacity, filter: colorShift }}
       >
         <motion.span
-          className="absolute -top-32 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-brand-cyan/30 blur-3xl"
+          className="absolute -top-32 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-brand-cyan/30 blur-3xl mix-blend-screen"
           style={{ opacity: trailOpacity }}
         />
         <motion.span
-          className="absolute -bottom-24 right-0 h-60 w-40 rounded-[120px] bg-brand-blush/25 blur-3xl"
+          className="absolute -bottom-24 right-0 h-60 w-40 rounded-[120px] bg-brand-blush/25 blur-3xl mix-blend-screen"
           style={{ opacity: modelGlow }}
         />
         <HeroModel
-          className="h-[360px] w-[320px] sm:h-[420px] sm:w-[360px] lg:h-[520px] lg:w-[460px]"
+          className="h-[460px] w-[420px] sm:h-[500px] sm:w-[480px] lg:h-[580px] lg:w-[540px]"
           label="Cinderella"
           modelSrc="/models/cinderella3D.glb"
-          modelSettings={cinderellaModelSettings}
+          modelSettings={{
+            ...cinderellaModelSettings,
+            modelScale: 0.48,
+            modelYOffset: -1.6,
+            responsive: {
+              ...cinderellaModelSettings.responsive,
+              mobile: { ...(cinderellaModelSettings.responsive?.mobile ?? {}), modelScale: 0.4, modelYOffset: -2.2 },
+              tablet: { ...(cinderellaModelSettings.responsive?.tablet ?? {}), modelScale: 0.44, modelYOffset: -1.95 },
+              laptop: { ...(cinderellaModelSettings.responsive?.laptop ?? {}), modelScale: 0.46, modelYOffset: -1.75 },
+              desktop: { ...(cinderellaModelSettings.responsive?.desktop ?? {}), modelScale: 0.49, modelYOffset: -1.6 },
+              desktopXL: { ...(cinderellaModelSettings.responsive?.desktopXL ?? {}), modelScale: 0.52, modelYOffset: -1.5 },
+            },
+          }}
           slideId="about-floating"
         />
       </motion.div>
