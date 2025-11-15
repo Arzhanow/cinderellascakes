@@ -40,7 +40,7 @@ const DessertModel = ({ src }) => {
 
   return (
     <Float speed={1.8} rotationIntensity={0.65} floatIntensity={1.1} position={[0, 0, 0]}>
-      <group ref={groupRef} position={[0, -0.55, 0]}>
+      <group ref={groupRef} position={[0, -0.72, 0]} scale={[0.82, 0.82, 0.82]}>
         <primitive object={clonedScene} />
       </group>
     </Float>
@@ -86,7 +86,7 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w
 
         <Canvas
           key={modelSrc}
-          camera={{ position: [0, 1.25, 1.65], fov: 28, near: 0.1, far: 15 }}
+          camera={{ position: [0, 1.35, 1.95], fov: 32, near: 0.1, far: 15 }}
           className="absolute inset-0"
           dpr={[1, 2.2]}
           shadows
@@ -120,9 +120,9 @@ const HeroModel = ({ eyebrow, label, modelSrc, slideId, className = 'h-[420px] w
             enableZoom={false}
             maxDistance={2}
             minDistance={1.4}
-            minPolarAngle={Math.PI * 0.38}
-            maxPolarAngle={Math.PI * 0.52}
-            target={[0, -0.15, 0]}
+            minPolarAngle={Math.PI * 0.34}
+            maxPolarAngle={Math.PI * 0.5}
+            target={[0, -0.28, 0]}
           />
         </Canvas>
 
