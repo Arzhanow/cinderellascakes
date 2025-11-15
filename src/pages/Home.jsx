@@ -39,9 +39,9 @@ const heroSlides = [
       responsive: {
         mobile: {
           cameraPosition: [2.55, 2.65, 1.35],
-          modelScale: 0.48,
-          modelYOffset: -2.58,
-          orbitTarget: [0, -2.58, 0],
+          modelScale: 0.44,
+          modelYOffset: -2.5,
+          orbitTarget: [0, -2.5, 0],
           fov: 36,
         },
         tablet: {
@@ -251,7 +251,7 @@ const HomePage = () => {
                   modelSrc={currentSlide.model}
                   slideId={currentSlide.id}
                   modelSettings={currentSlide.modelSettings}
-                  className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(300px,75vw,420px)] w-[clamp(300px,75vw,420px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(320px,65vw,460px)] sm:w-[clamp(320px,65vw,460px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[420px] md:w-[420px] md:-translate-y-1/2 md:translate-x-0 lg:h-[520px] lg:w-[520px] xl:h-[600px] xl:w-[600px] 2xl:h-[700px] 2xl:w-[700px] 3xl:h-[760px] 3xl:w-[760px] 4xl:h-[820px] 4xl:w-[820px]"
+                  className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(310px,80vw,460px)] w-[clamp(310px,80vw,460px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(340px,72vw,500px)] sm:w-[clamp(340px,72vw,500px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[460px] md:w-[460px] md:-translate-y-1/2 md:translate-x-0 lg:h-[560px] lg:w-[560px] xl:h-[640px] xl:w-[640px] 2xl:h-[740px] 2xl:w-[740px] 3xl:h-[780px] 3xl:w-[780px] 4xl:h-[840px] 4xl:w-[840px]"
                 />
                 <div className="pointer-events-none absolute left-1/2 bottom-[clamp(280px,65vw,460px)] z-30 hidden -translate-x-1/2 text-center text-white drop-shadow-2xl sm:bottom-[clamp(320px,52vw,520px)] md:right-[10%] md:top-[16%] md:block md:translate-x-0 md:text-right md:drop-shadow-[0_15px_35px_rgba(0,0,0,0.45)] lg:right-[12%] xl:right-[14%] 3xl:right-[16%] 4xl:right-[18%]">
                   <span className="text-xs uppercase tracking-[0.6em] text-white/60">{currentSlide.eyebrow}</span>
