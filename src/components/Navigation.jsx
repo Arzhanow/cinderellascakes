@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+﻿import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import ThemeSwitcher from './ThemeSwitcher'
@@ -8,7 +8,7 @@ import { createStagger, createTransition, fadeInUp, glowIn, slideIn } from '../u
 const navLinks = [
   { label: 'Начало', href: '/' },
   { label: 'Принципи', href: '/#principles' },
-  { label: 'За нас', href: '/#about' },
+  { label: 'За нас', href: '/about' },
   { label: 'Продукти', href: '/#hero' },
   { label: 'Производство', href: '/#products' },
   { label: 'Контакт', href: '/#contact' },
@@ -181,3 +181,4 @@ const Navigation = () => {
 }
 
 export default Navigation
+

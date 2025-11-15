@@ -20,6 +20,8 @@ import {
 } from '../utils/motionPresets'
 
 const MotionLink = motion.create(Link)
+const panelHoverClasses =
+  'transform-gpu transition duration-300 hover:-translate-y-2 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_25px_45px_rgba(15,23,42,0.45)]'
 
 const heroSlides = [
   {
@@ -410,7 +412,7 @@ const HomePage = () => {
           {principles.map((principle) => (
             <motion.article
               key={principle.title}
-              className="rounded-[28px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 backdrop-blur-lg 2xl:px-8 2xl:py-10 4xl:px-10 4xl:py-12"
+              className={`rounded-[28px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 backdrop-blur-lg 2xl:px-8 2xl:py-10 4xl:px-10 4xl:py-12 ${panelHoverClasses}`}
               variants={tiltIn}
               transition={createTransition(0, 0.65)}
             >
@@ -423,7 +425,7 @@ const HomePage = () => {
       </motion.section>
 
       <motion.section className="layout-shell" id="about" variants={scaleIn} {...revealConfig} transition={createTransition(0.1, 0.8)}>
-        <motion.div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-14 4xl:py-16" variants={createStagger(0.1)}>
+        <motion.div className={`rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-14 4xl:py-16 ${panelHoverClasses}`} variants={createStagger(0.1)}>
           <motion.p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base" variants={slideIn('down', 35)}>
             История
           </motion.p>
@@ -437,7 +439,7 @@ const HomePage = () => {
             {founderHighlights.map((highlight) => (
               <motion.article
                 key={`${highlight.label}-${highlight.title}`}
-                className="rounded-3xl border border-white/10 bg-white/5 px-5 py-5 text-white/85 backdrop-blur"
+                className={`rounded-3xl border border-white/10 bg-white/5 px-5 py-5 text-white/85 backdrop-blur ${panelHoverClasses}`}
                 variants={floatIn}
                 transition={createTransition(0, 0.6)}
               >
@@ -499,7 +501,7 @@ const HomePage = () => {
           {businessServices.map((service) => (
             <motion.article
               key={service.id}
-              className="rounded-[28px] border border-white/10 bg-white/5 p-6 text-white/85 backdrop-blur-lg 2xl:p-8 4xl:p-10"
+              className={`rounded-[28px] border border-white/10 bg-white/5 p-6 text-white/85 backdrop-blur-lg 2xl:p-8 4xl:p-10 ${panelHoverClasses}`}
               variants={blurIn}
               transition={createTransition(0, 0.7)}
             >
@@ -540,7 +542,7 @@ const HomePage = () => {
       </motion.section>
 
       <motion.section className="layout-shell max-w-4xl 3xl:max-w-[1100px]" id="contact" variants={scaleIn} {...revealConfig}>
-        <motion.div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-12 4xl:py-16" variants={createStagger(0.12)}>
+        <motion.div className={`rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-12 4xl:py-16 ${panelHoverClasses}`} variants={createStagger(0.12)}>
           <motion.p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base" variants={slideIn('down', 30)}>
             Свържи се с нас
           </motion.p>

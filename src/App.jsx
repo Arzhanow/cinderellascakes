@@ -4,6 +4,7 @@ import HomePage from './pages/Home'
 import RetailPage from './pages/Retail'
 import HotelsPage from './pages/Hotels'
 import CateringPage from './pages/Catering'
+import AboutPage from './pages/About'
 import ScrollToTop from './components/ScrollToTop'
 import { ThemeProvider } from './context/ThemeContext'
 
@@ -17,6 +18,7 @@ const App = () => (
           <Route path="/retail" element={<RetailPage />} />
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/catering" element={<CateringPage />} />
+          <Route path="/about" element={<AboutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
