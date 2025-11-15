@@ -23,8 +23,8 @@ const CinderellaModel = () => {
   })
 
   return (
-    <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.5}>
-      <group ref={groupRef} position={[0, -1.4, 0]} scale={[1.15, 1.15, 1.15]}>
+    <Float speed={1.4} rotationIntensity={0.4} floatIntensity={0.5} position={[0, 0.2, 0]}>
+      <group ref={groupRef} position={[0, -0.65, 0]} scale={[1.15, 1.15, 1.15]}>
         <primitive object={clonedScene} />
       </group>
     </Float>
@@ -85,7 +85,7 @@ const LoadingScreen = ({ onComplete }) => {
               <CinderellaModel />
               <Environment preset="studio" />
               <ContactShadows
-                position={[0, -1.6, 0]}
+                position={[0, -1, 0]}
                 opacity={0.5}
                 blur={2.5}
                 far={4}
