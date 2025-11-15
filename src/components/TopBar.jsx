@@ -24,7 +24,7 @@ const TopBar = () => {
       initial="hidden"
       animate="visible"
       transition={createTransition(0.2, 0.9)}
-      className="sticky top-0 z-30 border-b border-white/15 bg-[radial-gradient(circle_at_10%_20%,rgba(255,255,255,0.18),rgba(14,12,37,0.9))] backdrop-blur-2xl"
+      className="fixed inset-x-0 top-0 z-40 w-full border-b border-white/15 bg-[radial-gradient(circle_at_10%_20%,rgba(255,255,255,0.18),rgba(14,12,37,0.9))] backdrop-blur-2xl"
     >
       <div className="layout-shell flex flex-wrap items-center justify-between gap-2 py-2 text-[0.7rem] uppercase tracking-[0.42em] text-white/80 sm:text-[0.75rem] 3xl:gap-4 3xl:text-sm 4xl:text-base">
         <span className="font-semibold">Серии без захар и без брашно · Премиум ръчна изработка</span>

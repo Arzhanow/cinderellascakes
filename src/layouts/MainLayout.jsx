@@ -15,7 +15,10 @@ const MainLayout = () => {
         <div className="absolute inset-x-0 top-1/3 h-48 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05),transparent_60%)] blur-3xl 3xl:h-64"></div>
       </div>
 
-      <div className="relative z-10 pb-16">
+      <div
+        className="relative z-10 pb-16"
+        style={{ paddingTop: 'calc(var(--topbar-height) + var(--navigation-height))' }}
+      >
         <TopBar />
         <Navigation />
         <Outlet />

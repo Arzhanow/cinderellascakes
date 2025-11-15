@@ -41,7 +41,7 @@ const Navigation = () => {
       initial="hidden"
       animate="visible"
       transition={createTransition(0.35, 0.9)}
-      className="sticky z-30 w-full px-0"
+      className="fixed inset-x-0 z-40 w-full px-0"
       style={{ top: 'var(--topbar-height)' }}
     >
       <motion.div
