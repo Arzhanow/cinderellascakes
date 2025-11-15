@@ -124,13 +124,13 @@ const cinderellaModelSettings = {
 }
 
 const heroPathPoints = [
-  { progress: 0, x: -320, y: -360 },
-  { progress: 0.18, x: -160, y: -80 },
-  { progress: 0.32, x: 40, y: -20 },
-  { progress: 0.48, x: 220, y: 180 },
-  { progress: 0.64, x: 160, y: 420 },
-  { progress: 0.82, x: -20, y: 540 },
-  { progress: 1, x: -260, y: 260 },
+  { progress: 0, x: 280, y: -340 },
+  { progress: 0.15, x: 300, y: -60 },
+  { progress: 0.33, x: 220, y: 160 },
+  { progress: 0.5, x: 120, y: 420 },
+  { progress: 0.7, x: -80, y: 520 },
+  { progress: 0.88, x: -280, y: 360 },
+  { progress: 1, x: -320, y: 80 },
 ]
 
 const pathViewBox = '-420 -420 840 1080'
@@ -303,7 +303,7 @@ const AboutPage = () => {
       </div>
 
         <motion.section
-          className="grid min-h-screen content-center gap-10 lg:grid-cols-[1.05fr_0.95fr]"
+          className="grid min-h-screen content-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:pr-[320px]"
           initial="hidden"
           animate="visible"
           variants={createStagger(0.12)}
@@ -362,8 +362,8 @@ const AboutPage = () => {
         </motion.div>
       </motion.section>
 
-        <motion.section
-          className="space-y-8 snap-start"
+      <motion.section
+        className="space-y-8 snap-start lg:pr-[300px]"
           variants={createStagger(0.08)}
           {...repeatRevealConfig}
           onViewportEnter={() => handleStepEnter(1)}
@@ -393,9 +393,9 @@ const AboutPage = () => {
         </div>
       </motion.section>
 
-        <motion.section
-          ref={portfolioSectionRef}
-          className="relative snap-start py-16"
+      <motion.section
+        ref={portfolioSectionRef}
+        className="relative snap-start py-16 lg:pr-[280px]"
           onViewportEnter={() => handleStepEnter(2)}
           viewport={{ once: false, amount: 0.45 }}
         >
@@ -419,8 +419,8 @@ const AboutPage = () => {
           </motion.div>
         </motion.section>
 
-        <motion.section
-          className="space-y-8 snap-start"
+      <motion.section
+        className="space-y-8 snap-start lg:ml-[260px]"
           variants={createStagger(0.08)}
           {...repeatRevealConfig}
           onViewportEnter={() => handleStepEnter(3)}
@@ -448,8 +448,8 @@ const AboutPage = () => {
         </div>
       </motion.section>
 
-        <motion.section
-          className="rounded-[48px] border border-white/10 bg-gradient-to-r from-brand-dusk/80 via-brand-night/80 to-brand-dusk/70 px-10 py-12 text-center shadow-[0_40px_90px_rgba(5,0,25,0.55)] backdrop-blur-3xl"
+      <motion.section
+        className="rounded-[48px] border border-white/10 bg-gradient-to-r from-brand-dusk/80 via-brand-night/80 to-brand-dusk/70 px-10 py-12 text-center shadow-[0_40px_90px_rgba(5,0,25,0.55)] backdrop-blur-3xl lg:ml-[260px]"
           variants={scaleIn}
           {...repeatRevealConfig}
           onViewportEnter={() => handleStepEnter(4)}
@@ -465,18 +465,19 @@ const AboutPage = () => {
           (@cinderellas_cakes и @polina_alatinova). Следващата глава на тази приказка може да бъде вашето тържество в
           Пловдив или на път.
         </motion.p>
-        <MotionLink
-          className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-10 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-button-contrast shadow-glow-cta transition hover:-translate-y-1"
-          to="/#contact"
-          variants={fadeInUp}
-          whileTap={{ scale: 0.96 }}
-        >
-          Свържете се с нас
-        </MotionLink>
-        </motion.section>
-      </div>
-    </main>
-  )
+      <MotionLink
+        className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-brand-accent to-brand-cyan px-10 py-3 text-xs font-semibold uppercase tracking-[0.35em] text-button-contrast shadow-glow-cta transition hover:-translate-y-1"
+        to="/#contact"
+        variants={fadeInUp}
+        whileTap={{ scale: 0.96 }}
+      >
+        Свържете се с нас
+      </MotionLink>
+      </motion.section>
+      <div className="hidden lg:block lg:h-[30vh]"></div>
+    </div>
+  </main>
+)
 }
 
 export default AboutPage
