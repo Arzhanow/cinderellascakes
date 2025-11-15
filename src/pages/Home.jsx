@@ -19,7 +19,7 @@ import {
   tiltIn,
 } from '../utils/motionPresets'
 
-const MotionLink = motion(Link)
+const MotionLink = motion.create(Link)
 
 const heroSlides = [
   {
@@ -57,6 +57,20 @@ const heroSlides = [
           modelYOffset: -2.55,
           orbitTarget: [0, -2.5, 0],
           fov: 32,
+        },
+        desktop: {
+          cameraPosition: [1.95, 2.18, 0.78],
+          modelScale: 0.5,
+          modelYOffset: -2.45,
+          orbitTarget: [0, -2.45, 0],
+          fov: 30,
+        },
+        desktopXL: {
+          cameraPosition: [1.85, 2.1, 0.68],
+          modelScale: 0.56,
+          modelYOffset: -2.38,
+          orbitTarget: [0, -2.38, 0],
+          fov: 28,
         },
       },
     },
@@ -251,7 +265,7 @@ const HomePage = () => {
                   modelSrc={currentSlide.model}
                   slideId={currentSlide.id}
                   modelSettings={currentSlide.modelSettings}
-                  className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(310px,80vw,460px)] w-[clamp(310px,80vw,460px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(340px,72vw,500px)] sm:w-[clamp(340px,72vw,500px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[460px] md:w-[460px] md:-translate-y-1/2 md:translate-x-0 lg:h-[560px] lg:w-[560px] xl:h-[640px] xl:w-[640px] 2xl:h-[740px] 2xl:w-[740px] 3xl:h-[780px] 3xl:w-[780px] 4xl:h-[840px] 4xl:w-[840px]"
+                  className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[6%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:h-[660px] lg:w-[660px] xl:h-[780px] xl:w-[780px] 2xl:h-[920px] 2xl:w-[920px] 3xl:h-[980px] 3xl:w-[980px] 4xl:h-[1080px] 4xl:w-[1080px]"
                 />
                 <div className="pointer-events-none absolute left-1/2 bottom-[clamp(280px,65vw,460px)] z-30 hidden -translate-x-1/2 text-center text-white drop-shadow-2xl sm:bottom-[clamp(320px,52vw,520px)] md:right-[10%] md:top-[16%] md:block md:translate-x-0 md:text-right md:drop-shadow-[0_15px_35px_rgba(0,0,0,0.45)] lg:right-[12%] xl:right-[14%] 3xl:right-[16%] 4xl:right-[18%]">
                   <span className="text-xs uppercase tracking-[0.6em] text-white/60">{currentSlide.eyebrow}</span>

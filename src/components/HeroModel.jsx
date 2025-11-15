@@ -1,12 +1,13 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { ContactShadows, Environment, Float, Html, OrbitControls, useGLTF } from '@react-three/drei'
+import { ContactShadows, Environment, Html, OrbitControls, useGLTF } from '@react-three/drei'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 
 const viewportQueries = [
   { name: 'mobile', query: '(max-width: 639px)' },
   { name: 'tablet', query: '(min-width: 640px) and (max-width: 1023px)' },
   { name: 'laptop', query: '(min-width: 1024px) and (max-width: 1439px)' },
-  { name: 'desktop', query: '(min-width: 1440px)' },
+  { name: 'desktop', query: '(min-width: 1440px) and (max-width: 1919px)' },
+  { name: 'desktopXL', query: '(min-width: 1920px)' },
 ]
 
 const useViewportCategory = () => {
@@ -86,11 +87,9 @@ const DessertModel = ({ src, groupScale = 0.92, yOffset = -0.9 }) => {
   })
 
   return (
-    <Float speed={1.8} rotationIntensity={0.65} floatIntensity={1.1} position={[0, 0, 0]}>
-      <group ref={groupRef} position={[0, yOffset, 0]} scale={[groupScale, groupScale, groupScale]}>
-        <primitive object={clonedScene} />
-      </group>
-    </Float>
+    <group ref={groupRef} position={[0, yOffset, 0]} scale={[groupScale, groupScale, groupScale]}>
+      <primitive object={clonedScene} />
+    </group>
   )
 }
 
@@ -106,7 +105,12 @@ const HeroModel = ({
   const appliedSettings = useMemo(() => {
     const { responsive = {}, ...baseSettings } = modelSettings ?? {}
     const fallbackOverrides =
-      responsive.desktop || responsive.laptop || responsive.tablet || responsive.mobile || {}
+      responsive.desktopXL ||
+      responsive.desktop ||
+      responsive.laptop ||
+      responsive.tablet ||
+      responsive.mobile ||
+      {}
 
     return {
       modelScale: 0.92,
@@ -157,8 +161,8 @@ const HeroModel = ({
           className={`absolute inset-0 transform transition-transform duration-500 ${
             isMobileViewport ? '-translate-y-24' : ''
           }`}
-          dpr={[1, 2.2]}
-          gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
+          dpr={[1, 1.6]}
+          gl={{ antialias: true, alpha: true, preserveDrawingBuffer: false, powerPreference: 'high-performance' }}
           shadows
           style={{ background: 'transparent' }}
         >
