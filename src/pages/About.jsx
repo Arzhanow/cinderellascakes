@@ -1,5 +1,5 @@
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
 import { createStagger, createTransition, fadeInUp, glowIn, scaleIn, tiltIn } from '../utils/motionPresets'
@@ -123,6 +123,18 @@ const cinderellaModelSettings = {
   },
 }
 
+const heroPathPoints = [
+  { progress: 0, x: -320, y: -360 },
+  { progress: 0.18, x: -160, y: -80 },
+  { progress: 0.32, x: 40, y: -20 },
+  { progress: 0.48, x: 220, y: 180 },
+  { progress: 0.64, x: 160, y: 420 },
+  { progress: 0.82, x: -20, y: 540 },
+  { progress: 1, x: -260, y: 260 },
+]
+
+const pathViewBox = '-420 -420 840 1080'
+
 const progressRoadmap = [
   { id: 'intro', label: 'Старт' },
   { id: 'timeline', label: 'Време' },
@@ -157,9 +169,27 @@ const AboutPage = () => {
   }
 
   const stageProgress = useSpring(pageScroll, { stiffness: 100, damping: 30, mass: 0.65 })
-  const stageKeyframes = [0, 0.33, 0.66, 1]
-  const modelX = useTransform(stageProgress, stageKeyframes, [-180, 70, 140, -60])
-  const modelY = useTransform(stageProgress, stageKeyframes, [-260, -20, 220, 420])
+  const heroPathD = useMemo(() => {
+    return heroPathPoints.map((point, index) => `${index === 0 ? 'M' : 'L'} ${point.x} ${point.y}`).join(' ')
+  }, [])
+
+  const computePathCoordinate = (axis, progressValue) => {
+    const clamped = Math.min(Math.max(progressValue, 0), 1)
+    for (let i = 0; i < heroPathPoints.length - 1; i++) {
+      const current = heroPathPoints[i]
+      const next = heroPathPoints[i + 1]
+      if (clamped >= current.progress && clamped <= next.progress) {
+        const span = Math.max(next.progress - current.progress, 0.0001)
+        const localT = (clamped - current.progress) / span
+        const eased = localT * localT * (3 - 2 * localT)
+        return current[axis] + (next[axis] - current[axis]) * eased
+      }
+    }
+    return heroPathPoints[heroPathPoints.length - 1][axis]
+  }
+
+  const modelX = useTransform(stageProgress, (value) => computePathCoordinate('x', value))
+  const modelY = useTransform(stageProgress, (value) => computePathCoordinate('y', value))
   const modelScale = useTransform(stageProgress, [0, 0.4, 0.8, 1], [0.82, 1.04, 1.22, 1.05])
   const modelGlow = useTransform(stageProgress, [0, 1], [0.35, 0.92])
   const colorShift = useTransform(stageProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-35deg) saturate(1.3)', 'hue-rotate(18deg) saturate(1.1)'])
@@ -171,6 +201,39 @@ const AboutPage = () => {
 
   return (
     <main ref={pageRef} className="relative min-h-screen overflow-hidden bg-transparent text-white">
+      <motion.svg
+        aria-hidden="true"
+        className="pointer-events-none fixed left-1/2 top-1/2 z-10 h-[1200px] w-[1200px] -translate-x-1/2 -translate-y-1/2 text-white/20"
+        viewBox={pathViewBox}
+      >
+        <defs>
+          <linearGradient id="heroPathGradient" x1="0%" x2="100%" y1="0%" y2="100%">
+            <stop offset="0%" stopColor="rgba(255,255,255,0.4)" />
+            <stop offset="100%" stopColor="rgba(120,255,255,0.8)" />
+          </linearGradient>
+        </defs>
+        <path d={heroPathD} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2" strokeLinecap="round" />
+        <motion.path
+          d={heroPathD}
+          fill="none"
+          stroke="url(#heroPathGradient)"
+          strokeWidth="2.8"
+          strokeLinecap="round"
+          style={{ pathLength: stageProgress }}
+        />
+        {heroPathPoints.map((point, index) => (
+          <motion.circle
+            key={`hero-node-${point.progress}`}
+            cx={point.x}
+            cy={point.y}
+            r={index === 0 || index === heroPathPoints.length - 1 ? 5 : 3.5}
+            fill="currentColor"
+            initial={{ opacity: 0.3, scale: 0.85 }}
+            animate={{ opacity: 0.7, scale: 1 }}
+            transition={{ delay: index * 0.02 }}
+          />
+        ))}
+      </motion.svg>
       <motion.div
         aria-hidden="true"
         className="pointer-events-none fixed left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
