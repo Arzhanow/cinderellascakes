@@ -9,7 +9,7 @@ const heroSlides = [
     label: 'Signature Garash',
     eyebrow: 'Какаов пралин · Без брашно',
     description:
-      'Ръчната ни интерпретация на класическа торта Гараш – сатенен ганаш, орехов дакоаз и полирано огледално покритие.',
+      'Ръчната ни интерпретация на класическа торта Гараш - сатенен ганаш, орехов дакоаз и полирано огледално покритие.',
     image: '/images/cakes/garash/20250128_145936.jpg',
     cta: 'Повече за продукта',
     href: '/#contact',
@@ -91,7 +91,7 @@ const principles = [
   {
     title: 'Отношение',
     description:
-      'Слушаме повода и човека. Предлагаме без захар, без брашно и с протеин – без компромис с вкуса.',
+      'Слушаме повода и човека. Предлагаме без захар, без брашно и с протеин - без компромис с вкуса.',
   },
   {
     title: 'Отговорен избор',
@@ -100,17 +100,17 @@ const principles = [
 ]
 
 const storyTeaser = {
-  title: 'От Hell’s Kitchen до собствена сладкарница в Пловдив',
-  text: 'Полина Петрова Алатинова стъпи под светлините на Hell’s Kitchen България (сезон 6, 2024) като самоук любител, но впечатли журито със сладкарските си умения и получи похвали от шеф Виктор Ангелов. Събраната увереност прерасна в Cinderella’s Cakes – бутикова работилница за домашни торти, която тя управлява лично в родния си Пловдив.',
+  title: "От Hell's Kitchen до собствена сладкарница в Пловдив",
+  text: "Полина Петрова Алатинова стъпи под светлините на Hell's Kitchen България (сезон 6, 2024) като самоук любител, но впечатли журито със сладкарските си умения и получи похвали от шеф Виктор Ангелов. Събраната увереност прерасна в Cinderella's Cakes - бутикова работилница за домашни торти, която тя управлява лично в родния си Пловдив.",
   cta: 'Научи повече за историята ни',
 }
 
 const founderHighlights = [
   {
     label: '2024',
-    title: 'Hell’s Kitchen България',
+    title: "Hell's Kitchen България",
     description:
-      'Полина блести като „майсторка на сладкишите“ – участието ѝ в сезон 6 дава силен старт на професионалния ѝ път.',
+      'Полина блести като ,,майсторка на сладкишите" - участието ѝ в сезон 6 дава силен старт на професионалния ѝ път.',
   },
   {
     label: 'юни 2024',
@@ -120,15 +120,15 @@ const founderHighlights = [
   },
   {
     label: 'юли 2025',
-    title: 'Cinderella’s Cakes 2 · ул. Белград 19',
+    title: "Cinderella's Cakes 2 · ул. Белград 19",
     description:
-      'Втори салон в центъра на Пловдив – до Гранд Хотел Пловдив, за бързи дегустации и срещи с почитателите на десерта.',
+      'Втори салон в центъра на Пловдив - до Гранд Хотел Пловдив, за бързи дегустации и срещи с почитателите на десерта.',
   },
   {
     label: 'Признание',
-    title: 'Награда „Първа дама“ 2025',
+    title: 'Награда ,,Първа дама" 2025',
     description:
-      'Полина е отличена в категория „Храни – сладкарство“ за авторските си десерти и социални инициативи като Halloween Street Food.',
+      'Полина е отличена в категория ,,Храни - сладкарство" за авторските си десерти и социални инициативи като Halloween Street Food.',
   },
 ]
 
@@ -227,7 +227,7 @@ const HomePage = () => {
             <p className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base">Пловдив · Fine Pastry</p>
             <h1 className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]">Приказка за ценители.</h1>
             <p className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl">
-              Премиум сладкария от Пловдив – торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
+              Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
             </p>
             <div className="mt-8 flex flex-wrap gap-4 3xl:gap-6">
               <Link
@@ -318,7 +318,7 @@ const HomePage = () => {
             <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">B2B</p>
             <h2 className="mt-2 font-luxury text-3xl 2xl:text-4xl 4xl:text-5xl">Магазини · Хотели · Кетъринг</h2>
             <p className="mt-2 text-white/80 2xl:text-xl 4xl:text-2xl">
-              Един и същ стандарт – независимо дали десертът стои във витрина, сервира се в стая или украсява сцена.
+              Един и същ стандарт - независимо дали десертът стои във витрина, сервира се в стая или украсява сцена.
             </p>
           </div>
           <div className="flex flex-wrap gap-4 3xl:gap-6">
@@ -373,61 +373,81 @@ const HomePage = () => {
 
       <section className="layout-shell max-w-4xl 3xl:max-w-[1100px]" id="contact">
         <div className="rounded-[32px] border border-white/10 bg-white/5 px-6 py-10 text-white/85 backdrop-blur-lg 2xl:px-10 2xl:py-14 4xl:px-12 4xl:py-16">
-          <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">Контакт</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">Разкажи ни за повода</h2>
-          <p className="mt-2 text-white/80 2xl:text-lg 4xl:text-xl">Име, дата, гости и вкусови предпочитания – отговорът идва до един работен ден.</p>
+          <p className="text-xs uppercase tracking-[0.5em] text-white/60 2xl:text-sm 4xl:text-base">Свържи се с нас</p>
+          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl 4xl:text-5xl">Запази своето сладко изживяване</h2>
+          <p className="mt-2 text-white/80 2xl:text-lg 4xl:text-xl">
+            Двата адреса на Cinderella's Cakes в Пловдив работят паралелно като уютни салони и работилници, а Полина лично
+            консултира всяка торта - от домашни рецепти до здравословни алтернативи без захар или глутен.
+          </p>
+          <div className="mt-8 grid gap-6 lg:grid-cols-2">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Локации</p>
+              <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
+                <li>
+                  <span className="font-semibold text-white">Остромила ·</span> ул. Остромила 6 - първият бутиков салон и
+                  производствена база.
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Център ·</span> ул. Белград 19 (до Гранд Хотел Пловдив) - Cinderella's
+                  Cakes 2 за бързи дегустации.
+                </li>
+              </ul>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Контакти</p>
+              <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
+                <li>
+                  <span className="font-semibold text-white">Поръчки:</span> 0885 493 040
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Кетъринг и събития:</span> 0889 979 565
+                </li>
+                <li>
+                  <span className="font-semibold text-white">Имейл:</span> polinaalatinova@bigenergy.bg
+                </li>
+              </ul>
+            </div>
+          </div>
           <form className="mt-8 space-y-4 2xl:space-y-6 4xl:space-y-8">
             <div>
-              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Как да се обърнем към теб?</label>
-              <input
-                className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
-                placeholder="Име и фамилия"
-                type="text"
-              />
+              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Вашето име</label>
+              <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="Име и фамилия" type="text" />
             </div>
             <div className="grid gap-4 sm:grid-cols-2 2xl:gap-6 4xl:gap-8">
               <div>
                 <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Имейл</label>
-                <input
-                    className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
-                    placeholder="example@domain.com"
-                    type="email"
-                  />
-                </div>
-                <div>
-                  <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Телефон</label>
-                  <input
-                    className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
-                    placeholder="+359 ..."
-                    type="tel"
-                  />
-                </div>
+                <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="example@domain.com" type="email" />
               </div>
               <div>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Повод / дата / гости</label>
-                <textarea
-                  className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
-                  placeholder="Разкажи ни какво празнуваш и колко гости очакваш"
-                  rows={4}
-                ></textarea>
+                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Телефон</label>
+                <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="+359 ..." type="tel" />
               </div>
-              <div>
-                <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Предпочитания</label>
-                <div className="mt-2 flex flex-wrap gap-3 text-sm 2xl:gap-4 2xl:text-base 4xl:text-lg">
-                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
-                    <input className="accent-brand-blush" type="checkbox" />
-                    Без захар
-                  </label>
-                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
-                    <input className="accent-brand-blush" type="checkbox" />
-                    Без брашно
-                  </label>
-                  <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
-                    <input className="accent-brand-blush" type="checkbox" />
-                    С протеин
-                  </label>
-                </div>
+            </div>
+            <div>
+              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Събитие / повод / детайли</label>
+              <textarea
+                className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
+                placeholder="Опишете тортата, брой порции или специални изисквания."
+                rows={4}
+              ></textarea>
+            </div>
+            <div>
+              <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Интересува ме</label>
+              <div className="mt-2 flex flex-wrap gap-3 text-sm 2xl:gap-4 2xl:text-base 4xl:text-lg">
+                <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                  <input className="accent-brand-blush" type="checkbox" />
+                  Торти за вкъщи
+                </label>
+                <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                  <input className="accent-brand-blush" type="checkbox" />
+                  Кетъринг
+                </label>
+                <label className="theme-chip inline-flex items-center gap-2 rounded-full border px-4 py-2">
+                  <input className="accent-brand-blush" type="checkbox" />
+                  Дегустация на място
+                </label>
               </div>
+            </div>
             <button className="w-full rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.25em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-12 4xl:py-5 4xl:text-lg">
               Изпрати запитване
             </button>
@@ -439,5 +459,13 @@ const HomePage = () => {
 }
 
 export default HomePage
+
+
+
+
+
+
+
+
 
 
