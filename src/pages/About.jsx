@@ -169,49 +169,47 @@ const useViewportBreakpoint = () => {
 
 const heroPathVariants = {
   mobile: [
-    { progress: 0, x: 80, y: -260 },
-    { progress: 0.3, x: 120, y: -40 },
-    { progress: 0.6, x: -20, y: 220 },
-    { progress: 1, x: -60, y: 420 },
+    { progress: 0, x: -120, y: -220 },
+    { progress: 0.25, x: 120, y: -40 },
+    { progress: 0.5, x: -100, y: 200 },
+    { progress: 0.75, x: 110, y: 420 },
+    { progress: 1, x: -80, y: 580 },
   ],
   tablet: [
-    { progress: 0, x: 180, y: -320 },
-    { progress: 0.2, x: 200, y: -40 },
-    { progress: 0.45, x: 120, y: 220 },
-    { progress: 0.7, x: -40, y: 380 },
-    { progress: 1, x: -160, y: 220 },
+    { progress: 0, x: -200, y: -260 },
+    { progress: 0.25, x: 220, y: -40 },
+    { progress: 0.5, x: -180, y: 240 },
+    { progress: 0.75, x: 200, y: 460 },
+    { progress: 1, x: -160, y: 360 },
   ],
   desktop: [
-    { progress: 0, x: 280, y: -340 },
-    { progress: 0.15, x: 300, y: -60 },
-    { progress: 0.33, x: 220, y: 160 },
-    { progress: 0.5, x: 120, y: 420 },
-    { progress: 0.7, x: -80, y: 520 },
-    { progress: 0.88, x: -280, y: 360 },
-    { progress: 1, x: -320, y: 80 },
+    { progress: 0, x: -300, y: -320 },
+    { progress: 0.23, x: 320, y: -20 },
+    { progress: 0.5, x: -280, y: 280 },
+    { progress: 0.77, x: 300, y: 520 },
+    { progress: 1, x: -260, y: 260 },
   ],
   wide: [
-    { progress: 0, x: 360, y: -360 },
-    { progress: 0.2, x: 330, y: -40 },
-    { progress: 0.4, x: 260, y: 220 },
-    { progress: 0.6, x: 120, y: 460 },
-    { progress: 0.8, x: -80, y: 520 },
-    { progress: 1, x: -320, y: 160 },
+    { progress: 0, x: -380, y: -340 },
+    { progress: 0.23, x: 400, y: 0 },
+    { progress: 0.5, x: -360, y: 320 },
+    { progress: 0.77, x: 380, y: 560 },
+    { progress: 1, x: -340, y: 220 },
   ],
 }
 
 const heroPathViewBoxes = {
-  mobile: '-220 -320 480 820',
-  tablet: '-320 -360 700 980',
-  desktop: '-420 -420 840 1080',
-  wide: '-520 -420 1040 1080',
+  mobile: '-260 -360 620 1020',
+  tablet: '-360 -420 860 1200',
+  desktop: '-520 -480 1180 1360',
+  wide: '-620 -520 1420 1480',
 }
 
 const layoutOffsets = {
   mobile: { introRight: 0, timelineRight: 0, portfolioRight: 0, principlesLeft: 0, ctaLeft: 0, spacer: false },
-  tablet: { introRight: 80, timelineRight: 60, portfolioRight: 40, principlesLeft: 0, ctaLeft: 0, spacer: false },
-  desktop: { introRight: 260, timelineRight: 230, portfolioRight: 220, principlesLeft: 180, ctaLeft: 180, spacer: true },
-  wide: { introRight: 360, timelineRight: 320, portfolioRight: 300, principlesLeft: 220, ctaLeft: 220, spacer: true },
+  tablet: { introRight: 0, timelineRight: 0, portfolioRight: 0, principlesLeft: 0, ctaLeft: 0, spacer: false },
+  desktop: { introRight: 0, timelineRight: 0, portfolioRight: 0, principlesLeft: 0, ctaLeft: 0, spacer: false },
+  wide: { introRight: 0, timelineRight: 0, portfolioRight: 0, principlesLeft: 0, ctaLeft: 0, spacer: false },
 }
 
 const progressRoadmap = [
@@ -287,53 +285,20 @@ const AboutPage = () => {
 
   const modelX = useTransform(stageProgress, (value) => computePathCoordinate('x', value))
   const modelY = useTransform(stageProgress, (value) => computePathCoordinate('y', value))
-  const modelScale = useTransform(stageProgress, [0, 0.4, 0.8, 1], [0.82, 1.04, 1.22, 1.05])
-  const modelGlow = useTransform(stageProgress, [0, 1], [0.35, 0.92])
+  const modelScale = useTransform(stageProgress, [0, 0.4, 0.8, 1], [0.7, 0.86, 0.94, 0.78])
+  const modelGlow = useTransform(stageProgress, [0, 1], [0.2, 0.6])
   const colorShift = useTransform(stageProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-35deg) saturate(1.3)', 'hue-rotate(18deg) saturate(1.1)'])
-  const trailOpacity = useTransform(stageProgress, [0, 0.5, 1], [0.15, 0.9, 0.45])
-  const stageOpacity = useTransform(stageProgress, [0, 0.05, 0.95, 1], [0.2, 1, 1, 0.4])
+  const trailOpacity = useTransform(stageProgress, [0, 0.5, 1], [0.08, 0.4, 0.2])
+  const stageOpacity = useTransform(stageProgress, [0, 0.05, 0.95, 1], [0.08, 0.45, 0.45, 0.15])
 
   const cardsReveal = useTransform(scrollYProgress, [0.05, 0.35], [0, 1])
   const cardsBlur = useTransform(cardsReveal, [0, 1], ['blur(18px)', 'blur(0px)'])
 
   return (
     <main ref={pageRef} className="relative min-h-screen overflow-hidden bg-transparent text-white">
-      <motion.svg
-        aria-hidden="true"
-        className="pointer-events-none fixed left-1/2 top-1/2 z-10 h-[1200px] w-[1200px] -translate-x-1/2 -translate-y-1/2 text-white/20"
-        viewBox={pathViewBox}
-      >
-        <defs>
-          <linearGradient id="heroPathGradient" x1="0%" x2="100%" y1="0%" y2="100%">
-            <stop offset="0%" stopColor="rgba(255,255,255,0.4)" />
-            <stop offset="100%" stopColor="rgba(120,255,255,0.8)" />
-          </linearGradient>
-        </defs>
-        <path d={heroPathD} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2" strokeLinecap="round" />
-        <motion.path
-          d={heroPathD}
-          fill="none"
-          stroke="url(#heroPathGradient)"
-          strokeWidth="2.8"
-          strokeLinecap="round"
-          style={{ pathLength: stageProgress }}
-        />
-        {heroPathPoints.map((point, index) => (
-          <motion.circle
-            key={`hero-node-${point.progress}`}
-            cx={point.x}
-            cy={point.y}
-            r={index === 0 || index === heroPathPoints.length - 1 ? 5 : 3.5}
-            fill="currentColor"
-            initial={{ opacity: 0.3, scale: 0.85 }}
-            animate={{ opacity: 0.7, scale: 1 }}
-            transition={{ delay: index * 0.02 }}
-          />
-        ))}
-      </motion.svg>
       <motion.div
         aria-hidden="true"
-        className="pointer-events-none fixed left-1/2 top-1/2 z-30 -translate-x-1/2 -translate-y-1/2"
+        className="pointer-events-none fixed left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
         style={{ x: modelX, y: modelY, scale: modelScale, opacity: stageOpacity, filter: colorShift }}
       >
         <motion.span
@@ -345,27 +310,30 @@ const AboutPage = () => {
           style={{ opacity: modelGlow }}
         />
         <HeroModel
-          className="h-[460px] w-[420px] sm:h-[500px] sm:w-[480px] lg:h-[580px] lg:w-[540px]"
+          className="h-[400px] w-[360px] sm:h-[460px] sm:w-[420px] lg:h-[520px] lg:w-[480px]"
           label="Cinderella"
           modelSrc="/models/cinderella3D.glb"
           modelSettings={{
             ...cinderellaModelSettings,
-            modelScale: 0.48,
-            modelYOffset: -1.6,
+            modelScale: 0.38,
+            modelYOffset: -1.75,
+            lockOrientation: true,
+            orbitAzimuthRange: [-0.25, 0.25],
+            modelRotationY: 0,
             responsive: {
               ...cinderellaModelSettings.responsive,
-              mobile: { ...(cinderellaModelSettings.responsive?.mobile ?? {}), modelScale: 0.4, modelYOffset: -2.2 },
-              tablet: { ...(cinderellaModelSettings.responsive?.tablet ?? {}), modelScale: 0.44, modelYOffset: -1.95 },
-              laptop: { ...(cinderellaModelSettings.responsive?.laptop ?? {}), modelScale: 0.46, modelYOffset: -1.75 },
-              desktop: { ...(cinderellaModelSettings.responsive?.desktop ?? {}), modelScale: 0.49, modelYOffset: -1.6 },
-              desktopXL: { ...(cinderellaModelSettings.responsive?.desktopXL ?? {}), modelScale: 0.52, modelYOffset: -1.5 },
+              mobile: { ...(cinderellaModelSettings.responsive?.mobile ?? {}), modelScale: 0.32, modelYOffset: -2.3 },
+              tablet: { ...(cinderellaModelSettings.responsive?.tablet ?? {}), modelScale: 0.36, modelYOffset: -2.05 },
+              laptop: { ...(cinderellaModelSettings.responsive?.laptop ?? {}), modelScale: 0.4, modelYOffset: -1.82 },
+              desktop: { ...(cinderellaModelSettings.responsive?.desktop ?? {}), modelScale: 0.44, modelYOffset: -1.65 },
+              desktopXL: { ...(cinderellaModelSettings.responsive?.desktopXL ?? {}), modelScale: 0.48, modelYOffset: -1.55 },
             },
           }}
           slideId="about-floating"
         />
       </motion.div>
 
-      <div className="layout-shell relative z-10 space-y-16 pb-20 pt-28 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
+      <div className="layout-shell relative z-40 space-y-16 pb-20 pt-28 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute left-[-2.5rem] top-24 hidden h-[calc(100%-6rem)] w-2 md:block lg:left-[-3rem]"
@@ -400,7 +368,7 @@ const AboutPage = () => {
       </div>
 
         <motion.section
-          className="grid min-h-screen content-center gap-10 lg:grid-cols-[1.05fr_0.95fr]"
+          className="grid gap-10 2xl:min-h-screen 2xl:content-center 2xl:grid-cols-[1.05fr_0.95fr]"
           style={introSpacing}
           initial="hidden"
           animate="visible"
@@ -449,11 +417,13 @@ const AboutPage = () => {
             с богат асортимент и превъзходен вкус. Клиентите споделят, че „решението кое парче да опиташ е истинско
             предизвикателство“, а самата Поли лично препоръчва любимите си десерти.
           </p>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2">
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {atelierStats.map((stat) => (
               <div key={stat.label} className="rounded-3xl border border-white/15 p-4">
-                <p className="text-4xl font-semibold text-white">{stat.value}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.3em] text-white/60">{stat.label}</p>
+                <p className="text-xl font-semibold leading-snug text-white break-words sm:text-2xl lg:text-3xl">
+                  {stat.value}
+                </p>
+                <p className="mt-2 text-[0.6rem] uppercase tracking-[0.25em] text-white/60 sm:text-xs">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -469,7 +439,9 @@ const AboutPage = () => {
         >
         <motion.div className="max-w-3xl" variants={fadeInUp}>
           <p className="text-xs uppercase tracking-[0.55em] text-white/60">Линия на времето</p>
-          <h2 className="mt-3 font-luxury text-3xl text-white 2xl:text-4xl">От телевизионния старт до собствен бранд</h2>
+          <h2 className="mt-3 font-luxury text-xl text-white leading-snug sm:text-2xl lg:text-3xl 2xl:text-4xl">
+            От телевизионния старт до собствен бранд
+          </h2>
           <p className="mt-4 text-white/75">
             Историята на Cinderella’s Cakes е разказана от местните медии – от Hell’s Kitchen и „Черешката на тортата“ до
             репортажите на localstore.bg, nova.bg и marica.bg. Всяко участие води Полина към собствения ѝ адрес за

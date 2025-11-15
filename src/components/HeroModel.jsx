@@ -66,7 +66,13 @@ const ModelUnavailable = ({ label }) => (
   </div>
 )
 
-const DessertModel = ({ src, groupScale = 0.92, yOffset = -0.9 }) => {
+const DessertModel = ({
+  src,
+  groupScale = 0.92,
+  yOffset = -0.9,
+  lockOrientation = false,
+  baseRotationY = null,
+}) => {
   const { scene } = useGLTF(src)
   const clonedScene = useMemo(() => scene.clone(true), [scene])
   const groupRef = useRef(null)
@@ -80,8 +86,14 @@ const DessertModel = ({ src, groupScale = 0.92, yOffset = -0.9 }) => {
     })
   }, [clonedScene])
 
+  useEffect(() => {
+    if (groupRef.current && baseRotationY !== null) {
+      groupRef.current.rotation.y = baseRotationY
+    }
+  }, [baseRotationY])
+
   useFrame((_, delta) => {
-    if (groupRef.current) {
+    if (groupRef.current && !lockOrientation) {
       groupRef.current.rotation.y += delta * 0.35
     }
   })
@@ -118,13 +130,27 @@ const HeroModel = ({
       cameraPosition: [0, 1.35, 1.95],
       orbitTarget: [0, -0.28, 0],
       fov: 32,
+      lockOrientation: false,
+      orbitAzimuthRange: null,
+      modelRotationY: null,
       ...baseSettings,
       ...fallbackOverrides,
       ...(responsive[viewport] ?? {}),
     }
   }, [modelSettings, viewport])
 
-  const { modelScale, modelYOffset, cameraPosition, orbitTarget, fov } = appliedSettings
+  const {
+    modelScale,
+    modelYOffset,
+    cameraPosition,
+    orbitTarget,
+    fov,
+    lockOrientation,
+    orbitAzimuthRange,
+    modelRotationY,
+  } = appliedSettings
+  const resolvedAzimuthRange = orbitAzimuthRange ?? null
+  const rotateEnabled = resolvedAzimuthRange ? true : !lockOrientation
 
   useEffect(() => {
     if (modelSrc) {
@@ -183,19 +209,28 @@ const HeroModel = ({
             position={[-5, 6, -2]}
           />
           <Suspense fallback={<LoadingOverlay label={label} />}>
-            <DessertModel src={modelSrc} groupScale={modelScale} yOffset={modelYOffset} />
+            <DessertModel
+              src={modelSrc}
+              groupScale={modelScale}
+              yOffset={modelYOffset}
+              lockOrientation={lockOrientation}
+              baseRotationY={modelRotationY}
+            />
             <Environment preset="studio" />
             <ContactShadows opacity={0.45} scale={6} blur={2.5} far={4} resolution={512} position={[0, -1.2, 0]} />
           </Suspense>
           <OrbitControls
-            autoRotate
+            autoRotate={!lockOrientation}
             autoRotateSpeed={0.9}
             enablePan={false}
             enableZoom={false}
+            enableRotate={rotateEnabled}
             maxDistance={2}
             minDistance={1.4}
             minPolarAngle={Math.PI * 0.34}
             maxPolarAngle={Math.PI * 0.5}
+            minAzimuthAngle={resolvedAzimuthRange ? resolvedAzimuthRange[0] : undefined}
+            maxAzimuthAngle={resolvedAzimuthRange ? resolvedAzimuthRange[1] : undefined}
             target={orbitTarget}
           />
         </Canvas>
