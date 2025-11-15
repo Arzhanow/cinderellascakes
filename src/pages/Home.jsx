@@ -15,9 +15,10 @@ const heroSlides = [
     href: '/#contact',
     model: '/models/garash.glb',
     modelSettings: {
-      cameraPosition: [0, 1.35, 2.35],
-      modelScale: 0.8,
-      modelYOffset: -1.1,
+      cameraPosition: [0, 1.2, 2.6],
+      modelScale: 0.7,
+      modelYOffset: -0.6,
+      orbitTarget: [0, -0.15, 0],
     },
   },
   {

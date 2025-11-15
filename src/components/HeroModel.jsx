@@ -59,6 +59,7 @@ const HeroModel = ({
     modelScale = 0.92,
     modelYOffset = -0.9,
     cameraPosition = [0, 1.35, 1.95],
+    orbitTarget = [0, -0.28, 0],
   } = modelSettings
   const [mounted, setMounted] = useState(false)
 
@@ -132,7 +133,7 @@ const HeroModel = ({
             minDistance={1.4}
             minPolarAngle={Math.PI * 0.34}
             maxPolarAngle={Math.PI * 0.5}
-            target={[0, -0.28, 0]}
+            target={orbitTarget}
           />
         </Canvas>
 
