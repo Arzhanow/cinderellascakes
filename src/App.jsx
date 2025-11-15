@@ -16,7 +16,7 @@ const App = () => (
       <Routes>
         <Route element={<MainLayout />}>
           <Route index element={<HomePage />} />
-          <Route path="/production" element={<ProductionPage />} />
+          <Route path="/horeca" element={<ProductionPage />} />
           <Route path="/retail" element={<RetailPage />} />
           <Route path="/hotels" element={<HotelsPage />} />
           <Route path="/catering" element={<CateringPage />} />

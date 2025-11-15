@@ -10,7 +10,7 @@ const navLinks = [
   { label: 'Принципи', href: '/#principles' },
   { label: 'За нас', href: '/about' },
   { label: 'Продукти', href: '/#hero' },
-  { label: 'Услуги', href: '/production' },
+  { label: 'HoReCa', href: '/horeca' },
   { label: 'Контакт', href: '/#contact' },
 ]
 

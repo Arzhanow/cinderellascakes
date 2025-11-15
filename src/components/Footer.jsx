@@ -27,8 +27,8 @@ const Footer = () => {
           <a className="transition hover:text-brand-blush" href="tel:+359884123456">
             +359 88 412 34 56
           </a>
-          <a className="transition hover:text-brand-blush" href="/production">
-            Услуги
+          <a className="transition hover:text-brand-blush" href="/horeca">
+            HoReCa
           </a>
           <a className="transition hover:text-brand-blush" href="#products">
             Продукти
