@@ -1,6 +1,5 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Float, useGLTF } from '@react-three/drei'
-import { motion } from 'framer-motion'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 
 const CinderellaModel = () => {
@@ -49,12 +48,14 @@ const LoadingScreen = ({ onComplete }) => {
     return () => clearInterval(interval)
   }, [])
 
+  const shouldFadeOut = progress >= 100
+
   useEffect(() => {
-    if (progress === 100 && typeof onComplete === 'function') {
-      const timeout = setTimeout(() => onComplete(), 450)
+    if (shouldFadeOut && typeof onComplete === 'function') {
+      const timeout = setTimeout(() => onComplete(), 500)
       return () => clearTimeout(timeout)
     }
-  }, [progress, onComplete])
+  }, [shouldFadeOut, onComplete])
 
   const arc = (progress / 100) * 360
   const progressStyle = useMemo(
@@ -65,12 +66,10 @@ const LoadingScreen = ({ onComplete }) => {
   )
 
   return (
-    <motion.div
-      className="fixed inset-0 z-[999] flex items-center justify-center bg-[#05020a] text-white"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6, ease: 'easeInOut' }}
+    <div
+      className={`fixed inset-0 z-[999] flex items-center justify-center bg-[#05020a] text-white transition-opacity duration-500 ease-in-out ${
+        shouldFadeOut ? 'opacity-0' : 'opacity-100'
+      }`}
     >
       <div className="flex w-full max-w-[420px] flex-col items-center gap-10 px-4 text-center sm:gap-12">
         <div className="relative h-48 w-full sm:h-56">
@@ -115,7 +114,7 @@ const LoadingScreen = ({ onComplete }) => {
           </p>
         </div>
       </div>
-    </motion.div>
+    </div>
   )
 }
 

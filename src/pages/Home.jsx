@@ -203,9 +203,7 @@ const HomePage = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {showIntroLoader && <LoadingScreen onComplete={() => setShowIntroLoader(false)} />}
-      </AnimatePresence>
+      {showIntroLoader && <LoadingScreen onComplete={() => setShowIntroLoader(false)} />}
       <motion.main
         aria-hidden={showIntroLoader}
         className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36"
@@ -608,7 +606,6 @@ const HomePage = () => {
 }
 
 export default HomePage
-
 
 
 
