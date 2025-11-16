@@ -326,7 +326,16 @@ const HomePage = () => {
         transition={createTransition(0, 0.8, 'easeOut')}
         style={{ pointerEvents: showIntroLoader ? 'none' : 'auto' }}
       >
-      <section className="relative min-h-[90vh] w-full overflow-hidden" data-surface="dark" id="hero">
+      <section
+        className="relative min-h-[80vh] w-full overflow-hidden"
+        data-surface="dark"
+        id="hero"
+        onWheel={handleHeroWheel}
+        ref={heroSectionRef}
+        style={{
+          minHeight: 'max(80vh, calc(100vh - (var(--topbar-height, 0px) + var(--navigation-height, 0px))))',
+        }}
+      >
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
             <motion.div
@@ -396,7 +405,7 @@ const HomePage = () => {
           )}
         </div>
 
-        <div className="relative z-10 layout-shell flex min-h-[90vh] w-full flex-col justify-center gap-8 pt-4 pb-[14rem] text-left sm:pt-8 sm:pb-[18rem] md:pb-10 2xl:gap-12 3xl:pt-12 3xl:pb-20 4xl:pt-16 4xl:pb-24">
+        <div className="relative z-10 layout-shell flex min-h-[70vh] w-full flex-col justify-center gap-8 pt-6 pb-32 text-left sm:pt-10 sm:pb-36 md:pb-16 lg:pt-14 lg:pb-12 2xl:gap-12 3xl:pt-16 3xl:pb-12 4xl:pt-20 4xl:pb-14">
           <motion.div
             className="max-w-2xl text-white -translate-y-6 sm:translate-y-0 md:ml-auto md:mr-20 xl:ml-4 2xl:max-w-3xl 2xl:ml-8 3xl:ml-14 3xl:mr-6 4xl:max-w-[60rem] 4xl:ml-22"
             variants={createStagger(0.12)}
@@ -762,4 +771,36 @@ const HomePage = () => {
           >
             <button
               className="absolute right-4 top-4 rounded-full border border-white/20 bg-white/10 p-2 text-sm text-white transition hover:border-white/60 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan/60"
-              onClick={() => setA
+              onClick={() => setActiveMap(null)}
+              ref={closeButtonRef}
+              type="button"
+              aria-label="Затвори картата"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <p className="text-xs uppercase tracking-[0.4em] text-white/60">Локация</p>
+            <h3 className="mt-2 font-luxury text-3xl text-white" id={`map-modal-title-${activeLocation.id}`}>
+              {activeLocation.name}
+            </h3>
+            <p className="text-sm text-white/70">{activeLocation.street}</p>
+            <div className="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
+              <iframe
+                allowFullScreen
+                className="h-[420px] w-full"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src={activeLocation.iframeSrc}
+                style={{ border: 0 }}
+                title={`Карта - ${activeLocation.name}`}
+              ></iframe>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
+  )
+}
+
+export default HomePage
+
