@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import '../styles/production-slider.css'
 
@@ -15,8 +15,19 @@ const backgroundTransition = {
 }
 
 const ProductionSlider = ({ slides = [], initialIndex = 0, onSlideSelect }) => {
-  const [activeIndex, setActiveIndex] = useState(() => wrapIndex(initialIndex, slides.length || 1))
+  const [activeIndex, setActiveIndex] = useState(0)
   const normalizedIndex = slides.length ? wrapIndex(activeIndex, slides.length) : 0
+
+  useEffect(() => {
+    if (!slides.length) return undefined
+    const safeIndex = wrapIndex(initialIndex, slides.length)
+    const frame = requestAnimationFrame(() => {
+      setActiveIndex((current) => (current === safeIndex ? current : safeIndex))
+      onSlideSelect?.(slides[safeIndex], safeIndex)
+    })
+
+    return () => cancelAnimationFrame(frame)
+  }, [initialIndex, slides, onSlideSelect])
 
   const selectIndex = (nextIndex) => {
     if (!slides.length) return

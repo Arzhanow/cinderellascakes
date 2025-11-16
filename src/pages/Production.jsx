@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import ProductionSlider from '../components/ProductionSlider'
 import {
   createStagger,
@@ -15,6 +15,12 @@ import {
    email: 'hello@cinderellascakes.bg',
    phone: '+359 88 412 34 56',
  }
+
+const normalizeServiceId = (value) => {
+  if (typeof value !== 'string') return null
+  const trimmed = value.trim()
+  return trimmed.length ? trimmed.toLowerCase() : null
+}
 
 const productionServices = [
   {
@@ -97,8 +103,37 @@ const productionServices = [
  }
 
 const ProductionPage = () => {
+  const location = useLocation()
   const memoizedServices = useMemo(() => productionServices, [])
-  const [selectedService, setSelectedService] = useState(null)
+
+  const derivedSlideId = useMemo(() => {
+    const possibleMatches = []
+    if (location.state && typeof location.state === 'object') {
+      const { slideId, serviceId, program } = location.state
+      possibleMatches.push(slideId, serviceId, program)
+    }
+    if (location.search) {
+      const params = new URLSearchParams(location.search)
+      possibleMatches.push(params.get('slide'), params.get('service'), params.get('program'))
+    }
+    if (location.hash) {
+      possibleMatches.push(location.hash.replace('#', ''))
+    }
+
+    return possibleMatches.map(normalizeServiceId).find(Boolean) ?? null
+  }, [location])
+
+  const initialSlideIndex = useMemo(() => {
+    if (!derivedSlideId) return 0
+    const matchedIndex = memoizedServices.findIndex(
+      (service) => normalizeServiceId(service.id) === derivedSlideId
+    )
+    return matchedIndex >= 0 ? matchedIndex : 0
+  }, [derivedSlideId, memoizedServices])
+
+  const [selectedService, setSelectedService] = useState(
+    () => memoizedServices[initialSlideIndex] ?? null
+  )
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-brand-night text-white">
@@ -143,7 +178,11 @@ const ProductionPage = () => {
          </motion.header>
 
         <div className="flex flex-col gap-10">
-          <ProductionSlider slides={memoizedServices} onSlideSelect={setSelectedService} />
+          <ProductionSlider
+            slides={memoizedServices}
+            initialIndex={initialSlideIndex}
+            onSlideSelect={setSelectedService}
+          />
 
           <AnimatePresence mode="wait">
             {selectedService && (
