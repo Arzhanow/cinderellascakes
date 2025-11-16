@@ -42,7 +42,6 @@ const Footer = () => {
         {...revealConfig}
       >
         <span>© {new Date().getFullYear()} Cinderella’s Cakes</span>
-        <span>Създадено с React + Vite</span>
       </motion.div>
     </motion.footer>
   )
