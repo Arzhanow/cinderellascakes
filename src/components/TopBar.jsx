@@ -75,9 +75,9 @@ const TopBar = () => {
         <div className="flex flex-wrap items-center gap-2 text-[0.7rem] tracking-[0.2em] text-brand-cyan 3xl:text-sm 4xl:text-base">
           <a
             className="font-semibold transition-colors hover:text-brand-blush"
-            href="tel:+359884123456"
+            href="tel:+359885493040"
           >
-            +359 88 412 34 56
+            +359 88 549 3040
           </a>
           <span aria-hidden="true" className="text-white/40">
             /

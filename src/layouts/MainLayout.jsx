@@ -2,10 +2,12 @@ import { Outlet } from 'react-router-dom'
 import Footer from '../components/Footer'
 import Navigation from '../components/Navigation'
 import TopBar from '../components/TopBar'
+import FallingCakesBackground from '../components/FallingCakesBackground'
 
 const MainLayout = () => {
   return (
     <div className="relative min-h-screen bg-brand-night text-white">
+      <FallingCakesBackground />
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"

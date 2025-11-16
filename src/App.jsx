@@ -4,6 +4,7 @@ import AboutPage from './pages/About'
 import HomePage from './pages/Home'
 import ProductionPage from './pages/Production'
 import ProductsPage from './pages/Products'
+import ProductDetailsPage from './pages/ProductDetails'
 import ScrollToTop from './components/ScrollToTop'
 import { ThemeProvider } from './context/ThemeContext'
 
@@ -15,6 +16,7 @@ const App = () => (
         <Route element={<MainLayout />}>
           <Route index element={<HomePage />} />
           <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:productSlug" element={<ProductDetailsPage />} />
           <Route path="/horeca" element={<ProductionPage />} />
           <Route path="/about" element={<AboutPage />} />
         </Route>

@@ -518,7 +518,7 @@ const AboutPage = () => {
           Разкажете ни за вашия повод – Полина и екипът са на един разговор разстояние.
         </motion.h2>
         <motion.p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-white/75" variants={fadeInUp}>
-          Cinderella’s Cakes приема поръчки на 0885 493040 и 0889 979565, а Полина лично отговаря в Instagram
+          Cinderella’s Cakes приема поръчки на +359 88 549 3040, а Полина лично отговаря в Instagram
           (@cinderellas_cakes и @polina_alatinova). Следващата глава на тази приказка може да бъде вашето тържество в
           Пловдив или на път.
         </motion.p>

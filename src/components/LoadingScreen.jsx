@@ -2,6 +2,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Float, useGLTF } from '@react-three/drei'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useTheme } from '../context/ThemeContext'
+import FallingCakesBackground from './FallingCakesBackground'
 
 const themePalettes = {
   midnight: {
@@ -133,6 +134,7 @@ const LoadingScreen = ({ onComplete }) => {
         color: text,
       }}
     >
+      <FallingCakesBackground />
       <div className="flex w-full max-w-[420px] flex-col items-center gap-10 px-4 text-center sm:gap-12">
         <div className="relative h-48 w-full sm:h-56">
           <Canvas

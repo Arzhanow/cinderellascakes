@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Canvas } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, OrbitControls, useGLTF } from '@react-three/drei'
@@ -8,11 +9,11 @@ const GARASH_MODEL_SRC = '/models/garash.glb'
 
 const featuredProducts = Array.from({ length: 6 }, (_, index) => ({
   id: `garash-${index + 1}`,
-  title: 'Гараш',
+  title: 'Торта "Гараш"',
   cta: 'Виж повече',
   modelSrc: GARASH_MODEL_SRC,
+  slug: 'garash',
 }))
-
 const viewportQueries = [
   { name: 'mobile', query: '(max-width: 639px)' },
   { name: 'tablet', query: '(min-width: 640px) and (max-width: 1023px)' },
@@ -231,12 +232,12 @@ const ProductCard = ({ product, index, canvasConfig }) => (
         <p className="text-[0.65rem] uppercase tracking-[0.55em] text-white/50">най-харесвани</p>
         <h3 className="mt-2 text-2xl font-semibold tracking-tight text-white sm:text-[1.7rem]">{product.title}</h3>
       </div>
-      <button
-        type="button"
-        className="w-full rounded-full border border-white/30 px-4 py-2 text-[0.62rem] uppercase tracking-[0.4em] text-white/80 transition group-hover:border-white/70 group-hover:text-white sm:w-auto"
+      <Link
+        to={`/products/${product.slug}`}
+        className="inline-flex w-full items-center justify-center rounded-full border border-white/30 px-4 py-2 text-[0.62rem] uppercase tracking-[0.4em] text-white/80 transition hover:border-white/70 hover:text-white group-hover:border-white/70 group-hover:text-white sm:w-auto"
       >
         {product.cta}
-      </button>
+      </Link>
     </div>
   </motion.article>
 )

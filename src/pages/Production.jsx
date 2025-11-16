@@ -13,7 +13,7 @@ import {
 
  const CONTACT = {
   email: 'alatinovapolina@gmail.com',
-   phone: '+359 88 412 34 56',
+  phone: '+359 88 549 3040',
  }
 
 const normalizeServiceId = (value) => {

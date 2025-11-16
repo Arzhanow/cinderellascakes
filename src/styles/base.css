@@ -98,6 +98,15 @@
     overflow-x: hidden;
   }
 
+  .hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   section[id] {
     scroll-margin-top: calc(var(--topbar-height) + var(--navigation-height) + var(--anchor-padding));
   }
@@ -228,5 +237,41 @@
 
   .border-white\/40 {
     border-color: rgb(var(--theme-border-color) / 0.4) !important;
+  }
+}
+
+@layer utilities {
+  @keyframes fall-and-fade {
+    0% {
+      transform: translate3d(0, -10%, 0) scale(var(--cake-scale, 0.6));
+      opacity: 0;
+    }
+
+    45% {
+      opacity: 0.7;
+    }
+
+    100% {
+      transform: translate3d(0, 110%, 0) scale(var(--cake-scale, 0.6));
+      opacity: 0;
+    }
+  }
+
+  @keyframes slow-spin {
+    0% {
+      rotate: var(--cake-rotation-start, -8deg);
+    }
+
+    100% {
+      rotate: var(--cake-rotation-end, 8deg);
+    }
+  }
+
+  .animate-fall-and-fade {
+    animation-name: fall-and-fade, slow-spin;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite, infinite;
+    animation-fill-mode: both, both;
+    will-change: transform, opacity;
   }
 }

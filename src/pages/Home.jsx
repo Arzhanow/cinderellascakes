@@ -597,10 +597,10 @@ const HomePage = () => {
                   <p className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Контакти</p>
                   <ul className="mt-3 space-y-3 text-sm text-white/80 2xl:text-base 4xl:text-lg">
                     <li>
-                      <span className="font-semibold text-white">Поръчки:</span> 0885 493 040
+                      <span className="font-semibold text-white">Поръчки:</span> +359 88 549 3040
                     </li>
                     <li>
-                      <span className="font-semibold text-white">Кетъринг и събития:</span> 0889 979 565
+                      <span className="font-semibold text-white">Кетъринг и събития:</span> +359 88 549 3040
                     </li>
                     <li>
                       <span className="font-semibold text-white">Имейл:</span> alatinovapolina@gmail.com
@@ -639,7 +639,11 @@ const HomePage = () => {
                 </motion.div>
                 <motion.div variants={fadeInUp}>
                   <label className="text-xs uppercase tracking-[0.3em] text-white/60 2xl:text-sm 4xl:text-base">Телефон</label>
-                  <input className="theme-input mt-2 w-full rounded-2xl border px-4 py-3" placeholder="+359 ..." type="tel" />
+                  <input
+                    className="theme-input mt-2 w-full rounded-2xl border px-4 py-3"
+                    placeholder="+359 88 549 3040"
+                    type="tel"
+                  />
                 </motion.div>
               </motion.div>
               <motion.div variants={fadeInUp}>
