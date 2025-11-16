@@ -290,7 +290,7 @@ const ProductDetailsPage = () => {
             {story.hero.title}
           </motion.h1>
           <motion.p
-            className="text-base leading-relaxed text-white/75 sm:text-lg lg:text-xl"
+            className="text-base leading-relaxed text-white sm:text-lg lg:text-xl"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
