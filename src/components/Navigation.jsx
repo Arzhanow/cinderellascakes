@@ -28,8 +28,25 @@ const Navigation = () => {
     }
 
     updateNavigationHeight()
-    window.addEventListener('resize', updateNavigationHeight)
-    return () => window.removeEventListener('resize', updateNavigationHeight)
+
+    const navElement = headerRef.current
+    let resizeObserver
+
+    if (navElement && typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(() => updateNavigationHeight())
+      resizeObserver.observe(navElement)
+    } else {
+      window.addEventListener('resize', updateNavigationHeight)
+    }
+
+    return () => {
+      if (resizeObserver && navElement) {
+        resizeObserver.unobserve(navElement)
+        resizeObserver.disconnect()
+      } else {
+        window.removeEventListener('resize', updateNavigationHeight)
+      }
+    }
   }, [])
 
   const toggleMenu = () => setMenuOpen((prev) => !prev)

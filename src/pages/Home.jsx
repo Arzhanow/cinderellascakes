@@ -603,7 +603,7 @@ const HomePage = () => {
                       <span className="font-semibold text-white">Кетъринг и събития:</span> 0889 979 565
                     </li>
                     <li>
-                      <span className="font-semibold text-white">Имейл:</span> polinaalatinova@bigenergy.bg
+                      <span className="font-semibold text-white">Имейл:</span> alatinovapolina@gmail.com
                     </li>
                   </ul>
                 </motion.div>

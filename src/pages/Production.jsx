@@ -12,7 +12,7 @@ import {
 } from '../utils/motionPresets'
 
  const CONTACT = {
-   email: 'hello@cinderellascakes.bg',
+  email: 'alatinovapolina@gmail.com',
    phone: '+359 88 412 34 56',
  }
 

@@ -21,8 +21,8 @@ const Footer = () => {
           transition={createTransition(0.3, 0.7)}
           {...revealConfig}
         >
-          <a className="transition hover:text-brand-blush" href="mailto:hello@cinderellascakes.bg">
-            hello@cinderellascakes.bg
+          <a className="transition hover:text-brand-blush" href="mailto:alatinovapolina@gmail.com">
+            alatinovapolina@gmail.com
           </a>
           <a className="transition hover:text-brand-blush" href="tel:+359884123456">
             +359 88 412 34 56
