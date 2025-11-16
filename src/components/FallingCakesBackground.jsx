@@ -8,8 +8,8 @@ const CAKE_IMAGES = [
   '/images/fallingcakes/element_strawberry.png',
 ]
 
-const MIN_PARTICLES = 40
-const MAX_PARTICLES = 80
+const MIN_PARTICLES = 80
+const MAX_PARTICLES = 140
 
 const randomBetween = (min, max) => Math.random() * (max - min) + min
 const randomInt = (min, max) => Math.floor(randomBetween(min, max + 1))
