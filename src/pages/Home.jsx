@@ -1,5 +1,4 @@
-﻿import { useEffect, useState } from 'react'
-import { useRef } from 'react'
+﻿import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
@@ -210,6 +209,9 @@ const HomePage = () => {
   const [showIntroLoader, setShowIntroLoader] = useState(true)
   const [activeMap, setActiveMap] = useState(null)
   const closeButtonRef = useRef(null)
+  const heroSectionRef = useRef(null)
+  const heroScrollLockRef = useRef(false)
+  const heroScrollTimeoutRef = useRef(null)
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -227,6 +229,57 @@ const HomePage = () => {
 
     return () => clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    return () => {
+      if (heroScrollTimeoutRef.current) {
+        window.clearTimeout(heroScrollTimeoutRef.current)
+      }
+    }
+  }, [])
+
+  const handleHeroWheel = useCallback(
+    (event) => {
+      if (!heroSectionRef.current || showIntroLoader) {
+        return
+      }
+
+      if (!heroSectionRef.current.contains(event.target)) {
+        return
+      }
+
+      const deltaY = event.deltaY
+      if (Math.abs(deltaY) < 15) {
+        return
+      }
+
+      const isScrollingDown = deltaY > 0
+      const atFirstSlide = activeSlide === 0
+      const atLastSlide = activeSlide === heroSlides.length - 1
+
+      if (heroScrollLockRef.current) {
+        event.preventDefault()
+        return
+      }
+
+      if (isScrollingDown && !atLastSlide) {
+        event.preventDefault()
+        heroScrollLockRef.current = true
+        setActiveSlide((prev) => Math.min(prev + 1, heroSlides.length - 1))
+        heroScrollTimeoutRef.current = window.setTimeout(() => {
+          heroScrollLockRef.current = false
+        }, 850)
+      } else if (!isScrollingDown && !atFirstSlide) {
+        event.preventDefault()
+        heroScrollLockRef.current = true
+        setActiveSlide((prev) => Math.max(prev - 1, 0))
+        heroScrollTimeoutRef.current = window.setTimeout(() => {
+          heroScrollLockRef.current = false
+        }, 850)
+      }
+    },
+    [activeSlide, showIntroLoader]
+  )
 
   const currentSlide = heroSlides[activeSlide]
   const activeLocation = mapLocations.find((location) => location.id === activeMap)
@@ -709,35 +762,4 @@ const HomePage = () => {
           >
             <button
               className="absolute right-4 top-4 rounded-full border border-white/20 bg-white/10 p-2 text-sm text-white transition hover:border-white/60 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-cyan/60"
-              onClick={() => setActiveMap(null)}
-              ref={closeButtonRef}
-              type="button"
-              aria-label="Затвори картата"
-            >
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <p className="text-xs uppercase tracking-[0.4em] text-white/60">Локация</p>
-            <h3 className="mt-2 font-luxury text-3xl text-white" id={`map-modal-title-${activeLocation.id}`}>
-              {activeLocation.name}
-            </h3>
-            <p className="text-sm text-white/70">{activeLocation.street}</p>
-            <div className="mt-6 overflow-hidden rounded-3xl border border-white/10 bg-black/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]">
-              <iframe
-                allowFullScreen
-                className="h-[420px] w-full"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                src={activeLocation.iframeSrc}
-                style={{ border: 0 }}
-                title={`Карта - ${activeLocation.name}`}
-              ></iframe>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-    </>
-  )
-}
-
-export default HomePage
+              onClick={() => setA
