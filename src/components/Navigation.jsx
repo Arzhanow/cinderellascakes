@@ -54,7 +54,7 @@ const Navigation = () => {
   const handleBrandClick = (event) => {
     if (location.pathname === '/' && !location.hash) {
       event.preventDefault()
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      window.scrollTo({ top: 0, behavior: 'auto' })
     }
     closeMenu()
   }

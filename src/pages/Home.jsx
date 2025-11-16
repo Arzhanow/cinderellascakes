@@ -26,7 +26,7 @@ const heroTitleVariants = {
   animate: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
   exit: { opacity: 0, y: -28, scale: 0.97, filter: 'blur(8px)' },
 }
-const heroTitleTransition = createTransition(0.04, 0.85, 'easeInOut')
+const heroTitleTransition = createTransition(0.02, 0.55, 'easeInOut')
 
 const heroSlides = [
   {
@@ -249,12 +249,40 @@ const mapLocations = [
 
 const HomePage = () => {
   const [activeSlide, setActiveSlide] = useState(0)
+  const [heroModelNonce, setHeroModelNonce] = useState(0)
   const [showIntroLoader, setShowIntroLoader] = useState(true)
   const [activeMap, setActiveMap] = useState(null)
   const closeButtonRef = useRef(null)
   const heroSectionRef = useRef(null)
   const heroScrollLockRef = useRef(false)
   const heroScrollTimeoutRef = useRef(null)
+  const heroWheelStateRef = useRef({
+    activeSlide: 0,
+    showIntroLoader: true,
+  })
+
+  const refreshHeroModel = useCallback(() => {
+    setHeroModelNonce((prev) => prev + 1)
+  }, [])
+
+  const updateHeroSlide = useCallback(
+    (resolver) => {
+      setActiveSlide((prev) => {
+        const next = typeof resolver === 'function' ? resolver(prev) : resolver
+        return next
+      })
+      refreshHeroModel()
+    },
+    [refreshHeroModel]
+  )
+
+  useEffect(() => {
+    heroWheelStateRef.current.activeSlide = activeSlide
+  }, [activeSlide])
+
+  useEffect(() => {
+    heroWheelStateRef.current.showIntroLoader = showIntroLoader
+  }, [showIntroLoader])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -267,11 +295,11 @@ const HomePage = () => {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setActiveSlide((prev) => (prev + 1) % heroSlides.length)
+      updateHeroSlide((prev) => (prev + 1) % heroSlides.length)
     }, sliderDuration)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [updateHeroSlide])
 
   useEffect(() => {
     return () => {
@@ -281,58 +309,71 @@ const HomePage = () => {
     }
   }, [])
 
-  const handleHeroWheel = useCallback(
-    (event) => {
-      if (!heroSectionRef.current || showIntroLoader) {
-        return
-      }
+  const handleHeroWheel = useCallback((event) => {
+    const sectionNode = heroSectionRef.current
+    const { activeSlide: wheelSlide, showIntroLoader: wheelLoader } = heroWheelStateRef.current
 
-      if (!heroSectionRef.current.contains(event.target)) {
-        return
-      }
+    if (!sectionNode || wheelLoader) {
+      return
+    }
 
-      const deltaY = event.deltaY
-      if (Math.abs(deltaY) < 15) {
-        return
-      }
+    if (!sectionNode.contains(event.target)) {
+      return
+    }
 
-      const isScrollingDown = deltaY > 0
-      const atFirstSlide = activeSlide === 0
-      const atLastSlide = activeSlide === heroSlides.length - 1
+    const deltaY = event.deltaY
+    if (Math.abs(deltaY) < 15) {
+      return
+    }
 
-      if (heroScrollLockRef.current) {
-        event.preventDefault()
-        return
-      }
+    const isScrollingDown = deltaY > 0
+    const atFirstSlide = wheelSlide === 0
+    const atLastSlide = wheelSlide === heroSlides.length - 1
 
-      if (isScrollingDown && !atLastSlide) {
-        event.preventDefault()
-        heroScrollLockRef.current = true
-        setActiveSlide((prev) => Math.min(prev + 1, heroSlides.length - 1))
-        heroScrollTimeoutRef.current = window.setTimeout(() => {
-          heroScrollLockRef.current = false
-        }, 850)
-      } else if (!isScrollingDown && !atFirstSlide) {
-        event.preventDefault()
-        heroScrollLockRef.current = true
-        setActiveSlide((prev) => Math.max(prev - 1, 0))
-        heroScrollTimeoutRef.current = window.setTimeout(() => {
-          heroScrollLockRef.current = false
-        }, 850)
-      }
-    },
-    [activeSlide, showIntroLoader]
-  )
+    if (heroScrollLockRef.current) {
+      event.preventDefault()
+      return
+    }
+
+    if (isScrollingDown && !atLastSlide) {
+      event.preventDefault()
+      heroScrollLockRef.current = true
+      updateHeroSlide((prev) => Math.min(prev + 1, heroSlides.length - 1))
+      heroScrollTimeoutRef.current = window.setTimeout(() => {
+        heroScrollLockRef.current = false
+      }, 850)
+    } else if (!isScrollingDown && !atFirstSlide) {
+      event.preventDefault()
+      heroScrollLockRef.current = true
+      updateHeroSlide((prev) => Math.max(prev - 1, 0))
+      heroScrollTimeoutRef.current = window.setTimeout(() => {
+        heroScrollLockRef.current = false
+      }, 850)
+    }
+  }, [updateHeroSlide])
+
+  useEffect(() => {
+    const node = heroSectionRef.current
+    if (!node) {
+      return
+    }
+
+    node.addEventListener('wheel', handleHeroWheel, { passive: false })
+
+    return () => {
+      node.removeEventListener('wheel', handleHeroWheel)
+    }
+  }, [handleHeroWheel])
 
   const currentSlide = heroSlides[activeSlide]
   const activeLocation = mapLocations.find((location) => location.id === activeMap)
 
   const goToPrev = () => {
-    setActiveSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+    updateHeroSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
   }
 
   const goToNext = () => {
-    setActiveSlide((prev) => (prev + 1) % heroSlides.length)
+    updateHeroSlide((prev) => (prev + 1) % heroSlides.length)
   }
 
   useEffect(() => {
@@ -366,14 +407,13 @@ const HomePage = () => {
         id="home"
         initial={{ opacity: 0 }}
         animate={{ opacity: showIntroLoader ? 0 : 1 }}
-        transition={createTransition(0, 0.8, 'easeOut')}
+        transition={createTransition(0, 0.6, 'easeOut')}
         style={{ pointerEvents: showIntroLoader ? 'none' : 'auto' }}
       >
       <section
         className="relative min-h-[80vh] w-full overflow-hidden"
         data-surface="dark"
         id="hero"
-        onWheel={handleHeroWheel}
         ref={heroSectionRef}
         style={{
           minHeight: 'max(80vh, calc(100vh - (var(--topbar-height, 0px) + var(--navigation-height, 0px))))',
@@ -387,7 +427,7 @@ const HomePage = () => {
               className="absolute inset-0 overflow-hidden"
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
-              transition={createTransition(0, 0.8)}
+              transition={createTransition(0, 0.5)}
             >
               <img
                 alt=""
@@ -413,9 +453,11 @@ const HomePage = () => {
           {currentSlide.model && (
             <div className="absolute inset-0">
               <div className="relative h-full w-full">
+                {/* Bounded frame keeps the 3D model from overwhelming small viewports */}
                 <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
                   <div className="relative h-full w-full">
                     <HeroModel
+                      key={`${currentSlide.id}-${heroModelNonce}`}
                       eyebrow={currentSlide.eyebrow}
                       label={currentSlide.label}
                       modelSrc={currentSlide.model}
@@ -457,30 +499,30 @@ const HomePage = () => {
             <motion.p
               className="text-xs uppercase tracking-[0.7em] text-white/60 2xl:text-sm 4xl:text-base"
               variants={slideIn('down', 40)}
-              transition={createTransition(0, 0.7)}
+              transition={createTransition(0, 0.45)}
             >
               Пловдив · лукс сладкарство
             </motion.p>
             <motion.h1
               className="mt-4 font-luxury text-4xl font-semibold leading-tight sm:text-5xl lg:text-6xl 2xl:text-7xl 3xl:text-[5.5rem] 4xl:text-[6.25rem]"
               variants={glowIn}
-              transition={createTransition(0.1, 0.85)}
+              transition={createTransition(0.08, 0.55)}
             >
               Приказка за ценители.
             </motion.h1>
             <motion.p
               className="mt-6 text-base leading-relaxed text-white/85 sm:text-lg 2xl:text-xl 4xl:text-2xl"
               variants={fadeInUp}
-              transition={createTransition(0.2, 0.7)}
+              transition={createTransition(0.18, 0.48)}
             >
               Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин. Работим с HoReCa партньори в хотели, ресторанти и магазини в цялата страна.
             </motion.p>
-            <motion.div className="mt-8 flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.1)}>
+            <motion.div className="mt-8 flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.08)}>
               <MotionLink
                 className="rounded-full bg-gradient-to-r from-brand-accent via-brand-lilac to-brand-cyan px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-button-contrast shadow-glow-primary transition hover:-translate-y-1 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to="/horeca"
                 variants={popIn}
-                transition={createTransition(0.3, 0.6)}
+                transition={createTransition(0.24, 0.42)}
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.96 }}
               >
@@ -490,7 +532,7 @@ const HomePage = () => {
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
                 to={currentSlide.href}
                 variants={popIn}
-                transition={createTransition(0.35, 0.6)}
+                transition={createTransition(0.28, 0.42)}
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.96 }}
               >
@@ -506,7 +548,7 @@ const HomePage = () => {
             className="text-center text-white md:hidden"
             variants={fadeIn}
             {...heroRevealConfig}
-            transition={createTransition(0.6, 0.5)}
+            transition={createTransition(0.5, 0.35)}
           >
             <span className="text-[0.6rem] uppercase tracking-[0.5em] text-white/60">
               {currentSlide.eyebrow}
@@ -549,7 +591,7 @@ const HomePage = () => {
                       ? 'scale-110 border-white bg-white shadow-glow-primary'
                       : 'border-white/40 bg-white/10 hover:border-white/70'
                   }`}
-                  onClick={() => setActiveSlide(index)}
+                  onClick={() => updateHeroSlide(index)}
                   whileTap={{ scale: 0.8 }}
                   type="button"
                 >
@@ -846,4 +888,3 @@ const HomePage = () => {
 }
 
 export default HomePage
-

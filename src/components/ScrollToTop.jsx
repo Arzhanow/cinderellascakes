@@ -22,7 +22,7 @@ const ScrollToTop = () => {
 
       window.scrollTo({
         top: Math.max(elementTop - offset, 0),
-        behavior: 'smooth',
+        behavior: 'auto',
       })
     }
 
@@ -34,7 +34,7 @@ const ScrollToTop = () => {
       }
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.scrollTo({ top: 0, behavior: 'auto' })
   }, [location])
 
   return null
