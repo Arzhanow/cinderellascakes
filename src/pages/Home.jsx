@@ -107,10 +107,53 @@ const heroSlides = [
     label: 'Шоколадова без захар и брашно',
     description:
       'Интензивен шоколадов мус без рафинирана захар и без брашно - чист вкус за хората на специален режим.',
-    image: 'https://images.unsplash.com/photo-1501973801540-537f08ccae7b?auto=format&fit=crop&w=1600&q=80',
+    image: '/images/cakes/chococake/20250128_145732.jpg',
     cta: 'Попитай за наличности',
     href: '/#contact',
-    model: null,
+    model: '/models/chococake.glb',
+    modelSettings: {
+      cameraPosition: [1.65, 2.3, 0.78],
+      modelScale: 0.46,
+      modelYOffset: -2.45,
+      orbitTarget: [0, -2.45, 0],
+      responsive: {
+        mobile: {
+          cameraPosition: [3.3, 3.5, 2.15],
+          modelScale: 0.45,
+          modelYOffset: -4.05,
+          orbitTarget: [0, -3.95, 0],
+          fov: 36,
+        },
+        tablet: {
+          cameraPosition: [2.35, 2.4, 1.02],
+          modelScale: 0.41,
+          modelYOffset: -2.64,
+          orbitTarget: [0, -2.6, 0],
+          fov: 34,
+        },
+        laptop: {
+          cameraPosition: [2.05, 2.2, 0.9],
+          modelScale: 0.43,
+          modelYOffset: -2.52,
+          orbitTarget: [0, -2.48, 0],
+          fov: 32,
+        },
+        desktop: {
+          cameraPosition: [1.5, 2.25, 0.82],
+          modelScale: 0.42,
+          modelYOffset: -2.45,
+          orbitTarget: [0, -2.42, 0],
+          fov: 30,
+        },
+        desktopXL: {
+          cameraPosition: [1.35, 2.12, 0.72],
+          modelScale: 0.44,
+          modelYOffset: -2.38,
+          orbitTarget: [0, -2.36, 0],
+          fov: 28,
+        },
+      },
+    },
   },
 ]
 

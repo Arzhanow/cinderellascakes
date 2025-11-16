@@ -1,5 +1,7 @@
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
-import { useEffect, useRef, useState } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { ContactShadows, Environment, Html, useGLTF } from '@react-three/drei'
+import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
 import { createStagger, createTransition, fadeInUp, glowIn, scaleIn, tiltIn } from '../utils/motionPresets'
@@ -71,6 +73,21 @@ const atelierPrinciples = [
       'Сладкарницата е домакин на благотворителни събития, модни вечери и локални фестивали, за да подкрепя хората и бизнеса в града.',
   },
 ]
+
+const portfolioLegendHero = {
+  eyebrow: '3D портфолио',
+  title: 'Cinderella оживява в легенда от светлина и захар',
+  intro:
+    'Новата сцена използва cinderella3D.glb и превръща портфолиото ни в скрол-разказ с четири акта. Всеки панел добавя контекст към движението на модела и показва къде се ражда нашият couture десертен подпис.',
+}
+
+const portfolioLegendPanels = portfolioMoments.map((moment, index) => ({
+  id: `moment-${index}`,
+  order: `0${index + 1}`,
+  eyebrow: moment.caption,
+  title: moment.title,
+  paragraph: moment.details,
+}))
 
 const atelierStats = [
   { label: 'Година на старта', value: '2024 · Пловдив' },
@@ -219,6 +236,132 @@ const progressRoadmap = [
   { id: 'principles', label: 'Ценности' },
   { id: 'cta', label: 'Финал' },
 ]
+
+const PORTFOLIO_MODEL_SRC = '/models/cinderella3D.glb'
+
+const PortfolioModelFallback = () => (
+  <Html center className="text-[0.65rem] uppercase tracking-[0.4em] text-white/70">
+    Зареждаме 3D сцената...
+  </Html>
+)
+
+const AnimatedCinderella = ({ xMotion }) => {
+  const groupRef = useRef(null)
+  const { scene } = useGLTF(PORTFOLIO_MODEL_SRC)
+  const model = useMemo(() => scene.clone(true), [scene])
+  const pendingX = useRef(-0.8)
+
+  useMotionValueEvent(xMotion, 'change', (value) => {
+    pendingX.current = value
+  })
+
+  useFrame(({ clock }, delta) => {
+    if (!groupRef.current) return
+    const current = groupRef.current.position.x
+    groupRef.current.position.x = current + (pendingX.current - current) * Math.min(1, delta * 6)
+    groupRef.current.rotation.y += delta * 0.22
+    const bobOffset = Math.sin(clock.getElapsedTime() * 0.7) * 0.04
+    groupRef.current.position.y = -1.15 + bobOffset
+  })
+
+  return (
+    <group ref={groupRef} position={[-0.8, -1.15, 0]} scale={1.05}>
+      <primitive object={model} />
+    </group>
+  )
+}
+
+const PortfolioCanvas = ({ xMotion }) => (
+  <Canvas
+    camera={{ position: [0.25, 1.8, 2.85], fov: 31 }}
+    dpr={[1, 2]}
+    gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+    shadows
+  >
+    <color attach="background" args={['transparent']} />
+    <ambientLight intensity={0.85} />
+    <directionalLight position={[3, 4, 2]} intensity={1.05} color="#ffd6ff" />
+    <directionalLight position={[-2, 3, -1]} intensity={0.9} color="#a5f0ff" />
+    <Suspense fallback={<PortfolioModelFallback />}>
+      <AnimatedCinderella xMotion={xMotion} />
+      <Environment preset="studio" />
+      <ContactShadows opacity={0.45} scale={7} blur={2.5} far={5} resolution={1024} position={[0, -0.95, 0]} />
+    </Suspense>
+  </Canvas>
+)
+
+const PortfolioPanel = ({ panel, index, total, progress }) => {
+  const start = index / total
+  const end = (index + 1) / total
+  const mid = (start + end) / 2
+  const opacity = useTransform(progress, [start, mid, end], [0.65, 1, 0.75])
+  const translateY = useTransform(progress, [start, mid, end], [35, 0, -35])
+
+  return (
+    <motion.article style={{ opacity, y: translateY }} className="story-panel p-6 text-white/85 sm:p-7">
+      <div className="flex items-center justify-between text-[0.6rem] uppercase tracking-[0.45em] text-white/60">
+        <span>{panel.eyebrow}</span>
+        <span>{panel.order}</span>
+      </div>
+      <h3 className="mt-3 text-2xl text-white">{panel.title}</h3>
+      <p className="mt-3 text-sm leading-relaxed text-white/75">{panel.paragraph}</p>
+    </motion.article>
+  )
+}
+
+const PortfolioLegend = ({ hero, panels }) => {
+  const sectionRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start center', 'end end'],
+  })
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.5 })
+  const canvasOpacity = useTransform(progress, [0, 0.15, 0.9, 1], [0.35, 0.92, 0.92, 0.62])
+  const modelTrack = useTransform(progress, [0, 0.5, 1], [-1.2, 0.8, -0.3])
+  const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.35, 0.6, 0.4])
+
+  return (
+    <div
+      ref={sectionRef}
+      data-surface="dark"
+      className="relative isolate overflow-hidden rounded-[44px] border border-white/10 bg-brand-night/40 px-6 py-10 text-white shadow-[0_35px_90px_rgba(5,0,25,0.55)] sm:px-10 lg:px-14"
+    >
+      <motion.div className="pointer-events-none absolute inset-0" style={{ opacity: canvasOpacity }}>
+        <div className="absolute inset-0">
+          <PortfolioCanvas xMotion={modelTrack} />
+        </div>
+        <div aria-hidden="true" className="scene-veil absolute inset-0 rounded-[44px]" />
+        <motion.div
+          aria-hidden="true"
+          className="absolute -right-12 top-12 h-48 w-48 rounded-full bg-brand-cyan/30 blur-[140px]"
+          style={{ opacity: glowOpacity }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="absolute -left-16 bottom-0 h-60 w-60 rounded-full bg-brand-blush/30 blur-[160px]"
+          style={{ opacity: glowOpacity }}
+        />
+      </motion.div>
+
+      <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(260px,0.85fr)_minmax(320px,1fr)]">
+        <header className="space-y-4">
+          <p className="text-[0.65rem] uppercase tracking-[0.5em] text-white/65">{hero.eyebrow}</p>
+          <h2 className="font-luxury text-3xl text-white sm:text-4xl">{hero.title}</h2>
+          <p className="text-sm leading-relaxed text-white/75 sm:text-base">{hero.intro}</p>
+          <div className="pt-2 text-[0.6rem] uppercase tracking-[0.4em] text-white/55">cinderella3D.glb</div>
+        </header>
+
+        <div className="flex flex-col gap-6">
+          {panels.map((panel, index) => (
+            <PortfolioPanel key={panel.id} panel={panel} index={index} total={panels.length} progress={progress} />
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+useGLTF.preload(PORTFOLIO_MODEL_SRC)
 
 const AboutPage = () => {
   const pageRef = useRef(null)
@@ -456,23 +599,15 @@ const AboutPage = () => {
       <motion.section
         className="relative snap-start py-16"
         style={portfolioSpacing}
-          onViewportEnter={() => handleStepEnter(2)}
-          viewport={{ once: true, amount: 0.45 }}
-        >
-          <motion.div className="space-y-10 lg:space-y-12" variants={createStagger(0.12)} {...repeatRevealConfig}>
-            {portfolioMoments.map((moment) => (
-              <motion.article
-                key={moment.title}
-                className="rounded-[32px] border border-white/10 bg-brand-night/40 p-8 text-white/85 shadow-[0_25px_60px_rgba(0,0,0,0.4)]"
-                variants={fadeInUp}
-              >
-                <p className="text-[0.7rem] uppercase tracking-[0.45em] text-white/50">{moment.caption}</p>
-                <h3 className="mt-3 text-2xl text-white">{moment.title}</h3>
-                <p className="mt-4 text-base leading-relaxed text-white/75">{moment.details}</p>
-              </motion.article>
-            ))}
-          </motion.div>
-        </motion.section>
+        variants={createStagger(0.08)}
+        {...repeatRevealConfig}
+        onViewportEnter={() => handleStepEnter(2)}
+        viewport={{ once: true, amount: 0.45 }}
+      >
+        <motion.div variants={fadeInUp}>
+          <PortfolioLegend hero={portfolioLegendHero} panels={portfolioLegendPanels} />
+        </motion.div>
+      </motion.section>
 
       <motion.section
         className="space-y-8 snap-start"

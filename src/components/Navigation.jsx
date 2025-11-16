@@ -5,7 +5,7 @@ import ThemeSwitcher from './ThemeSwitcher'
 import LogoBadge from './LogoBadge'
 import { createStagger, createTransition, fadeInUp, glowIn, slideIn } from '../utils/motionPresets'
 
-const navLinks = [
+export const navLinks = [
   { label: 'Начало', href: '/' },
   { label: 'За нас', href: '/about' },
   { label: 'Продукти', href: '/products' },
