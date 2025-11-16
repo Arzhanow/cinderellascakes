@@ -100,23 +100,22 @@ const LegendPanel = ({ panel, index, total, progress, viewportHeight }) => {
   const start = index / total
   const end = (index + 1) / total
   const mid = (start + end) / 2
-  const opacity = useTransform(progress, [start, mid, end], [0.15, 1, 0.15])
-  const translateY = useTransform(progress, [start, mid, end], [80, 0, -80])
-  const filter = useTransform(progress, [start, mid, end], ['blur(16px)', 'blur(0px)', 'blur(16px)'])
+  const opacity = useTransform(progress, [start, mid, end], [0.65, 1, 0.72])
+  const translateY = useTransform(progress, [start, mid, end], [55, 0, -55])
   const alignmentClass = panelAlignments[panel.layout] ?? panelAlignments.center
 
   return (
     <motion.section
-      style={{ minHeight: viewportHeight, opacity, y: translateY, filter }}
+      style={{ minHeight: viewportHeight, opacity, y: translateY }}
       className={`relative flex px-4 py-10 sm:px-10 lg:px-20 ${alignmentClass}`}
     >
-      <div className="w-full max-w-2xl rounded-[2.8rem] border border-white/15 bg-brand-night/70 p-8 shadow-[0_30px_60px_rgba(5,5,15,0.6)] backdrop-blur-2xl">
-        <div className="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.5em] text-white/60">
+      <div className="story-panel w-full max-w-2xl p-8 text-white/90 backdrop-blur-2xl sm:p-10">
+        <div className="flex items-center justify-between text-[0.65rem] font-semibold uppercase tracking-[0.5em] text-white/70">
           <span>{panel.eyebrow}</span>
-          <span className="text-white/70">{panel.order}</span>
+          <span className="text-white/80">{panel.order}</span>
         </div>
         <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-[2.4rem]">{panel.title}</h2>
-        <p className="mt-4 text-base leading-relaxed text-white/75 sm:text-lg">{panel.paragraph}</p>
+        <p className="mt-4 text-base leading-relaxed text-white/85 sm:text-lg">{panel.paragraph}</p>
       </div>
     </motion.section>
   )
@@ -132,7 +131,7 @@ const ProductDetailsPage = () => {
     offset: ['start start', 'end end'],
   })
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.5 })
-  const canvasOpacity = useTransform(progress, [0, 0.02, 0.95, 1], [0.2, 1, 1, 0.6])
+  const canvasOpacity = useTransform(progress, [0, 0.02, 0.95, 1], [0.7, 0.95, 0.95, 0.85])
   const modelTrack = useTransform(progress, [0, 0.5, 1], [-1.5, 1.5, -1.5])
 
   useEffect(() => {
@@ -145,11 +144,15 @@ const ProductDetailsPage = () => {
   return (
     <main
       ref={containerRef}
+      data-surface="dark"
       className="relative isolate px-4 pb-20 pt-10 sm:px-8 lg:px-16 3xl:px-28"
       style={{ scrollBehavior: 'smooth' }}
     >
       <motion.div className="pointer-events-none fixed inset-0 -z-10" style={{ opacity: canvasOpacity }}>
-        <LegendCanvas xMotion={modelTrack} />
+        <div className="absolute inset-0">
+          <LegendCanvas xMotion={modelTrack} />
+        </div>
+        <div aria-hidden="true" className="scene-veil absolute inset-0" />
       </motion.div>
 
       <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-20 overflow-hidden">
