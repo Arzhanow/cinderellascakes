@@ -1,7 +1,7 @@
-import { Suspense, useEffect, useMemo, useRef } from 'react'
+import { Suspense, useEffect, useMemo } from 'react'
 import { motion } from 'framer-motion'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { ContactShadows, Environment, Html, useGLTF } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
+import { ContactShadows, Environment, Html, OrbitControls, useGLTF } from '@react-three/drei'
 import { createStagger, createTransition, fadeInUp, glowIn } from '../utils/motionPresets'
 
 const GARASH_MODEL_SRC = '/models/garash.glb'
@@ -24,7 +24,6 @@ const ModelFallback = ({ label }) => (
 
 const ProductModel = ({ src }) => {
   const { scene } = useGLTF(src)
-  const groupRef = useRef(null)
   const clonedScene = useMemo(() => scene.clone(true), [scene])
 
   useEffect(() => {
@@ -36,23 +35,17 @@ const ProductModel = ({ src }) => {
     })
   }, [clonedScene])
 
-  useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.35
-    }
-  })
-
   return (
-    <group ref={groupRef} position={[0, -0.9, 0]} scale={[0.82, 0.82, 0.82]}>
+    <group position={[0, -0.55, 0]} scale={[0.88, 0.88, 0.88]}>
       <primitive object={clonedScene} />
     </group>
   )
 }
 
 const ProductCanvas = ({ label, modelSrc }) => (
-  <div className="relative h-64 w-full overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-white/5 via-white/0 to-brand-night/30">
+  <div className="relative flex h-64 w-full items-center justify-center overflow-hidden rounded-3xl border border-white/5 bg-gradient-to-b from-white/5 via-white/0 to-brand-night/30">
     <Canvas
-      camera={{ position: [2.1, 1.9, 2.1], fov: 38, near: 0.1, far: 10 }}
+      camera={{ position: [0.25, 1.6, 3.1], fov: 34, near: 0.1, far: 12 }}
       dpr={[1, 1.5]}
       gl={{ antialias: true, alpha: true, preserveDrawingBuffer: false }}
       shadows
@@ -63,8 +56,17 @@ const ProductCanvas = ({ label, modelSrc }) => (
       <Suspense fallback={<ModelFallback label={`зареждане · ${label}`} />}>
         <ProductModel src={modelSrc} />
         <Environment preset="studio" />
-        <ContactShadows opacity={0.45} scale={6} blur={2.2} far={4} resolution={512} position={[0, -1.25, 0]} />
+        <ContactShadows opacity={0.45} scale={6} blur={2.2} far={4} resolution={512} position={[0, -0.95, 0]} />
       </Suspense>
+      <OrbitControls
+        enablePan
+        enableZoom
+        minDistance={1.7}
+        maxDistance={3.6}
+        minPolarAngle={Math.PI * 0.18}
+        maxPolarAngle={Math.PI * 0.62}
+        target={[0, -0.55, 0]}
+      />
     </Canvas>
   </div>
 )
