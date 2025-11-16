@@ -241,7 +241,7 @@ const PORTFOLIO_MODEL_SRC = '/models/cinderella3D.glb'
 
 const PortfolioModelFallback = () => (
   <Html center className="text-[0.65rem] uppercase tracking-[0.4em] text-white/70">
-    Зареждаме 3D сцената...
+    Зареждаме сцената...
   </Html>
 )
 
@@ -249,7 +249,7 @@ const AnimatedCinderella = ({ xMotion }) => {
   const groupRef = useRef(null)
   const { scene } = useGLTF(PORTFOLIO_MODEL_SRC)
   const model = useMemo(() => scene.clone(true), [scene])
-  const pendingX = useRef(-0.8)
+  const pendingX = useRef(-1.45)
 
   useMotionValueEvent(xMotion, 'change', (value) => {
     pendingX.current = value
@@ -259,13 +259,15 @@ const AnimatedCinderella = ({ xMotion }) => {
     if (!groupRef.current) return
     const current = groupRef.current.position.x
     groupRef.current.position.x = current + (pendingX.current - current) * Math.min(1, delta * 6)
-    groupRef.current.rotation.y += delta * 0.22
-    const bobOffset = Math.sin(clock.getElapsedTime() * 0.7) * 0.04
-    groupRef.current.position.y = -1.15 + bobOffset
+    const desiredRotation = -0.25 + Math.cos(clock.getElapsedTime() * 0.18) * 0.05
+    const currentRotation = groupRef.current.rotation.y
+    groupRef.current.rotation.y = currentRotation + (desiredRotation - currentRotation) * Math.min(1, delta * 4.5)
+    const bobOffset = Math.sin(clock.getElapsedTime() * 0.6) * 0.05
+    groupRef.current.position.y = -0.95 + bobOffset
   })
 
   return (
-    <group ref={groupRef} position={[-0.8, -1.15, 0]} scale={1.05}>
+    <group ref={groupRef} position={[-1.45, -0.95, 0]} scale={1.05}>
       <primitive object={model} />
     </group>
   )
@@ -317,7 +319,7 @@ const PortfolioLegend = ({ hero, panels }) => {
   })
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.5 })
   const canvasOpacity = useTransform(progress, [0, 0.15, 0.9, 1], [0.35, 0.92, 0.92, 0.62])
-  const modelTrack = useTransform(progress, [0, 0.5, 1], [-1.2, 0.8, -0.3])
+  const modelTrack = useTransform(progress, [0, 0.5, 1], [-1.45, -0.95, -1.3])
   const glowOpacity = useTransform(progress, [0, 0.5, 1], [0.35, 0.6, 0.4])
 
   return (
@@ -575,9 +577,8 @@ const AboutPage = () => {
             От телевизионния старт до собствен бранд
           </h2>
           <p className="mt-4 text-white/75">
-            Историята на Cinderella’s Cakes е разказана от местните медии – от Hell’s Kitchen и „Черешката на тортата“ до
-            репортажите на localstore.bg, nova.bg и marica.bg. Всяко участие води Полина към собствения ѝ адрес за
-            сладки изкушения в Пловдив.
+            Популярността на Cinderella’s Cakes расте естествено – всяко телевизионно участие, репортаж или местно
+            събитие добавя нови приятели на бранда и води още гости към бутика в Пловдив.
           </p>
         </motion.div>
 

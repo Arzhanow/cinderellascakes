@@ -25,7 +25,7 @@ const featuredProducts = [
   },
   {
     id: 'garash-midnight',
-    title: 'Торта "Гараш" · Midnight Cut',
+    title: 'Торта "Гараш"',
     slug: 'garash',
     imageSrc: '/images/cakes/garash/20250128_145957.jpg',
     imageAlt: 'Торта "Гараш" в разрез с дълбок шоколадов блясък',
@@ -35,7 +35,7 @@ const featuredProducts = [
   },
   {
     id: 'garash-concerto',
-    title: 'Торта "Гараш" · Concerto Slice',
+    title: 'Торта "Гараш"',
     slug: 'garash',
     imageSrc: '/images/cakes/garash/20250128_145939.jpg',
     imageAlt: 'Парче торта "Гараш" с огледална глазура',
@@ -45,7 +45,7 @@ const featuredProducts = [
   },
   {
     id: 'garash-detail',
-    title: 'Торта "Гараш" · Atelier Detail',
+    title: 'Торта "Гараш"',
     slug: 'garash',
     imageSrc: '/images/cakes/garash/20250128_150005.jpg',
     imageAlt: 'Детайл от текстурата на торта "Гараш" с лешници',
@@ -55,7 +55,7 @@ const featuredProducts = [
   },
   {
     id: 'garash-glow',
-    title: 'Торта "Гараш" · Glow Edition',
+    title: 'Торта "Гараш"',
     slug: 'garash',
     imageSrc: '/images/cakes/garash/20250128_150003.jpg',
     imageAlt: 'Торта "Гараш" с меко осветление и лешникови орнаменти',
@@ -118,8 +118,8 @@ const ProductsPage = () => (
         <p className="text-xs uppercase tracking-[0.6em] text-white/60">най-харесвани</p>
         <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">Продукти</h1>
         <p className="max-w-3xl text-balance text-base leading-relaxed text-white/70 sm:text-lg lg:text-xl">
-          Подбрахме шест емблематични десерта, които нашите гости и HoReCa партньори поръчват всеки сезон. За по-добро
-          преживяване заменихме тежките 3D сцени с фотографски кадри направо от ателието, така че страницата да зарежда мигновено.
+          Разгледайте шестте най-харесвани продукта на Cinderella’s Cakes – любимите избори на нашите гости и HoReCa
+          партньори. Фотографските кадри директно от ателието заменят тежките 3D сцени, за да получите мигновено и по-леко преживяване.
         </p>
       </motion.div>
 

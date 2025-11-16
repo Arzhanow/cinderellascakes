@@ -23,7 +23,7 @@ const Footer = () => {
             {...revealConfig}
           >
             <p className="text-xs uppercase tracking-[0.45em] text-white/60 2xl:text-sm 4xl:text-base">Cinderella's Cakes</p>
-            <p className="mt-4 text-3xl font-semibold text-white 2xl:text-4xl 4xl:text-5xl">Луксозна сладкарница от Пловдив</p>
+            <p className="mt-4 text-3xl font-semibold text-white 2xl:text-4xl 4xl:text-5xl">Луксозна сладкарница в Пловдив</p>
           </motion.div>
           <motion.div
             className="grid gap-8 rounded-3xl border border-white/10 bg-white/0 p-6 sm:grid-cols-2"
@@ -68,7 +68,7 @@ const Footer = () => {
           {...revealConfig}
         >
           <span>© {currentYear} Cinderella's Cakes</span>
-          <span className="text-white/40">Луксозна сладкарница от Пловдив</span>
+          <span className="text-white/40">Луксозна сладкарница в Пловдив</span>
         </motion.div>
       </div>
     </motion.footer>
