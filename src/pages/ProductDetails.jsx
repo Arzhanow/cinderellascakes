@@ -1,10 +1,9 @@
-import { Suspense, useEffect, useMemo, useRef } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, useGLTF } from '@react-three/drei'
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
-
-const GARASH_MODEL_SRC = '/models/garash.glb'
+import { useTheme } from '../context/ThemeContext'
 
 const productStories = {
   garash: {
@@ -20,7 +19,7 @@ const productStories = {
         order: 'I',
         eyebrow: 'Виена, 1890 г.',
         title: 'Легендата започва',
-        layout: 'right',
+        layout: 'center',
         paragraph:
           'В края на XIX век младият унгарец Коста Гараш пристига във Виена със скицник и буркан с лешникова паста. Докато акомпанира на пианист от императорски бал, той записва в полетата на партитурата първата рецепта за десерт, съчетаващ шоколад, фина ядкова пралина и въздушни белтъци.',
       },
@@ -44,6 +43,66 @@ const productStories = {
       },
     ],
   },
+  chococake: {
+    hero: {
+      eyebrow: 'Тих ритуал на какаото',
+      title: 'Шоколадова торта без захар и брашно',
+      intro:
+        'Тази торта започва в късен следобед, когато ателието притихва и остава само шепотът на разтапящ се шоколад. Без брашно и без захар, оставяме какаото да говори и да води вкуса.',
+    },
+    panels: [
+      {
+        id: 'evening-ritual',
+        order: 'I',
+        eyebrow: 'Късен следобед',
+        title: 'Ритуалът започва',
+        layout: 'center',
+        paragraph:
+          'В късния следобед, когато градът притихва, майсторката запалва котлона и разтапя тъмен шоколад – тих, кадифен, без да търси прикритие в брашно или захар. „Нека говори какаото“, прошепва тя, и въздухът се изпълва с аромат на зрели зърна и топла нотка надежда.',
+      },
+      {
+        id: 'discipline',
+        order: 'II',
+        eyebrow: 'Белтък & огън',
+        title: 'Дисциплина в движение',
+        layout: 'right',
+        paragraph:
+          'Тя разбива белтъка до облаци, укротява огъня и оставя сместа да намери своята форма – чиста линия, плътност без тежест, блясък без украса. Сладостта не идва на висок глас; тя е тиха и дълбока, такава, каквато какаото пази за тези, които го слушат внимателно.',
+      },
+      {
+        id: 'atelier-today',
+        order: 'III',
+        eyebrow: 'Cinderella’s Cakes днес',
+        title: 'Легендата живее',
+        layout: 'center',
+        paragraph:
+          'И днес в Cinderella’s Cakes Поли пази тази легенда жива: правим нашата шоколадова торта без пшенично брашно и без захар – изчистена, елегантна, със силен характер на какаото. Парче, което не крещи, а остава – запомнено.',
+      },
+    ],
+  },
+}
+
+const PRODUCT_VISUALS = {
+  garash: {
+    modelSrc: '/models/garash.glb',
+    basePosition: [-1.5, -0.45, 0],
+    scale: 0.95,
+    xTrack: [-1.5, 1.5, -1.5],
+    shadowY: -0.95,
+  },
+  chococake: {
+    modelSrc: '/models/chococake.glb',
+    basePosition: [-1.35, -0.4, 0],
+    scale: 0.9,
+    xTrack: [-1.35, 1.35, -1.3],
+    shadowY: -0.9,
+  },
+}
+
+const DEFAULT_SCENE_COLORS = {
+  ambient: '#fdfbff',
+  warm: '#ffd6ff',
+  cool: '#a5f0ff',
 }
 
 const panelAlignments = {
@@ -52,21 +111,55 @@ const panelAlignments = {
   center: 'items-center justify-center text-center',
 }
 
+const toRgbString = (value, fallback) => {
+  if (!value) return fallback
+  const trimmed = value.trim()
+  if (!trimmed) return fallback
+  if (trimmed.startsWith('#') || trimmed.startsWith('rgb')) return trimmed
+  const parts = trimmed.split(/\s+/).filter(Boolean).map(Number)
+  if (parts.length >= 3 && parts.slice(0, 3).every((num) => Number.isFinite(num))) {
+    return `rgb(${parts[0]}, ${parts[1]}, ${parts[2]})`
+  }
+  return fallback
+}
+
+const useSceneLightPalette = () => {
+  const { theme } = useTheme()
+  const [colors, setColors] = useState(DEFAULT_SCENE_COLORS)
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const style = getComputedStyle(document.documentElement)
+    const warm = toRgbString(style.getPropertyValue('--color-brand-lilac'), DEFAULT_SCENE_COLORS.warm)
+    const cool = toRgbString(style.getPropertyValue('--color-brand-cyan'), DEFAULT_SCENE_COLORS.cool)
+    const ambient = toRgbString(style.getPropertyValue('--theme-foreground'), DEFAULT_SCENE_COLORS.ambient)
+    setColors({ ambient, warm, cool })
+  }, [theme])
+
+  return colors
+}
+
 const ModelFallback = () => (
   <Html center className="text-[0.65rem] uppercase tracking-[0.4em] text-white/70">
     Зареждаме легендата...
   </Html>
 )
 
-const AnimatedGarash = ({ xMotion }) => {
+const AnimatedProductModel = ({ xMotion, modelSrc, basePosition, scale, initialX }) => {
   const groupRef = useRef(null)
-  const { scene } = useGLTF(GARASH_MODEL_SRC)
+  const { scene } = useGLTF(modelSrc)
   const model = useMemo(() => scene.clone(true), [scene])
-  const pendingX = useRef(-1.5)
+  const pendingX = useRef(initialX ?? -1.5)
 
   useMotionValueEvent(xMotion, 'change', (value) => {
     pendingX.current = value
   })
+
+  useEffect(() => {
+    if (!groupRef.current) return
+    pendingX.current = initialX ?? -1.5
+    groupRef.current.position.set(basePosition?.[0] ?? -1.5, basePosition?.[1] ?? -0.45, basePosition?.[2] ?? 0)
+  }, [initialX, basePosition])
 
   useFrame((_, delta) => {
     if (!groupRef.current) return
@@ -76,25 +169,43 @@ const AnimatedGarash = ({ xMotion }) => {
   })
 
   return (
-    <group ref={groupRef} position={[-1.5, -0.45, 0]} scale={0.95}>
+    <group ref={groupRef} position={basePosition ?? [-1.5, -0.45, 0]} scale={scale ?? 0.95}>
       <primitive object={model} />
     </group>
   )
 }
 
-const LegendCanvas = ({ xMotion }) => (
-  <Canvas camera={{ position: [0.2, 1.75, 2.85], fov: 31 }} dpr={[1, 2]}>
-    <color attach="background" args={['transparent']} />
-    <ambientLight intensity={0.85} />
-    <directionalLight position={[3, 4, 2]} intensity={1.1} color="#ffd6ff" />
-    <directionalLight position={[-2, 3, -1]} intensity={0.9} color="#a5f0ff" />
-    <Suspense fallback={<ModelFallback />}>
-      <AnimatedGarash xMotion={xMotion} />
-      <Environment preset="studio" />
-      <ContactShadows opacity={0.45} scale={7} blur={2.5} far={5} resolution={1024} position={[0, -0.95, 0]} />
-    </Suspense>
-  </Canvas>
-)
+const LegendCanvas = ({ xMotion, modelConfig, sceneColors }) => {
+  const { modelSrc, basePosition, scale, xTrack } = modelConfig ?? {}
+  const shadowY = modelConfig?.shadowY ?? -0.95
+  const initialX = xTrack?.[0] ?? -1.5
+  return (
+    <Canvas camera={{ position: [0.2, 1.75, 2.85], fov: 31 }} dpr={[1, 2]}>
+      <color attach="background" args={['transparent']} />
+      <ambientLight intensity={0.65} color={sceneColors.ambient} />
+      <directionalLight position={[3, 4, 2]} intensity={1.1} color={sceneColors.warm} />
+      <directionalLight position={[-2, 3, -1]} intensity={0.9} color={sceneColors.cool} />
+      <Suspense fallback={<ModelFallback />}>
+        <AnimatedProductModel
+          xMotion={xMotion}
+          modelSrc={modelSrc ?? PRODUCT_VISUALS.garash.modelSrc}
+          basePosition={basePosition ?? PRODUCT_VISUALS.garash.basePosition}
+          scale={scale ?? PRODUCT_VISUALS.garash.scale}
+          initialX={initialX}
+        />
+        <Environment preset="studio" />
+        <ContactShadows
+          opacity={0.45}
+          scale={7}
+          blur={2.5}
+          far={5}
+          resolution={1024}
+          position={[0, shadowY, 0]}
+        />
+      </Suspense>
+    </Canvas>
+  )
+}
 
 const LegendPanel = ({ panel, index, total, progress, viewportHeight }) => {
   const start = index / total
@@ -124,6 +235,8 @@ const LegendPanel = ({ panel, index, total, progress, viewportHeight }) => {
 const ProductDetailsPage = () => {
   const { productSlug } = useParams()
   const story = productStories[productSlug] ?? productStories.garash
+  const modelConfig = PRODUCT_VISUALS[productSlug] ?? PRODUCT_VISUALS.garash
+  const xTrack = modelConfig.xTrack ?? [-1.5, 1.5, -1.5]
   const containerRef = useRef(null)
   const viewportHeight = 'calc(100vh - var(--topbar-height) - var(--navigation-height))'
   const { scrollYProgress } = useScroll({
@@ -132,7 +245,8 @@ const ProductDetailsPage = () => {
   })
   const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.5 })
   const canvasOpacity = useTransform(progress, [0, 0.02, 0.95, 1], [0.7, 0.95, 0.95, 0.85])
-  const modelTrack = useTransform(progress, [0, 0.5, 1], [-1.5, 1.5, -1.5])
+  const modelTrack = useTransform(progress, [0, 0.5, 1], xTrack)
+  const sceneColors = useSceneLightPalette()
 
   useEffect(() => {
     if (typeof document === 'undefined') return undefined
@@ -150,7 +264,7 @@ const ProductDetailsPage = () => {
     >
       <motion.div className="pointer-events-none fixed inset-0 -z-10" style={{ opacity: canvasOpacity }}>
         <div className="absolute inset-0">
-          <LegendCanvas xMotion={modelTrack} />
+          <LegendCanvas xMotion={modelTrack} modelConfig={modelConfig} sceneColors={sceneColors} />
         </div>
         <div aria-hidden="true" className="scene-veil absolute inset-0" />
       </motion.div>
@@ -209,6 +323,8 @@ const ProductDetailsPage = () => {
   )
 }
 
-useGLTF.preload(GARASH_MODEL_SRC)
+Object.values(PRODUCT_VISUALS).forEach((visual) => {
+  useGLTF.preload(visual.modelSrc)
+})
 
 export default ProductDetailsPage
