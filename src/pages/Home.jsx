@@ -43,6 +43,7 @@ const heroSlides = [
       modelScale: 0.45,
       modelYOffset: -2.5,
       orbitTarget: [0, -2.5, 0],
+      canvasYOffset: 24,
       responsive: {
         mobile: {
           cameraPosition: [3.55, 3.65, 2.35],
@@ -50,6 +51,7 @@ const heroSlides = [
           modelYOffset: -4.2,
           orbitTarget: [0, -4.1, 0],
           fov: 36,
+          canvasYOffset: -48,
         },
         tablet: {
           cameraPosition: [2.3, 2.4, 1.05],
@@ -57,6 +59,7 @@ const heroSlides = [
           modelYOffset: -2.62,
           orbitTarget: [0, -2.58, 0],
           fov: 34,
+          canvasYOffset: -12,
         },
         laptop: {
           cameraPosition: [2.1, 2.25, 0.92],
@@ -64,6 +67,7 @@ const heroSlides = [
           modelYOffset: -2.55,
           orbitTarget: [0, -2.5, 0],
           fov: 32,
+          canvasYOffset: 6,
         },
         desktop: {
           cameraPosition: [1.45, 2.25, 0.95],
@@ -71,6 +75,7 @@ const heroSlides = [
           modelYOffset: -2.45,
           orbitTarget: [0, -2.45, 0],
           fov: 29,
+          canvasYOffset: 20,
         },
         desktopXL: {
           cameraPosition: [1.3, 2.15, 0.82],
@@ -78,6 +83,7 @@ const heroSlides = [
           modelYOffset: -2.38,
           orbitTarget: [0, -2.38, 0],
           fov: 27,
+          canvasYOffset: 32,
         },
       },
     },
@@ -116,6 +122,7 @@ const heroSlides = [
       modelScale: 0.46,
       modelYOffset: -2.45,
       orbitTarget: [0, -2.45, 0],
+      canvasYOffset: 22,
       responsive: {
         mobile: {
           cameraPosition: [3.3, 3.5, 2.15],
@@ -123,6 +130,7 @@ const heroSlides = [
           modelYOffset: -4.05,
           orbitTarget: [0, -3.95, 0],
           fov: 36,
+          canvasYOffset: -52,
         },
         tablet: {
           cameraPosition: [2.35, 2.4, 1.02],
@@ -130,6 +138,7 @@ const heroSlides = [
           modelYOffset: -2.64,
           orbitTarget: [0, -2.6, 0],
           fov: 34,
+          canvasYOffset: -16,
         },
         laptop: {
           cameraPosition: [2.05, 2.2, 0.9],
@@ -137,6 +146,7 @@ const heroSlides = [
           modelYOffset: -2.52,
           orbitTarget: [0, -2.48, 0],
           fov: 32,
+          canvasYOffset: 6,
         },
         desktop: {
           cameraPosition: [1.5, 2.25, 0.82],
@@ -144,6 +154,7 @@ const heroSlides = [
           modelYOffset: -2.45,
           orbitTarget: [0, -2.42, 0],
           fov: 30,
+          canvasYOffset: 18,
         },
         desktopXL: {
           cameraPosition: [1.35, 2.12, 0.72],
@@ -151,6 +162,7 @@ const heroSlides = [
           modelYOffset: -2.38,
           orbitTarget: [0, -2.36, 0],
           fov: 28,
+          canvasYOffset: 30,
         },
       },
     },
@@ -465,7 +477,7 @@ const HomePage = () => {
                       modelSettings={currentSlide.modelSettings}
                       className="h-full w-full"
                     />
-                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-6 lg:top-8 xl:top-10 2xl:top-12 3xl:top-16">
+                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-12 lg:top-16 xl:top-20 2xl:top-24 3xl:top-28 4xl:top-32">
                       <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base 2xl:text-lg">
                         {currentSlide.eyebrow}
                       </span>
@@ -515,7 +527,7 @@ const HomePage = () => {
               variants={fadeInUp}
               transition={createTransition(0.18, 0.48)}
             >
-              Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин. Работим с HoReCa партньори в хотели, ресторанти и магазини в цялата страна.
+              Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
             </motion.p>
             <motion.div className="mt-8 flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.08)}>
               <MotionLink

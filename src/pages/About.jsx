@@ -74,13 +74,6 @@ const atelierPrinciples = [
   },
 ]
 
-const portfolioLegendHero = {
-  eyebrow: '3D портфолио',
-  title: 'Cinderella оживява в легенда от светлина и захар',
-  intro:
-    'Новата сцена използва cinderella3D.glb и превръща портфолиото ни в скрол-разказ с четири акта. Всеки панел добавя контекст към движението на модела и показва къде се ражда нашият couture десертен подпис.',
-}
-
 const portfolioLegendPanels = portfolioMoments.map((moment, index) => ({
   id: `moment-${index}`,
   order: `0${index + 1}`,
@@ -311,7 +304,7 @@ const PortfolioPanel = ({ panel, index, total, progress }) => {
   )
 }
 
-const PortfolioLegend = ({ hero, panels }) => {
+const PortfolioLegend = ({ panels }) => {
   const sectionRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -345,14 +338,7 @@ const PortfolioLegend = ({ hero, panels }) => {
         />
       </motion.div>
 
-      <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(260px,0.85fr)_minmax(320px,1fr)]">
-        <header className="space-y-4">
-          <p className="text-[0.65rem] uppercase tracking-[0.5em] text-white/65">{hero.eyebrow}</p>
-          <h2 className="font-luxury text-3xl text-white sm:text-4xl">{hero.title}</h2>
-          <p className="text-sm leading-relaxed text-white/75 sm:text-base">{hero.intro}</p>
-          <div className="pt-2 text-[0.6rem] uppercase tracking-[0.4em] text-white/55">cinderella3D.glb</div>
-        </header>
-
+      <div className="relative z-10">
         <div className="flex flex-col gap-6">
           {panels.map((panel, index) => (
             <PortfolioPanel key={panel.id} panel={panel} index={index} total={panels.length} progress={progress} />
@@ -606,7 +592,7 @@ const AboutPage = () => {
         viewport={{ once: true, amount: 0.45 }}
       >
         <motion.div variants={fadeInUp}>
-          <PortfolioLegend hero={portfolioLegendHero} panels={portfolioLegendPanels} />
+          <PortfolioLegend panels={portfolioLegendPanels} />
         </motion.div>
       </motion.section>
 

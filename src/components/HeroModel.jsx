@@ -171,6 +171,7 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
       lockOrientation: false,
       orbitAzimuthRange: null,
       modelRotationY: null,
+      canvasYOffset: viewport === 'mobile' ? -96 : 0,
       ...baseSettings,
       ...fallbackOverrides,
       ...(responsive[viewport] ?? {}),
@@ -186,7 +187,10 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
     lockOrientation,
     orbitAzimuthRange,
     modelRotationY,
+    canvasYOffset,
   } = appliedSettings
+  const canvasYOffsetValue =
+    typeof canvasYOffset === 'number' ? `${canvasYOffset}px` : canvasYOffset ?? '0px'
   const resolvedAzimuthRange = orbitAzimuthRange ?? null
   const rotateEnabled = resolvedAzimuthRange ? true : !lockOrientation
 
@@ -287,9 +291,7 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
             <Canvas
               key={`${modelSrc ?? 'no-model'}-${canvasRevision}`}
               camera={{ position: cameraPosition, fov, near: 0.1, far: 15 }}
-              className={`absolute inset-0 transform transition-transform duration-500 ${
-                isMobileViewport ? '-translate-y-24' : ''
-              }`}
+              className="absolute inset-0 transform-gpu transition-transform duration-500"
               dpr={qualitySettings.dprRange}
               gl={{
                 antialias: qualitySettings.antialias,
@@ -298,7 +300,7 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
                 powerPreference: qualitySettings.powerPreference,
               }}
               shadows
-              style={{ background: 'transparent' }}
+              style={{ background: 'transparent', transform: `translate3d(0, ${canvasYOffsetValue}, 0)` }}
               onCreated={({ gl }) => {
                 const handleContextLost = (event) => {
                   event?.preventDefault?.()
