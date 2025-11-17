@@ -100,6 +100,11 @@
   html {
     width: 100%;
     overflow-x: hidden;
+    scrollbar-width: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   body {
@@ -108,6 +113,11 @@
     color: rgb(var(--theme-foreground) / 1);
     width: 100%;
     overflow-x: hidden;
+    scrollbar-width: none;
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
   }
 
   .hide-scrollbar {

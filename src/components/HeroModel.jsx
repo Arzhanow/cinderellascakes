@@ -172,6 +172,7 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
       orbitAzimuthRange: null,
       modelRotationY: null,
       canvasYOffset: viewport === 'mobile' ? -96 : 0,
+      allowPointerInteraction: false,
       ...baseSettings,
       ...fallbackOverrides,
       ...(responsive[viewport] ?? {}),
@@ -188,11 +189,21 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
     orbitAzimuthRange,
     modelRotationY,
     canvasYOffset,
+    allowPointerInteraction,
   } = appliedSettings
   const canvasYOffsetValue =
     typeof canvasYOffset === 'number' ? `${canvasYOffset}px` : canvasYOffset ?? '0px'
   const resolvedAzimuthRange = orbitAzimuthRange ?? null
   const rotateEnabled = resolvedAzimuthRange ? true : !lockOrientation
+  const canvasStyle = useMemo(
+    () => ({
+      background: 'transparent',
+      transform: `translate3d(0, ${canvasYOffsetValue}, 0)`,
+      pointerEvents: allowPointerInteraction ? 'auto' : 'none',
+      touchAction: allowPointerInteraction ? 'pan-y' : 'auto',
+    }),
+    [allowPointerInteraction, canvasYOffsetValue],
+  )
 
   useEffect(() => {
     if (modelSrc) {
@@ -300,7 +311,7 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
                 powerPreference: qualitySettings.powerPreference,
               }}
               shadows
-              style={{ background: 'transparent', transform: `translate3d(0, ${canvasYOffsetValue}, 0)` }}
+              style={canvasStyle}
               onCreated={({ gl }) => {
                 const handleContextLost = (event) => {
                   event?.preventDefault?.()

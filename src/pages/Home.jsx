@@ -265,13 +265,6 @@ const HomePage = () => {
   const [showIntroLoader, setShowIntroLoader] = useState(true)
   const [activeMap, setActiveMap] = useState(null)
   const closeButtonRef = useRef(null)
-  const heroSectionRef = useRef(null)
-  const heroScrollLockRef = useRef(false)
-  const heroScrollTimeoutRef = useRef(null)
-  const heroWheelStateRef = useRef({
-    activeSlide: 0,
-    showIntroLoader: true,
-  })
 
   const refreshHeroModel = useCallback(() => {
     setHeroModelNonce((prev) => prev + 1)
@@ -287,14 +280,9 @@ const HomePage = () => {
     },
     [refreshHeroModel]
   )
-
-  useEffect(() => {
-    heroWheelStateRef.current.activeSlide = activeSlide
-  }, [activeSlide])
-
-  useEffect(() => {
-    heroWheelStateRef.current.showIntroLoader = showIntroLoader
-  }, [showIntroLoader])
+  const handleLoaderComplete = useCallback(() => {
+    setShowIntroLoader(false)
+  }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -312,70 +300,6 @@ const HomePage = () => {
 
     return () => clearInterval(timer)
   }, [updateHeroSlide])
-
-  useEffect(() => {
-    return () => {
-      if (heroScrollTimeoutRef.current) {
-        window.clearTimeout(heroScrollTimeoutRef.current)
-      }
-    }
-  }, [])
-
-  const handleHeroWheel = useCallback((event) => {
-    const sectionNode = heroSectionRef.current
-    const { activeSlide: wheelSlide, showIntroLoader: wheelLoader } = heroWheelStateRef.current
-
-    if (!sectionNode || wheelLoader) {
-      return
-    }
-
-    if (!sectionNode.contains(event.target)) {
-      return
-    }
-
-    const deltaY = event.deltaY
-    if (Math.abs(deltaY) < 15) {
-      return
-    }
-
-    const isScrollingDown = deltaY > 0
-    const atFirstSlide = wheelSlide === 0
-    const atLastSlide = wheelSlide === heroSlides.length - 1
-
-    if (heroScrollLockRef.current) {
-      event.preventDefault()
-      return
-    }
-
-    if (isScrollingDown && !atLastSlide) {
-      event.preventDefault()
-      heroScrollLockRef.current = true
-      updateHeroSlide((prev) => Math.min(prev + 1, heroSlides.length - 1))
-      heroScrollTimeoutRef.current = window.setTimeout(() => {
-        heroScrollLockRef.current = false
-      }, 850)
-    } else if (!isScrollingDown && !atFirstSlide) {
-      event.preventDefault()
-      heroScrollLockRef.current = true
-      updateHeroSlide((prev) => Math.max(prev - 1, 0))
-      heroScrollTimeoutRef.current = window.setTimeout(() => {
-        heroScrollLockRef.current = false
-      }, 850)
-    }
-  }, [updateHeroSlide])
-
-  useEffect(() => {
-    const node = heroSectionRef.current
-    if (!node) {
-      return
-    }
-
-    node.addEventListener('wheel', handleHeroWheel, { passive: false })
-
-    return () => {
-      node.removeEventListener('wheel', handleHeroWheel)
-    }
-  }, [handleHeroWheel])
 
   const currentSlide = heroSlides[activeSlide]
   const activeLocation = mapLocations.find((location) => location.id === activeMap)
@@ -412,7 +336,7 @@ const HomePage = () => {
 
   return (
     <>
-      {showIntroLoader && <LoadingScreen onComplete={() => setShowIntroLoader(false)} />}
+      {showIntroLoader && <LoadingScreen onComplete={handleLoaderComplete} />}
       <motion.main
         aria-hidden={showIntroLoader}
         className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36"
@@ -420,17 +344,15 @@ const HomePage = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: showIntroLoader ? 0 : 1 }}
         transition={createTransition(0, 0.6, 'easeOut')}
-        style={{ pointerEvents: showIntroLoader ? 'none' : 'auto' }}
       >
-      <section
-        className="relative min-h-[80vh] w-full overflow-hidden"
-        data-surface="dark"
-        id="hero"
-        ref={heroSectionRef}
-        style={{
-          minHeight: 'max(80vh, calc(100vh - (var(--topbar-height, 0px) + var(--navigation-height, 0px))))',
-        }}
-      >
+        <section
+          className="relative min-h-[80vh] w-full overflow-hidden"
+          data-surface="dark"
+          id="hero"
+          style={{
+            minHeight: 'max(80vh, calc(100vh - (var(--topbar-height, 0px) + var(--navigation-height, 0px))))',
+          }}
+        >
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
             <motion.div

@@ -36,6 +36,7 @@ const LogoBadge = ({ className = 'h-12 w-12 3xl:h-16 3xl:w-16 4xl:h-20 4xl:w-20'
         className="absolute inset-0"
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
+        style={{ pointerEvents: 'none', touchAction: 'auto' }}
       >
         <ambientLight intensity={0.7} />
         <directionalLight position={[3, 3, 3]} intensity={1.2} color="#ffd6ff" />
