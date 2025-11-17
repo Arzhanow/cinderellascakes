@@ -23,9 +23,11 @@ const Footer = () => {
             {...revealConfig}
           >
             <p className="text-xs uppercase tracking-[0.45em] text-white/60 2xl:text-sm 4xl:text-base">Cinderella's Cakes</p>
-            <p className="mt-4 text-3xl font-semibold text-white 2xl:text-4xl 4xl:text-5xl">Луксозна сладкарница в Пловдив</p>
+            <p className="mt-4 text-3xl font-semibold text-white 2xl:text-4xl 4xl:text-5xl">
+              Домашни торти и изискани десерти, за хора, които ценят традициите и чистите вкусове.
+            </p>
             <p className="mt-4 text-base text-white/70 2xl:text-lg 4xl:text-xl">
-              Празнични торти и изискани десерти за хора, които ценят чистите вкусове и фината изработка.
+              Приготвяме всеки детайл ръчно – с уважение към класическите рецепти и внимание към здравословните алтернативи.
             </p>
             <address className="mt-6 not-italic space-y-2 text-sm text-white/70 2xl:text-base">
               <a
@@ -72,7 +74,7 @@ const Footer = () => {
           {...revealConfig}
         >
           <span>© {currentYear} Cinderella's Cakes</span>
-          <span className="text-white/40">Луксозна сладкарница в Пловдив</span>
+          <span className="text-white/40">Домашни торти и изискани десерти, за хора, които ценят традициите и чистите вкусове.</span>
         </motion.div>
       </div>
     </motion.footer>

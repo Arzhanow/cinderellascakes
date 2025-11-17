@@ -11,7 +11,7 @@ import {
   slideIn,
 } from '../utils/motionPresets'
 
- const CONTACT = {
+const CONTACT = {
   email: 'alatinovapolina@gmail.com',
   phone: '+359 88 549 3040',
  }
@@ -97,6 +97,37 @@ const productionServices = [
   },
 ]
 
+const horecaHighlights = [
+  {
+    id: 'specialized-lines',
+    eyebrow: 'Специализирани програми',
+    title: 'HoReCa, Retail и Catering',
+    description:
+      'Изградихме три специализирани линии – HoReCa, Retail и Catering. Организираме корпоративни събития, фирмени презентации, конференции, сватби, погачи, прощапулници, лични поводи и домашни събития. Качествена храна и обслужване на високо ниво. Гостите Ви ще говорят за Вас!',
+  },
+  {
+    id: 'pro-service',
+    eyebrow: 'Професионално обслужване',
+    title: 'Надежден партньор за HoReCa бизнеса',
+    description:
+      'Развиваме се в областта на професионалното обслужване за клиенти от ХоРеКа дейността. Поради непрестанната жажда да бъдем иновативни и стремежа си към развитие, ние можем да бъдем вашият надежден партньор, осигуряващ всичко необходимо за обслужването и поддръжката на вашия бизнес.',
+  },
+  {
+    id: 'retail-partners',
+    eyebrow: 'Ритейл партньорства',
+    title: 'Бюджетни продукти с отлично качество',
+    description:
+      'Освен нашите професионални бизнес партньори, ние обръщаме специално внимание и на ритейл партньорствата, като можем да предложим бюджетни продукти с отлично качество.',
+  },
+  {
+    id: 'portfolio-expansion',
+    eyebrow: 'Продуктово развитие',
+    title: 'Портфолио в крак с тенденциите',
+    description:
+      'Сериозният интерес, който се появи през последните години към нас, ни мотивира да предлагаме богат набор от продукти на нашите клиенти. Ежедневно разширяваме продуктовото си портфолио, защото трябва да бъдем в тренд с бързо развиващия се свят.',
+  },
+]
+
  const detailTransition = {
    duration: 0.45,
    ease: [0.3, 0, 0.2, 1],
@@ -152,11 +183,11 @@ const ProductionPage = () => {
            variants={createStagger(0.08)}
            {...revealConfig}
          >
-           <motion.p
-             className="text-xs uppercase tracking-[0.55em] text-white/60 2xl:text-sm 4xl:text-base"
-             variants={slideIn('down', 40)}
-             transition={createTransition(0, 0.65)}
-           >
+          <motion.p
+            className="text-xs uppercase tracking-[0.55em] text-white/60 2xl:text-sm 4xl:text-base"
+            variants={slideIn('down', 40)}
+            transition={createTransition(0, 0.65)}
+          >
             HoReCa · професионални услуги
           </motion.p>
           <motion.h1
@@ -171,9 +202,8 @@ const ProductionPage = () => {
             variants={fadeInUp}
             transition={createTransition(0.2, 0.7)}
           >
-            Изградихме три специализирани линии – HoReCa, Retail и Catering – които осигуряват стабилност в кухнята,
-            стандартизация във витрината и сценография при събития. Във всяка програма включваме консултация,
-            протоколи за работа, контакт с екипа ни и директна връзка с формата за запитване.
+            Професионалното ни производство осигурява пълна подкрепа за хотели, ресторанти, ритейл и кетъринг партньори –
+            от стратегическо меню и стандарти до логистика и директна връзка с нашия екип сладкари.
           </motion.p>
          </motion.header>
 
@@ -268,10 +298,40 @@ const ProductionPage = () => {
                     Изпрати запитване
                   </Link>
                 </div>
-               </motion.article>
-             )}
-           </AnimatePresence>
-         </div>
+             </motion.article>
+           )}
+         </AnimatePresence>
+        </div>
+
+        <div className="mt-16 space-y-12">
+          <div className="grid gap-6 lg:grid-cols-2">
+            {horecaHighlights.map((panel) => (
+              <div
+                key={panel.id}
+                className="rounded-[32px] border border-white/10 bg-white/5 p-6 text-white/85 shadow-[0_20px_60px_rgba(3,0,14,0.45)] backdrop-blur-xl sm:p-8"
+              >
+                <p className="text-xs uppercase tracking-[0.45em] text-white/60">{panel.eyebrow}</p>
+                <h3 className="mt-3 font-luxury text-2xl text-white 2xl:text-3xl">{panel.title}</h3>
+                <p className="mt-4 text-sm leading-relaxed text-white/80 2xl:text-base">{panel.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="rounded-[36px] border border-white/10 bg-gradient-to-br from-white/5 via-white/0 to-white/10 p-6 text-white/90 shadow-[0_20px_60px_rgba(2,0,12,0.4)] backdrop-blur-xl sm:p-8 2xl:p-10">
+            <p className="text-lg text-white 2xl:text-xl">
+              Целта ни е да сме устойчиви, да предлагаме най-високо качество на десертите, които създаваме, без подобрители
+              и консерванти, за да нямаме конкурент на пазара.
+            </p>
+            <p className="mt-4 text-sm text-white/80 2xl:text-base">
+              За повече информация, лична консултация и изготвяне на индивидуална оферта можете да направите директна връзка
+              с нас чрез{' '}
+              <Link className="font-semibold text-brand-cyan transition hover:text-white" to="/#contact">
+                формата за запитване
+              </Link>
+              .
+            </p>
+          </div>
+        </div>
       </section>
     </main>
   )
