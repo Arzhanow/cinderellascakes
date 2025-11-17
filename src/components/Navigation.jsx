@@ -76,14 +76,14 @@ const Navigation = () => {
         animate="visible"
         transition={createTransition(0.2, 0.8)}
       >
-        <div className="flex flex-1 items-center justify-center gap-3 text-white lg:flex-none lg:justify-start">
+        <div className="flex flex-1 items-center justify-center gap-4 text-white lg:flex-none lg:justify-start">
           <MotionLink
             to="/"
             onClick={handleBrandClick}
             className="inline-flex items-center gap-3 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           >
             <LogoBadge />
-            <span className="inline-flex items-center font-script text-3xl tracking-[0.02em] text-white/90 whitespace-nowrap leading-tight relative top-1 3xl:text-[2.75rem] 4xl:text-[3.25rem]">
+            <span className="inline-flex items-center font-script text-[2.5rem] tracking-[0.02em] text-white/90 whitespace-nowrap leading-none relative top-1 sm:text-[2.75rem] xl:text-[3rem] 3xl:text-[3.8rem] 4xl:text-[4.5rem]">
               Cinderella&apos;s Cakes
             </span>
           </MotionLink>
@@ -167,7 +167,7 @@ const Navigation = () => {
             <MotionLink
               to="/"
               onClick={handleBrandClick}
-              className="font-script text-4xl text-white whitespace-nowrap"
+              className="font-script text-5xl text-white whitespace-nowrap"
               variants={fadeInUp}
               initial="hidden"
               animate="visible"

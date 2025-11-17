@@ -1,9 +1,10 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, useGLTF } from '@react-three/drei'
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
-import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
+import LoadingScreen from '../components/LoadingScreen'
 import { createStagger, createTransition, fadeInUp, glowIn, scaleIn, tiltIn } from '../utils/motionPresets'
 
 const MotionLink = motion.create(Link)
@@ -353,6 +354,7 @@ useGLTF.preload(PORTFOLIO_MODEL_SRC)
 
 const AboutPage = () => {
   const pageRef = useRef(null)
+  const [showIntroLoader, setShowIntroLoader] = useState(true)
   const [maxStep, setMaxStep] = useState(0)
   const totalSections = progressRoadmap.length
   const progressSpring = useSpring(0, { stiffness: 120, damping: 24, mass: 0.8 })
@@ -389,6 +391,9 @@ const AboutPage = () => {
   }
 
   const stageProgress = useSpring(pageScroll, { stiffness: 100, damping: 30, mass: 0.65 })
+  const handleLoaderComplete = useCallback(() => {
+    setShowIntroLoader(false)
+  }, [])
 
   const computePathCoordinate = (axis, progressValue) => {
     const clamped = Math.min(Math.max(progressValue, 0), 1)
@@ -415,7 +420,16 @@ const AboutPage = () => {
 
 
   return (
-    <main ref={pageRef} className="relative min-h-screen overflow-hidden bg-transparent text-white">
+    <>
+      {showIntroLoader && <LoadingScreen onComplete={handleLoaderComplete} />}
+      <motion.main
+        ref={pageRef}
+        aria-hidden={showIntroLoader}
+        className="relative min-h-screen overflow-hidden bg-transparent text-white"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: showIntroLoader ? 0 : 1 }}
+        transition={createTransition(0, 0.6, 'easeOut')}
+      >
       <motion.div
         aria-hidden="true"
         className="pointer-events-none fixed left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
@@ -655,8 +669,9 @@ const AboutPage = () => {
       </motion.section>
       {sectionSpacing.spacer && <div className="hidden lg:block lg:h-[30vh]"></div>}
     </div>
-  </main>
-)
+      </motion.main>
+    </>
+  )
 }
 
 export default AboutPage

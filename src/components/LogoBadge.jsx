@@ -22,13 +22,13 @@ const CinderellaLogo = () => {
   })
 
   return (
-    <group ref={groupRef} position={[0, -0.35, 0]} scale={0.9}>
+    <group ref={groupRef} position={[0, -0.35, 0]} scale={1.05}>
       <primitive object={clonedScene} />
     </group>
   )
 }
 
-const LogoBadge = ({ className = 'h-12 w-12 3xl:h-16 3xl:w-16 4xl:h-20 4xl:w-20' }) => {
+const LogoBadge = ({ className = 'h-14 w-14 sm:h-16 sm:w-16 3xl:h-20 3xl:w-20 4xl:h-24 4xl:w-24' }) => {
   return (
     <div className={`relative ${className}`}>
       <Canvas
