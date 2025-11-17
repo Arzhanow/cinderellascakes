@@ -1,6 +1,32 @@
 import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, OrbitControls, PerformanceMonitor, useGLTF } from '@react-three/drei'
-import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Box3, MathUtils, Vector3 } from 'three'
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState, useId } from 'react'
+
+const resolveModelSettings = (modelSettings = {}, viewport = 'desktop') => {
+  const { responsive = {}, ...baseSettings } = modelSettings ?? {}
+  const fallbackOverrides =
+    responsive.desktopXL || responsive.desktop || responsive.laptop || responsive.tablet || responsive.mobile || {}
+
+  return {
+    modelScale: 0.92,
+    modelYOffset: -0.9,
+    cameraPosition: [0, 1.35, 1.95],
+    orbitTarget: [0, -0.28, 0],
+    fov: 32,
+    lockOrientation: false,
+    orbitAzimuthRange: null,
+    modelRotationY: null,
+    rotationSpeed: 0.35,
+    modelOrientation: null,
+    modelOrientationDeg: null,
+    canvasYOffset: viewport === 'mobile' ? -96 : 0,
+    allowPointerInteraction: false,
+    ...baseSettings,
+    ...fallbackOverrides,
+    ...(responsive[viewport] ?? {}),
+  }
+}
 
 const viewportQueries = [
   { name: 'mobile', query: '(max-width: 639px)' },
@@ -105,16 +131,41 @@ const ModelUnavailable = ({ label }) => (
   </div>
 )
 
+const degToRad = (degrees) => (degrees * Math.PI) / 180
+
 const DessertModel = ({
   src,
   groupScale = 0.92,
   yOffset = -0.9,
   lockOrientation = false,
   baseRotationY = null,
+  rotationSpeed = 0.35,
+  onHalfRotation = null,
+  onRotationChange = null,
+  sceneOrientation = 0,
+  opacity = 1,
+  onFadeComplete,
+  emitEvents = true,
 }) => {
   const { scene } = useGLTF(src)
-  const clonedScene = useMemo(() => scene.clone(true), [scene])
+  const clonedScene = useMemo(() => {
+    const cloned = scene.clone(true)
+    if (typeof sceneOrientation === 'number') {
+      cloned.rotation.y = (cloned.rotation?.y ?? 0) + sceneOrientation
+    }
+    return cloned
+  }, [scene, sceneOrientation])
   const groupRef = useRef(null)
+  const halfTurnAccumulator = useRef(0)
+  const opacityRef = useRef(opacity)
+  const targetOpacityRef = useRef(opacity)
+  const fadeCompletedRef = useRef(opacity === 0)
+  const pivotOffset = useMemo(() => {
+    const target = new Vector3()
+    const box = new Box3().setFromObject(clonedScene)
+    box.getCenter(target)
+    return target
+  }, [clonedScene])
 
   useEffect(() => {
     clonedScene.traverse((child) => {
@@ -131,66 +182,186 @@ const DessertModel = ({
     }
   }, [baseRotationY])
 
+  useEffect(() => {
+    halfTurnAccumulator.current = 0
+  }, [src, rotationSpeed, lockOrientation, onHalfRotation])
+
+  useEffect(() => {
+    targetOpacityRef.current = opacity
+    if (opacity > 0) {
+      fadeCompletedRef.current = false
+    }
+  }, [opacity])
+
+  useEffect(() => {
+    if (!groupRef.current) {
+      return
+    }
+    groupRef.current.traverse((child) => {
+      if (child.isMesh) {
+        const materials = Array.isArray(child.material) ? child.material : [child.material]
+        materials.forEach((material) => {
+          material.transparent = true
+          material.opacity = opacityRef.current
+        })
+      }
+    })
+  }, [clonedScene])
+
+  const applyOpacity = useCallback((value) => {
+    if (!groupRef.current) {
+      return
+    }
+    groupRef.current.traverse((child) => {
+      if (child.isMesh) {
+        const materials = Array.isArray(child.material) ? child.material : [child.material]
+        materials.forEach((material) => {
+          material.transparent = true
+          material.opacity = value
+        })
+      }
+    })
+  }, [])
+
   useFrame((_, delta) => {
-    if (groupRef.current && !lockOrientation) {
-      groupRef.current.rotation.y += delta * 0.35
+    if (!groupRef.current) {
+      return
+    }
+
+    if (!lockOrientation) {
+      const rotationDelta = delta * rotationSpeed
+      groupRef.current.rotation.y += rotationDelta
+      if (emitEvents && onHalfRotation) {
+        halfTurnAccumulator.current += Math.abs(rotationDelta)
+        if (halfTurnAccumulator.current >= Math.PI) {
+          halfTurnAccumulator.current -= Math.PI
+          onHalfRotation()
+        }
+      }
+    }
+
+    if (emitEvents && onRotationChange) {
+      onRotationChange(groupRef.current.rotation.y)
+    }
+
+    if (opacityRef.current !== targetOpacityRef.current) {
+      const nextOpacity = MathUtils.damp(opacityRef.current, targetOpacityRef.current, 6, delta)
+      opacityRef.current = nextOpacity
+      applyOpacity(nextOpacity)
+      if (!fadeCompletedRef.current && targetOpacityRef.current === 0 && nextOpacity < 0.02) {
+        fadeCompletedRef.current = true
+        onFadeComplete?.()
+      }
     }
   })
 
   return (
     <group ref={groupRef} position={[0, yOffset, 0]} scale={[groupScale, groupScale, groupScale]}>
-      <primitive object={clonedScene} />
+      <group position={[-pivotOffset.x, -pivotOffset.y, -pivotOffset.z]}>
+        <primitive object={clonedScene} />
+      </group>
     </group>
   )
 }
 
-const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', modelSettings = {} }) => {
+const HeroModel = ({
+  label,
+  modelSrc,
+  slideId,
+  className = 'h-[320px] w-full',
+  modelSettings = {},
+  onHalfRotation,
+  onRotationChange,
+}) => {
   const viewport = useViewportCategory()
   const isMobileViewport = viewport === 'mobile'
   const canvasCleanupRef = useRef(null)
-  const contextRestartTimeoutRef = useRef(null)
-  const [contextLost, setContextLost] = useState(false)
+  const lastRotationRef = useRef(modelSettings?.modelRotationY ?? 0)
+  const modelSrcRef = useRef(modelSrc)
+  const idPrefix = useId()
+  const initialLayerKey = `${idPrefix}-0`
   const [renderQuality, setRenderQuality] = useState('medium')
   const [canvasRevision, setCanvasRevision] = useState(0)
-  const appliedSettings = useMemo(() => {
-    const { responsive = {}, ...baseSettings } = modelSettings ?? {}
-    const fallbackOverrides =
-      responsive.desktopXL ||
-      responsive.desktop ||
-      responsive.laptop ||
-      responsive.tablet ||
-      responsive.mobile ||
-      {}
+  const [modelLayers, setModelLayers] = useState(() => [
+    {
+      key: initialLayerKey,
+      label,
+      modelSrc,
+      modelSettings,
+      emitEvents: true,
+      targetOpacity: 1,
+      baseRotationOverride: null,
+    },
+  ])
+  const layerCounterRef = useRef(1)
+  const activeLayerKeyRef = useRef(initialLayerKey)
 
-    return {
-      modelScale: 0.92,
-      modelYOffset: -0.9,
-      cameraPosition: [0, 1.35, 1.95],
-      orbitTarget: [0, -0.28, 0],
-      fov: 32,
-      lockOrientation: false,
-      orbitAzimuthRange: null,
-      modelRotationY: null,
-      canvasYOffset: viewport === 'mobile' ? -96 : 0,
-      allowPointerInteraction: false,
-      ...baseSettings,
-      ...fallbackOverrides,
-      ...(responsive[viewport] ?? {}),
+  const getNextLayerKey = useCallback(() => {
+    const key = `${idPrefix}-${layerCounterRef.current}`
+    layerCounterRef.current += 1
+    return key
+  }, [idPrefix])
+
+  const handleLayerFadeComplete = useCallback((key) => {
+    setModelLayers((prev) => prev.filter((layer) => layer.key !== key))
+  }, [])
+
+  const handleRotationChangeInternal = useCallback(
+    (angle) => {
+      lastRotationRef.current = angle
+      onRotationChange?.(angle)
+    },
+    [onRotationChange],
+  )
+
+  useEffect(() => {
+    if (modelSrcRef.current === modelSrc) {
+      setModelLayers((prev) =>
+        prev.map((layer) =>
+          layer.key === activeLayerKeyRef.current
+            ? { ...layer, label, modelSrc, modelSettings }
+            : layer,
+        ),
+      )
+      return
     }
-  }, [modelSettings, viewport])
 
+    modelSrcRef.current = modelSrc
+    setModelLayers((prev) => {
+      const fadedLayers = prev.map((layer) => ({ ...layer, targetOpacity: 0, emitEvents: false }))
+      const newKey = getNextLayerKey()
+      activeLayerKeyRef.current = newKey
+      return [
+        ...fadedLayers,
+        {
+          key: newKey,
+          label,
+          modelSrc,
+          modelSettings,
+          emitEvents: true,
+          targetOpacity: 1,
+          baseRotationOverride: lastRotationRef.current,
+        },
+      ]
+    })
+  }, [modelSrc, modelSettings, label, slideId, getNextLayerKey])
+
+  const activeLayer =
+    modelLayers.find((layer) => layer.emitEvents) ?? modelLayers[modelLayers.length - 1] ?? null
+  const activeSettings = useMemo(
+    () => resolveModelSettings(activeLayer?.modelSettings, viewport),
+    [activeLayer?.modelSettings, viewport],
+  )
   const {
-    modelScale,
-    modelYOffset,
     cameraPosition,
     orbitTarget,
     fov,
     lockOrientation,
     orbitAzimuthRange,
-    modelRotationY,
     canvasYOffset,
     allowPointerInteraction,
-  } = appliedSettings
+  } = activeSettings
+
   const canvasYOffsetValue =
     typeof canvasYOffset === 'number' ? `${canvasYOffset}px` : canvasYOffset ?? '0px'
   const resolvedAzimuthRange = orbitAzimuthRange ?? null
@@ -219,7 +390,7 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
     })
   }, [])
 
-  const canRenderModel = typeof window !== 'undefined' && Boolean(modelSrc)
+  const canRenderModel = typeof window !== 'undefined' && modelLayers.length > 0
 
   const qualitySettings = useMemo(() => QUALITY_PROFILES[renderQuality] ?? QUALITY_PROFILES.high, [renderQuality])
   const mobileSizeClass = isMobileViewport ? 'h-[240px]' : ''
@@ -248,33 +419,14 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
   useEffect(() => {
     return () => {
       canvasCleanupRef.current?.()
-      if (contextRestartTimeoutRef.current !== null && typeof window !== 'undefined') {
-        window.clearTimeout(contextRestartTimeoutRef.current)
-        contextRestartTimeoutRef.current = null
-      }
     }
   }, [])
 
   const restartCanvas = useCallback(() => {
     canvasCleanupRef.current?.()
-    if (contextRestartTimeoutRef.current !== null && typeof window !== 'undefined') {
-      window.clearTimeout(contextRestartTimeoutRef.current)
-      contextRestartTimeoutRef.current = null
-    }
-    setContextLost(false)
     setRenderQuality((prev) => (prev === 'low' ? 'low' : 'medium'))
     setCanvasRevision((prev) => prev + 1)
   }, [])
-
-  const scheduleCanvasRestart = useCallback(() => {
-    if (typeof window === 'undefined' || contextRestartTimeoutRef.current !== null) {
-      return
-    }
-    contextRestartTimeoutRef.current = window.setTimeout(() => {
-      contextRestartTimeoutRef.current = null
-      restartCanvas()
-    }, 1800)
-  }, [restartCanvas])
 
   return (
     <div className={wrapperClassName}>
@@ -291,16 +443,8 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
         )}
         {canRenderModel && (
           <>
-            {contextLost && (
-              <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-black/70 px-6 text-center">
-                <span className="h-10 w-10 animate-spin rounded-full border-2 border-white/20 border-t-white/80"></span>
-                <p className="text-[0.65rem] uppercase tracking-[0.35em] text-white/80">3D визуализацията се възстановява…</p>
-                <p className="text-[0.6rem] uppercase tracking-[0.25em] text-white/60">ако продължи, смени слайда</p>
-              </div>
-            )}
-
             <Canvas
-              key={`${modelSrc ?? 'no-model'}-${canvasRevision}`}
+              key={`hero-canvas-${canvasRevision}`}
               camera={{ position: cameraPosition, fov, near: 0.1, far: 15 }}
               className="absolute inset-0 transform-gpu transition-transform duration-500"
               dpr={qualitySettings.dprRange}
@@ -316,17 +460,11 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
                 const handleContextLost = (event) => {
                   event?.preventDefault?.()
                   setRenderQuality('low')
-                  setContextLost(true)
-                  scheduleCanvasRestart()
-                }
-                const handleContextRestored = () => {
-                  setContextLost(false)
+                  restartCanvas()
                 }
                 gl.domElement.addEventListener('webglcontextlost', handleContextLost)
-                gl.domElement.addEventListener('webglcontextrestored', handleContextRestored)
                 canvasCleanupRef.current = () => {
                   gl.domElement.removeEventListener('webglcontextlost', handleContextLost)
-                  gl.domElement.removeEventListener('webglcontextrestored', handleContextRestored)
                 }
               }}
             >
@@ -347,14 +485,45 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
                 intensity={qualitySettings.fillSpotIntensity}
                 position={[-5, 6, -2]}
               />
-              <Suspense fallback={<LoadingOverlay label={label} />}>
-                <DessertModel
-                  src={modelSrc}
-                  groupScale={modelScale}
-                  yOffset={modelYOffset}
-                  lockOrientation={lockOrientation}
-                  baseRotationY={modelRotationY}
-                />
+              <Suspense fallback={<LoadingOverlay label={activeLayer?.label ?? label} />}>
+                {modelLayers.map((layer) => {
+                  const layerSettings = resolveModelSettings(layer.modelSettings, viewport)
+                  const {
+                    modelScale: layerScale,
+                    modelYOffset: layerYOffset,
+                    lockOrientation: layerLockOrientation,
+                    modelRotationY: layerRotation,
+                    rotationSpeed: layerRotationSpeed,
+                    modelOrientation: layerOrientation,
+                    modelOrientationDeg: layerOrientationDeg,
+                  } = layerSettings
+                  const normalizedOrientation =
+                    typeof layerOrientation === 'number'
+                      ? layerOrientation
+                      : typeof layerOrientationDeg === 'number'
+                        ? degToRad(layerOrientationDeg)
+                        : 0
+                  const baseRotationY =
+                    layer.baseRotationOverride !== null ? layer.baseRotationOverride : layerRotation
+
+                  return (
+                    <DessertModel
+                      key={layer.key}
+                      src={layer.modelSrc}
+                      groupScale={layerScale}
+                      yOffset={layerYOffset}
+                      lockOrientation={layerLockOrientation}
+                      baseRotationY={baseRotationY}
+                      rotationSpeed={layerRotationSpeed}
+                      onHalfRotation={layer.emitEvents ? onHalfRotation : undefined}
+                      onRotationChange={layer.emitEvents ? handleRotationChangeInternal : undefined}
+                      sceneOrientation={normalizedOrientation}
+                      opacity={layer.targetOpacity}
+                      onFadeComplete={() => handleLayerFadeComplete(layer.key)}
+                      emitEvents={layer.emitEvents}
+                    />
+                  )
+                })}
                 <Environment preset="studio" />
                 {qualitySettings.contactShadow.enabled && (
                   <ContactShadows
@@ -388,5 +557,6 @@ const HeroModel = ({ label, modelSrc, slideId, className = 'h-[320px] w-full', m
     </div>
   )
 }
+
 
 export default HeroModel

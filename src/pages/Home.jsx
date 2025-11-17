@@ -28,9 +28,10 @@ const heroTitleVariants = {
 }
 const heroTitleTransition = createTransition(0.02, 0.55, 'easeInOut')
 
-const heroSlides = [
+const heroDesserts = [
   {
     id: 'garash',
+    eyebrow: 'Гланцирана класика',
     label: 'Гараш',
     description:
       'Класически орехов блат с тъмен ганаш и полирано огледално покритие - любимата ни торта за ценители.',
@@ -44,6 +45,7 @@ const heroSlides = [
       modelYOffset: -2.5,
       orbitTarget: [0, -2.5, 0],
       canvasYOffset: 24,
+      modelOrientationDeg: 89.7,
       responsive: {
         mobile: {
           cameraPosition: [3.55, 3.65, 2.35],
@@ -89,27 +91,8 @@ const heroSlides = [
     },
   },
   {
-    id: 'yadesh',
-    label: 'Ядеш и ревеш',
-    description:
-      'Слоеста торта с печени ядки, карамелен мус и солен карамел - толкова богата, че оставя без думи.',
-    image: 'https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Резервирай парче',
-    href: '/#contact',
-    model: null,
-  },
-  {
-    id: 'carrot',
-    label: 'Морковена',
-    description:
-      'Сочни блатове с морков, портокал и канела, комбинирани с лек крем сирене и цитрусова кора.',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=1600&q=80',
-    cta: 'Поръчай торта',
-    href: '/#contact',
-    model: null,
-  },
-  {
     id: 'no-sugar-choco',
+    eyebrow: 'Без захар · Без брашно',
     label: 'Шоколадова без захар и брашно',
     description:
       'Интензивен шоколадов мус без рафинирана захар и без брашно - чист вкус за хората на специален режим.',
@@ -123,6 +106,7 @@ const heroSlides = [
       modelYOffset: -2.45,
       orbitTarget: [0, -2.45, 0],
       canvasYOffset: 22,
+      modelOrientationDeg: 134.81,
       responsive: {
         mobile: {
           cameraPosition: [3.3, 3.5, 2.15],
@@ -240,8 +224,6 @@ const businessServices = [
   },
 ]
 
-const sliderDuration = 14000
-
 const mapLocations = [
   {
     id: 'ostromila',
@@ -260,26 +242,24 @@ const mapLocations = [
 ]
 
 const HomePage = () => {
-  const [activeSlide, setActiveSlide] = useState(0)
-  const [heroModelNonce, setHeroModelNonce] = useState(0)
+  const [activeDessertIndex, setActiveDessertIndex] = useState(0)
   const [showIntroLoader, setShowIntroLoader] = useState(true)
   const [activeMap, setActiveMap] = useState(null)
   const closeButtonRef = useRef(null)
+  const heroRotationRef = useRef(0)
+  const heroDessertCount = heroDesserts.length
 
-  const refreshHeroModel = useCallback(() => {
-    setHeroModelNonce((prev) => prev + 1)
+  const handleHalfRotation = useCallback(() => {
+    if (heroDessertCount < 2) {
+      return
+    }
+    setActiveDessertIndex((prev) => (prev + 1) % heroDessertCount)
+  }, [heroDessertCount])
+
+  const handleRotationChange = useCallback((angle) => {
+    heroRotationRef.current = angle
   }, [])
 
-  const updateHeroSlide = useCallback(
-    (resolver) => {
-      setActiveSlide((prev) => {
-        const next = typeof resolver === 'function' ? resolver(prev) : resolver
-        return next
-      })
-      refreshHeroModel()
-    },
-    [refreshHeroModel]
-  )
   const handleLoaderComplete = useCallback(() => {
     setShowIntroLoader(false)
   }, [])
@@ -293,24 +273,38 @@ const HomePage = () => {
     }
   }, [])
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      updateHeroSlide((prev) => (prev + 1) % heroSlides.length)
-    }, sliderDuration)
-
-    return () => clearInterval(timer)
-  }, [updateHeroSlide])
-
-  const currentSlide = heroSlides[activeSlide]
+  const currentDessert = heroDesserts[activeDessertIndex] ?? heroDesserts[0]
   const activeLocation = mapLocations.find((location) => location.id === activeMap)
 
-  const goToPrev = () => {
-    updateHeroSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
-  }
+  const logRotationSnapshot = useCallback(() => {
+    const rawAngle = heroRotationRef.current
+    const normalizedRadians = ((rawAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2)
+    const normalizedDegrees = Number(((normalizedRadians * 180) / Math.PI).toFixed(2))
+    const rawDegrees = Number(((rawAngle * 180) / Math.PI).toFixed(2))
+    console.info('[Hero rotation]', {
+      dessertId: currentDessert.id,
+      normalizedRadians,
+      normalizedDegrees,
+      rawDegrees,
+      hint: 'Use -normalizedDegrees as modelOrientationDeg when this view faces forward.',
+    })
+  }, [currentDessert.id])
 
-  const goToNext = () => {
-    updateHeroSlide((prev) => (prev + 1) % heroSlides.length)
-  }
+  useEffect(() => {
+    if (typeof window === 'undefined' || !import.meta?.env?.DEV) {
+      return undefined
+    }
+
+    const handleDebugHotkey = (event) => {
+      if (event.shiftKey && (event.key === 'O' || event.key === 'o')) {
+        event.preventDefault()
+        logRotationSnapshot()
+      }
+    }
+
+    window.addEventListener('keydown', handleDebugHotkey)
+    return () => window.removeEventListener('keydown', handleDebugHotkey)
+  }, [logRotationSnapshot])
 
   useEffect(() => {
     if (!activeMap || typeof window === 'undefined') {
@@ -356,7 +350,7 @@ const HomePage = () => {
         <div className="absolute inset-0">
           <AnimatePresence mode="wait">
             <motion.div
-              key={`${currentSlide.id}-background`}
+              key={`${currentDessert.id}-background`}
               animate={{ opacity: 1 }}
               className="absolute inset-0 overflow-hidden"
               exit={{ opacity: 0 }}
@@ -369,7 +363,7 @@ const HomePage = () => {
                 decoding="async"
                 fetchPriority="high"
                 loading="eager"
-                src={currentSlide.image}
+                src={currentDessert.image}
               />
           <div
             className="pointer-events-none absolute inset-0"
@@ -384,28 +378,28 @@ const HomePage = () => {
             className="pointer-events-none absolute inset-0"
             style={{ backgroundColor: 'var(--hero-overlay)' }}
           ></div>
-          {currentSlide.model && (
+          {currentDessert?.model && (
             <div className="absolute inset-0">
               <div className="relative h-full w-full">
                 {/* Bounded frame keeps the 3D model from overwhelming small viewports */}
                 <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
                   <div className="relative h-full w-full">
                     <HeroModel
-                      key={`${currentSlide.id}-${heroModelNonce}`}
-                      eyebrow={currentSlide.eyebrow}
-                      label={currentSlide.label}
-                      modelSrc={currentSlide.model}
-                      slideId={currentSlide.id}
-                      modelSettings={currentSlide.modelSettings}
+                      label={currentDessert.label}
+                      modelSrc={currentDessert.model}
+                      slideId={currentDessert.id}
+                      modelSettings={currentDessert.modelSettings}
+                      onHalfRotation={handleHalfRotation}
+                      onRotationChange={handleRotationChange}
                       className="h-full w-full"
                     />
                     <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-12 lg:top-16 xl:top-20 2xl:top-24 3xl:top-28 4xl:top-32">
                       <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base 2xl:text-lg">
-                        {currentSlide.eyebrow}
+                        {currentDessert.eyebrow}
                       </span>
                       <AnimatePresence mode="wait">
                         <motion.p
-                          key={`hero-desktop-title-${currentSlide.id}`}
+                          key={`hero-desktop-title-${currentDessert.id}`}
                           className="mt-4 font-script text-5xl text-white lg:text-6xl xl:text-[4.75rem] 2xl:text-[5.5rem] 3xl:text-[6rem] 4xl:text-[6.75rem]"
                           variants={heroTitleVariants}
                           initial="initial"
@@ -413,7 +407,7 @@ const HomePage = () => {
                           exit="exit"
                           transition={heroTitleTransition}
                         >
-                          {currentSlide.label}
+                          {currentDessert.label}
                         </motion.p>
                       </AnimatePresence>
                     </div>
@@ -449,7 +443,7 @@ const HomePage = () => {
               variants={fadeInUp}
               transition={createTransition(0.18, 0.48)}
             >
-              Премиум сладкария от Пловдив - торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
+              Премиум сладкария Пловдив - домашно приготвени торти и десерти с фина ръчна изработка, включително серии без захар, без брашно и с протеин.
             </motion.p>
             <motion.div className="mt-8 flex flex-wrap gap-4 3xl:gap-6" variants={createStagger(0.08)}>
               <MotionLink
@@ -464,7 +458,7 @@ const HomePage = () => {
               </MotionLink>
               <MotionLink
                 className="rounded-full border border-white/40 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white transition hover:-translate-y-1 hover:border-white 2xl:px-8 2xl:py-4 2xl:text-base 4xl:px-10 4xl:py-5 4xl:text-lg"
-                to={currentSlide.href}
+                to={currentDessert.href}
                 variants={popIn}
                 transition={createTransition(0.28, 0.42)}
                 whileHover={{ y: -4 }}
@@ -485,11 +479,11 @@ const HomePage = () => {
             transition={createTransition(0.5, 0.35)}
           >
             <span className="text-[0.6rem] uppercase tracking-[0.5em] text-white/60">
-              {currentSlide.eyebrow}
+              {currentDessert.eyebrow}
             </span>
             <AnimatePresence mode="wait">
               <motion.p
-                key={`hero-mobile-title-${currentSlide.id}`}
+                key={`hero-mobile-title-${currentDessert.id}`}
                 className="mt-2 font-script text-4xl leading-none text-white drop-shadow-lg sm:text-5xl"
                 variants={heroTitleVariants}
                 initial="initial"
@@ -497,51 +491,9 @@ const HomePage = () => {
                 exit="exit"
                 transition={heroTitleTransition}
               >
-                {currentSlide.label}
+                {currentDessert.label}
               </motion.p>
             </AnimatePresence>
-          </motion.div>
-          <motion.div
-            className="pointer-events-auto inline-flex items-center gap-4 rounded-full border border-white/30 bg-black/30 px-4 py-2 text-white shadow-lg backdrop-blur-lg"
-            variants={createStagger(0.05)}
-            {...heroRevealConfig}
-          >
-            <motion.button
-              aria-label="Предишна торта"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-2xl transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              onClick={goToPrev}
-              whileTap={{ scale: 0.85 }}
-              type="button"
-            >
-              <span aria-hidden="true">←</span>
-            </motion.button>
-            <div className="flex items-center gap-3">
-              {heroSlides.map((slide, index) => (
-                <motion.button
-                  key={slide.id}
-                  aria-label={`Показване на ${slide.label}`}
-                  className={`h-3 w-3 rounded-full border transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white ${
-                    activeSlide === index
-                      ? 'scale-110 border-white bg-white shadow-glow-primary'
-                      : 'border-white/40 bg-white/10 hover:border-white/70'
-                  }`}
-                  onClick={() => updateHeroSlide(index)}
-                  whileTap={{ scale: 0.8 }}
-                  type="button"
-                >
-                  <span className="sr-only">{slide.label}</span>
-                </motion.button>
-              ))}
-            </div>
-            <motion.button
-              aria-label="Следваща торта"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/40 text-2xl transition hover:-translate-y-0.5 hover:border-white hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              onClick={goToNext}
-              whileTap={{ scale: 0.85 }}
-              type="button"
-            >
-              <span aria-hidden="true">→</span>
-            </motion.button>
           </motion.div>
         </div>
       </section>
