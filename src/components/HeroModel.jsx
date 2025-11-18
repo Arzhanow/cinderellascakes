@@ -321,10 +321,6 @@ const HeroModel = ({
     return key
   }, [idPrefix])
 
-  const handleLayerFadeComplete = useCallback((key) => {
-    setModelLayers((prev) => prev.filter((layer) => layer.key !== key))
-  }, [])
-
   const handleRotationChangeInternal = useCallback(
     (angle) => {
       lastRotationRef.current = angle
@@ -332,6 +328,10 @@ const HeroModel = ({
     },
     [onRotationChange],
   )
+
+  const handleLayerFadeComplete = useCallback((key) => {
+    setModelLayers((prev) => prev.filter((layer) => layer.key !== key))
+  }, [])
 
   useEffect(() => {
     if (modelSrcRef.current === modelSrc) {
@@ -347,11 +347,11 @@ const HeroModel = ({
 
     modelSrcRef.current = modelSrc
     setModelLayers((prev) => {
-    const fadedLayers = prev.map((layer) => ({ ...layer, targetOpacity: 0, emitEvents: false }))
-    const newKey = getNextLayerKey()
-    const newLayerSettings = resolveModelSettings(modelSettings, viewport)
-    const layerBacktrack = newLayerSettings.swapBacktrackRad ?? SWAP_BACKTRACK_RAD
-    activeLayerKeyRef.current = newKey
+      const fadedLayers = prev.map((layer) => ({ ...layer, targetOpacity: 0, emitEvents: false }))
+      const newKey = getNextLayerKey()
+      const newLayerSettings = resolveModelSettings(modelSettings, viewport)
+      const layerBacktrack = newLayerSettings.swapBacktrackRad ?? SWAP_BACKTRACK_RAD
+      activeLayerKeyRef.current = newKey
       return [
         ...fadedLayers,
         {
