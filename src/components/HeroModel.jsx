@@ -8,7 +8,7 @@ const resolveModelSettings = (modelSettings = {}, viewport = 'desktop') => {
   const fallbackOverrides =
     responsive.desktopXL || responsive.desktop || responsive.laptop || responsive.tablet || responsive.mobile || {}
 
-  return {
+  const merged = {
     modelScale: 0.92,
     modelYOffset: -0.9,
     cameraPosition: [0, 1.35, 1.95],
@@ -20,11 +20,25 @@ const resolveModelSettings = (modelSettings = {}, viewport = 'desktop') => {
     rotationSpeed: 0.35,
     modelOrientation: null,
     modelOrientationDeg: null,
+    swapBacktrackRad: null,
+    swapBacktrackDeg: null,
     canvasYOffset: viewport === 'mobile' ? -96 : 0,
     allowPointerInteraction: false,
     ...baseSettings,
     ...fallbackOverrides,
     ...(responsive[viewport] ?? {}),
+  }
+
+  const swapBacktrackRad =
+    typeof merged.swapBacktrackRad === 'number'
+      ? merged.swapBacktrackRad
+      : typeof merged.swapBacktrackDeg === 'number'
+        ? degToRad(merged.swapBacktrackDeg)
+        : null
+
+  return {
+    ...merged,
+    swapBacktrackRad,
   }
 }
 
@@ -78,6 +92,7 @@ const useViewportCategory = () => {
 
 const QUALITY_LEVELS = ['high', 'medium', 'low']
 const HERO_MODEL_PRELOADS = ['/models/garash.glb', '/models/chococake.glb']
+const SWAP_BACKTRACK_RAD = 0 // default: stick to exact rotation when swapping
 
 const QUALITY_PROFILES = {
   high: {
@@ -143,7 +158,8 @@ const DessertModel = ({
   onHalfRotation = null,
   onRotationChange = null,
   sceneOrientation = 0,
-  opacity = 1,
+  targetOpacity = 1,
+  initialOpacity = targetOpacity,
   onFadeComplete,
   emitEvents = true,
 }) => {
@@ -157,9 +173,10 @@ const DessertModel = ({
   }, [scene, sceneOrientation])
   const groupRef = useRef(null)
   const halfTurnAccumulator = useRef(0)
-  const opacityRef = useRef(opacity)
-  const targetOpacityRef = useRef(opacity)
-  const fadeCompletedRef = useRef(opacity === 0)
+  const visibilityRef = useRef(initialOpacity)
+  const targetVisibilityRef = useRef(targetOpacity)
+  const fadeCompletedRef = useRef(targetOpacity === 0)
+  const materialsRef = useRef([])
   const pivotOffset = useMemo(() => {
     const target = new Vector3()
     const box = new Box3().setFromObject(clonedScene)
@@ -187,39 +204,40 @@ const DessertModel = ({
   }, [src, rotationSpeed, lockOrientation, onHalfRotation])
 
   useEffect(() => {
-    targetOpacityRef.current = opacity
-    if (opacity > 0) {
+    targetVisibilityRef.current = targetOpacity
+    if (targetOpacity > 0) {
       fadeCompletedRef.current = false
     }
-  }, [opacity])
+  }, [targetOpacity])
 
   useEffect(() => {
     if (!groupRef.current) {
       return
     }
+    const collectedMaterials = []
     groupRef.current.traverse((child) => {
       if (child.isMesh) {
-        const materials = Array.isArray(child.material) ? child.material : [child.material]
-        materials.forEach((material) => {
-          material.transparent = true
-          material.opacity = opacityRef.current
+        const childMaterials = Array.isArray(child.material) ? child.material : [child.material]
+        childMaterials.forEach((material) => {
+          if (!collectedMaterials.includes(material)) {
+            material.transparent = true
+            material.opacity = visibilityRef.current
+            material.depthWrite = visibilityRef.current >= 0.999
+            material.needsUpdate = true
+            collectedMaterials.push(material)
+          }
         })
       }
     })
+    materialsRef.current = collectedMaterials
   }, [clonedScene])
 
-  const applyOpacity = useCallback((value) => {
-    if (!groupRef.current) {
-      return
-    }
-    groupRef.current.traverse((child) => {
-      if (child.isMesh) {
-        const materials = Array.isArray(child.material) ? child.material : [child.material]
-        materials.forEach((material) => {
-          material.transparent = true
-          material.opacity = value
-        })
-      }
+  const applyVisibility = useCallback((value) => {
+    materialsRef.current.forEach((material) => {
+      material.transparent = true
+      material.depthWrite = value >= 0.999
+      material.opacity = value
+      material.needsUpdate = true
     })
   }, [])
 
@@ -244,11 +262,11 @@ const DessertModel = ({
       onRotationChange(groupRef.current.rotation.y)
     }
 
-    if (opacityRef.current !== targetOpacityRef.current) {
-      const nextOpacity = MathUtils.damp(opacityRef.current, targetOpacityRef.current, 6, delta)
-      opacityRef.current = nextOpacity
-      applyOpacity(nextOpacity)
-      if (!fadeCompletedRef.current && targetOpacityRef.current === 0 && nextOpacity < 0.02) {
+    if (visibilityRef.current !== targetVisibilityRef.current) {
+      const nextVisibility = MathUtils.damp(visibilityRef.current, targetVisibilityRef.current, 6, delta)
+      visibilityRef.current = nextVisibility
+      applyVisibility(nextVisibility)
+      if (!fadeCompletedRef.current && targetVisibilityRef.current === 0 && nextVisibility < 0.02) {
         fadeCompletedRef.current = true
         onFadeComplete?.()
       }
@@ -290,6 +308,7 @@ const HeroModel = ({
       modelSettings,
       emitEvents: true,
       targetOpacity: 1,
+      initialOpacity: 1,
       baseRotationOverride: null,
     },
   ])
@@ -328,9 +347,11 @@ const HeroModel = ({
 
     modelSrcRef.current = modelSrc
     setModelLayers((prev) => {
-      const fadedLayers = prev.map((layer) => ({ ...layer, targetOpacity: 0, emitEvents: false }))
-      const newKey = getNextLayerKey()
-      activeLayerKeyRef.current = newKey
+    const fadedLayers = prev.map((layer) => ({ ...layer, targetOpacity: 0, emitEvents: false }))
+    const newKey = getNextLayerKey()
+    const newLayerSettings = resolveModelSettings(modelSettings, viewport)
+    const layerBacktrack = newLayerSettings.swapBacktrackRad ?? SWAP_BACKTRACK_RAD
+    activeLayerKeyRef.current = newKey
       return [
         ...fadedLayers,
         {
@@ -340,11 +361,12 @@ const HeroModel = ({
           modelSettings,
           emitEvents: true,
           targetOpacity: 1,
-          baseRotationOverride: lastRotationRef.current,
+          initialOpacity: 1,
+          baseRotationOverride: lastRotationRef.current - layerBacktrack,
         },
       ]
     })
-  }, [modelSrc, modelSettings, label, slideId, getNextLayerKey])
+  }, [modelSrc, modelSettings, label, slideId, getNextLayerKey, viewport])
 
   const activeLayer =
     modelLayers.find((layer) => layer.emitEvents) ?? modelLayers[modelLayers.length - 1] ?? null
@@ -518,7 +540,8 @@ const HeroModel = ({
                       onHalfRotation={layer.emitEvents ? onHalfRotation : undefined}
                       onRotationChange={layer.emitEvents ? handleRotationChangeInternal : undefined}
                       sceneOrientation={normalizedOrientation}
-                      opacity={layer.targetOpacity}
+                      targetOpacity={layer.targetOpacity}
+                      initialOpacity={layer.initialOpacity ?? layer.targetOpacity}
                       onFadeComplete={() => handleLayerFadeComplete(layer.key)}
                       emitEvents={layer.emitEvents}
                     />

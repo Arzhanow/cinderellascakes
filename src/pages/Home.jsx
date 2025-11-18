@@ -22,11 +22,11 @@ const MotionLink = motion.create(Link)
 const panelHoverClasses =
   'transform-gpu transition duration-300 hover:-translate-y-2 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_25px_45px_rgba(15,23,42,0.45)]'
 const heroTitleVariants = {
-  initial: { opacity: 0, y: 35, scale: 0.95, filter: 'blur(10px)' },
-  animate: { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' },
-  exit: { opacity: 0, y: -28, scale: 0.97, filter: 'blur(8px)' },
+  initial: { opacity: 0, filter: 'blur(8px)' },
+  animate: { opacity: 1, filter: 'blur(0px)' },
+  exit: { opacity: 0, filter: 'blur(6px)' },
 }
-const heroTitleTransition = createTransition(0.02, 0.55, 'easeInOut')
+const heroTitleTransition = createTransition(0.02, 0.4, 'easeInOut')
 
 const heroDesserts = [
   {
@@ -46,6 +46,7 @@ const heroDesserts = [
       orbitTarget: [0, -2.5, 0],
       canvasYOffset: 24,
       modelOrientationDeg: 89.7,
+      swapBacktrackDeg: 0,
       responsive: {
         mobile: {
           cameraPosition: [3.55, 3.65, 2.35],
