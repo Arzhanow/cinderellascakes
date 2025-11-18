@@ -348,12 +348,12 @@ const HomePage = () => {
             minHeight: 'max(80vh, calc(100vh - (var(--topbar-height, 0px) + var(--navigation-height, 0px))))',
           }}
         >
-        <div className="absolute inset-0">
+        <div className="pointer-events-none absolute inset-0">
           <AnimatePresence mode="wait">
             <motion.div
               key={`${currentDessert.id}-background`}
               animate={{ opacity: 1 }}
-              className="absolute inset-0 overflow-hidden"
+              className="pointer-events-none absolute inset-0 overflow-hidden"
               exit={{ opacity: 0 }}
               initial={{ opacity: 0 }}
               transition={createTransition(0, 0.5)}
@@ -366,58 +366,58 @@ const HomePage = () => {
                 loading="eager"
                 src={currentDessert.image}
               />
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              backgroundImage: 'linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-end))',
-              mixBlendMode: 'soft-light',
-            }}
-          ></div>
+              <div
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  backgroundImage: 'linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-end))',
+                  mixBlendMode: 'soft-light',
+                }}
+              ></div>
             </motion.div>
           </AnimatePresence>
           <div
             className="pointer-events-none absolute inset-0"
             style={{ backgroundColor: 'var(--hero-overlay)' }}
           ></div>
-          {currentDessert?.model && (
-            <div className="absolute inset-0">
-              <div className="relative h-full w-full">
-                {/* Bounded frame keeps the 3D model from overwhelming small viewports */}
-                <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
-                  <div className="relative h-full w-full">
-                    <HeroModel
-                      label={currentDessert.label}
-                      modelSrc={currentDessert.model}
-                      slideId={currentDessert.id}
-                      modelSettings={currentDessert.modelSettings}
-                      onHalfRotation={handleHalfRotation}
-                      onRotationChange={handleRotationChange}
-                      className="h-full w-full"
-                    />
-                    <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-12 lg:top-16 xl:top-20 2xl:top-24 3xl:top-28 4xl:top-32">
-                      <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base 2xl:text-lg">
-                        {currentDessert.eyebrow}
-                      </span>
-                      <AnimatePresence mode="wait">
-                        <motion.p
-                          key={`hero-desktop-title-${currentDessert.id}`}
-                          className="mt-4 font-script text-5xl text-white lg:text-6xl xl:text-[4.75rem] 2xl:text-[5.5rem] 3xl:text-[6rem] 4xl:text-[6.75rem]"
-                          variants={heroTitleVariants}
-                          initial="initial"
-                          animate="animate"
-                          exit="exit"
-                          transition={heroTitleTransition}
-                        >
-                          {currentDessert.label}
-                        </motion.p>
-                      </AnimatePresence>
-                    </div>
+        </div>
+        {currentDessert?.model && (
+          <div className="absolute inset-0">
+            <div className="relative h-full w-full">
+              {/* Bounded frame keeps the 3D model from overwhelming small viewports */}
+              <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
+                <div className="relative h-full w-full">
+                  <HeroModel
+                    label={currentDessert.label}
+                    modelSrc={currentDessert.model}
+                    slideId={currentDessert.id}
+                    modelSettings={currentDessert.modelSettings}
+                    onHalfRotation={handleHalfRotation}
+                    onRotationChange={handleRotationChange}
+                    className="h-full w-full"
+                  />
+                  <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-12 lg:top-16 xl:top-20 2xl:top-24 3xl:top-28 4xl:top-32">
+                    <span className="text-sm uppercase tracking-[0.6em] text-white/60 lg:text-base 2xl:text-lg">
+                      {currentDessert.eyebrow}
+                    </span>
+                    <AnimatePresence mode="wait">
+                      <motion.p
+                        key={`hero-desktop-title-${currentDessert.id}`}
+                        className="mt-4 font-script text-5xl text-white lg:text-6xl xl:text-[4.75rem] 2xl:text-[5.5rem] 3xl:text-[6rem] 4xl:text-[6.75rem]"
+                        variants={heroTitleVariants}
+                        initial="initial"
+                        animate="animate"
+                        exit="exit"
+                        transition={heroTitleTransition}
+                      >
+                        {currentDessert.label}
+                      </motion.p>
+                    </AnimatePresence>
                   </div>
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
 
         <div className="relative z-10 layout-shell flex min-h-[70vh] w-full flex-col justify-center gap-8 pt-6 pb-32 text-left sm:pt-10 sm:pb-36 md:pb-16 lg:pt-14 lg:pb-12 2xl:gap-12 3xl:pt-16 3xl:pb-12 4xl:pt-20 4xl:pb-14">
           <motion.div
