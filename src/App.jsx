@@ -1,6 +1,9 @@
 import { Suspense, lazy } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route, Outlet } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop'
+import LoadingScreen from './components/LoadingScreen'
+import RouteLoadingOverlay from './components/RouteLoadingOverlay'
+import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './context/ThemeContext'
 
 const MainLayout = lazy(() => import('./layouts/MainLayout'))
@@ -10,29 +13,36 @@ const ProductionPage = lazy(() => import('./pages/Production'))
 const ProductsPage = lazy(() => import('./pages/Products'))
 const ProductDetailsPage = lazy(() => import('./pages/ProductDetails'))
 
+const RootShell = () => (
+  <>
+    <ScrollToTop />
+    <RouteLoadingOverlay />
+    <Outlet />
+  </>
+)
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route element={<RootShell />}>
+      <Route element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/products/:productSlug" element={<ProductDetailsPage />} />
+        <Route path="/horeca" element={<ProductionPage />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Route>
+    </Route>,
+  ),
+)
+
 const App = () => (
-  <ThemeProvider>
-    <BrowserRouter>
-      <ScrollToTop />
-      <Suspense
-        fallback={
-          <div className="flex min-h-screen items-center justify-center bg-brand-night text-white">
-            Зареждане на преживяването...
-          </div>
-        }
-      >
-        <Routes>
-          <Route element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/products/:productSlug" element={<ProductDetailsPage />} />
-            <Route path="/horeca" element={<ProductionPage />} />
-            <Route path="/about" element={<AboutPage />} />
-          </Route>
-        </Routes>
+  <HelmetProvider>
+    <ThemeProvider>
+      <Suspense fallback={<LoadingScreen />}>
+        <RouterProvider router={router} fallbackElement={<LoadingScreen />} />
       </Suspense>
-    </BrowserRouter>
-  </ThemeProvider>
+    </ThemeProvider>
+  </HelmetProvider>
 )
 
 export default App

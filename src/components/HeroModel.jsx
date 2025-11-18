@@ -148,6 +148,15 @@ const ModelUnavailable = ({ label }) => (
 )
 
 const degToRad = (degrees) => (degrees * Math.PI) / 180
+const formatCanvasOffset = (value) => {
+  if (typeof value === 'number') {
+    return `${value}px`
+  }
+  if (typeof value === 'string') {
+    return value
+  }
+  return '0px'
+}
 
 const DessertModel = ({
   src,
@@ -362,7 +371,7 @@ const HeroModel = ({
           modelSettings,
           emitEvents: true,
           targetOpacity: 1,
-          initialOpacity: 1,
+          initialOpacity: 0,
           baseRotationOverride: lastRotationRef.current - layerBacktrack,
         },
       ]
@@ -375,18 +384,26 @@ const HeroModel = ({
     () => resolveModelSettings(activeLayer?.modelSettings, viewport),
     [activeLayer?.modelSettings, viewport],
   )
+  const hasLayerTransition = modelLayers.length > 1
+  const [canvasYOffsetState, setCanvasYOffsetState] = useState(() => activeSettings.canvasYOffset ?? 0)
+  const resolvedCanvasYOffsetRaw = activeSettings.canvasYOffset ?? 0
+  useEffect(() => {
+    if (!hasLayerTransition) {
+      setCanvasYOffsetState((current) =>
+        Object.is(current, resolvedCanvasYOffsetRaw) ? current : resolvedCanvasYOffsetRaw,
+      )
+    }
+  }, [resolvedCanvasYOffsetRaw, hasLayerTransition])
   const {
     cameraPosition,
     orbitTarget,
     fov,
     lockOrientation,
     orbitAzimuthRange,
-    canvasYOffset,
     allowPointerInteraction,
   } = activeSettings
 
-  const canvasYOffsetValue =
-    typeof canvasYOffset === 'number' ? `${canvasYOffset}px` : canvasYOffset ?? '0px'
+  const canvasYOffsetValue = formatCanvasOffset(canvasYOffsetState)
   const resolvedAzimuthRange = orbitAzimuthRange ?? null
   const rotateEnabled = resolvedAzimuthRange ? true : !lockOrientation
   const canvasStyle = useMemo(
@@ -469,7 +486,9 @@ const HeroModel = ({
             <Canvas
               key={`hero-canvas-${canvasRevision}`}
               camera={{ position: cameraPosition, fov, near: 0.1, far: 15 }}
-              className="absolute inset-0 transform-gpu transition-transform duration-500"
+              className={['absolute inset-0 transform-gpu', !isMobileViewport && 'transition-transform duration-500']
+                .filter(Boolean)
+                .join(' ')}
               dpr={qualitySettings.dprRange}
               gl={{
                 antialias: qualitySettings.antialias,

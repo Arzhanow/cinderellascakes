@@ -2,7 +2,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
-import LoadingScreen from '../components/LoadingScreen'
 import {
   blurIn,
   createStagger,
@@ -244,7 +243,6 @@ const mapLocations = [
 
 const HomePage = () => {
   const [activeDessertIndex, setActiveDessertIndex] = useState(0)
-  const [showIntroLoader, setShowIntroLoader] = useState(true)
   const [activeMap, setActiveMap] = useState(null)
   const closeButtonRef = useRef(null)
   const heroRotationRef = useRef(0)
@@ -259,19 +257,6 @@ const HomePage = () => {
 
   const handleRotationChange = useCallback((angle) => {
     heroRotationRef.current = angle
-  }, [])
-
-  const handleLoaderComplete = useCallback(() => {
-    setShowIntroLoader(false)
-  }, [])
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if ('scrollRestoration' in window.history) {
-        window.history.scrollRestoration = 'manual'
-      }
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-    }
   }, [])
 
   const currentDessert = heroDesserts[activeDessertIndex] ?? heroDesserts[0]
@@ -331,13 +316,11 @@ const HomePage = () => {
 
   return (
     <>
-      {showIntroLoader && <LoadingScreen onComplete={handleLoaderComplete} />}
       <motion.main
-        aria-hidden={showIntroLoader}
         className="relative space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36"
         id="home"
         initial={{ opacity: 0 }}
-        animate={{ opacity: showIntroLoader ? 0 : 1 }}
+        animate={{ opacity: 1 }}
         transition={createTransition(0, 0.6, 'easeOut')}
       >
         <section
@@ -499,7 +482,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <motion.section className="layout-shell" id="principles" variants={createStagger(0.08)} {...revealConfig}>
+      <motion.section className="layout-shell !mt-0" id="principles" variants={createStagger(0.08)} {...revealConfig}>
         <motion.div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 2xl:gap-8 4xl:gap-10" variants={createStagger(0.1)}>
           {principles.map((principle) => (
             <motion.article
