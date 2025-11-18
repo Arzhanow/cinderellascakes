@@ -92,6 +92,7 @@ const useViewportCategory = () => {
 
 const QUALITY_LEVELS = ['high', 'medium', 'low']
 const HERO_MODEL_PRELOADS = ['/models/garash.glb', '/models/chococake.glb']
+const HERO_ENV_TEXTURE = '/hdri/studio_small_03_1k.hdr'
 const SWAP_BACKTRACK_RAD = 0 // default: stick to exact rotation when swapping
 
 const QUALITY_PROFILES = {
@@ -547,7 +548,7 @@ const HeroModel = ({
                     />
                   )
                 })}
-                <Environment preset="studio" />
+                <Environment files={HERO_ENV_TEXTURE} />
                 {qualitySettings.contactShadow.enabled && (
                   <ContactShadows
                     opacity={qualitySettings.contactShadow.opacity}
