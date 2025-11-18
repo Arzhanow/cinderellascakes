@@ -11,6 +11,9 @@ export default defineConfig({
     chunkSizeWarningLimit: 1600,
     rollupOptions: {
       output: {
+        entryFileNames: 'assets/[name].js',
+        chunkFileNames: 'assets/[name]-chunk.js',
+        assetFileNames: 'assets/[name][extname]',
         manualChunks: {
           reactVendor: ['react', 'react-dom', 'react-router-dom'],
           motion: ['framer-motion'],
