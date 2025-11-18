@@ -274,7 +274,6 @@ const PortfolioCanvas = ({ xMotion }) => (
     gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
     shadows
   >
-    <color attach="background" args={['transparent']} />
     <ambientLight intensity={0.85} />
     <directionalLight position={[3, 4, 2]} intensity={1.05} color="#ffd6ff" />
     <directionalLight position={[-2, 3, -1]} intensity={0.9} color="#a5f0ff" />

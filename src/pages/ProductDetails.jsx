@@ -181,7 +181,6 @@ const LegendCanvas = ({ xMotion, modelConfig, sceneColors }) => {
   const initialX = xTrack?.[0] ?? -1.5
   return (
     <Canvas camera={{ position: [0.2, 1.75, 2.85], fov: 31 }} dpr={[1, 2]}>
-      <color attach="background" args={['transparent']} />
       <ambientLight intensity={0.65} color={sceneColors.ambient} />
       <directionalLight position={[3, 4, 2]} intensity={1.1} color={sceneColors.warm} />
       <directionalLight position={[-2, 3, -1]} intensity={0.9} color={sceneColors.cool} />

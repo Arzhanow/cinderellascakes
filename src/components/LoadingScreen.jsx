@@ -3,6 +3,7 @@ import { ContactShadows, Environment, Float, useGLTF } from '@react-three/drei'
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useTheme } from '../context/ThemeContext'
 import FallingCakesBackground from './FallingCakesBackground'
+import { HERO_ENV_TEXTURE } from '../constants/environment'
 
 const themePalettes = {
   midnight: {
@@ -148,7 +149,7 @@ const LoadingScreen = ({ onComplete }) => {
             <directionalLight position={[-4, 3, -2]} intensity={0.6} color={accentAlt} />
             <Suspense fallback={null}>
               <CinderellaModel />
-              <Environment preset="studio" />
+              <Environment files={HERO_ENV_TEXTURE} />
               <ContactShadows
                 position={[0, -1, 0]}
                 opacity={0.5}

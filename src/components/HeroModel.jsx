@@ -2,6 +2,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { ContactShadows, Environment, Html, OrbitControls, PerformanceMonitor, useGLTF } from '@react-three/drei'
 import { Box3, MathUtils, Vector3 } from 'three'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, useId } from 'react'
+import { HERO_ENV_TEXTURE } from '../constants/environment'
 
 const resolveModelSettings = (modelSettings = {}, viewport = 'desktop') => {
   const { responsive = {}, ...baseSettings } = modelSettings ?? {}
@@ -92,7 +93,6 @@ const useViewportCategory = () => {
 
 const QUALITY_LEVELS = ['high', 'medium', 'low']
 const HERO_MODEL_PRELOADS = ['/models/garash.glb', '/models/chococake.glb']
-const HERO_ENV_TEXTURE = '/hdri/studio_small_03_1k.hdr'
 const SWAP_BACKTRACK_RAD = 0 // default: stick to exact rotation when swapping
 
 const QUALITY_PROFILES = {

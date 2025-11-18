@@ -334,7 +334,7 @@ const HomePage = () => {
       {showIntroLoader && <LoadingScreen onComplete={handleLoaderComplete} />}
       <motion.main
         aria-hidden={showIntroLoader}
-        className="space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36"
+        className="relative space-y-20 pb-20 pt-0 2xl:space-y-24 3xl:space-y-32 3xl:pb-28 4xl:pb-36"
         id="home"
         initial={{ opacity: 0 }}
         animate={{ opacity: showIntroLoader ? 0 : 1 }}
