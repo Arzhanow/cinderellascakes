@@ -68,7 +68,7 @@ const TopBar = () => {
       initial="hidden"
       animate="visible"
       transition={createTransition(0.2, 0.9)}
-      className="fixed inset-x-0 top-0 z-50 hidden w-full border-b border-white/15 bg-brand-night shadow-[0_25px_45px_rgba(4,0,22,0.65)] md:block"
+      className="fixed inset-x-0 top-0 z-50 w-full border-b border-white/15 bg-brand-night shadow-[0_25px_45px_rgba(4,0,22,0.65)]"
     >
       <div className="layout-shell flex flex-wrap items-center justify-between gap-2 py-2 text-[0.7rem] uppercase tracking-[0.42em] text-white/80 sm:text-[0.75rem] 3xl:gap-4 3xl:text-sm 4xl:text-base">
         <span className="font-semibold">Серии без захар и без брашно · Премиум ръчна изработка</span>

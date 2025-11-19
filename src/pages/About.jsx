@@ -3,7 +3,6 @@ import { ContactShadows, Environment, Html, useGLTF } from '@react-three/drei'
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import HeroModel from '../components/HeroModel'
 import LoadingScreen from '../components/LoadingScreen'
 import { createStagger, createTransition, fadeInUp, glowIn, scaleIn, tiltIn } from '../utils/motionPresets'
 
@@ -89,51 +88,6 @@ const atelierStats = [
   { label: 'Награди и общност', value: 'First Lady Awards 2025 · 500+ Facebook последователи' },
 ]
 
-const cinderellaModelSettings = {
-  modelScale: 0.95,
-  modelYOffset: -1.6,
-  cameraPosition: [0.4, 1.55, 2.4],
-  orbitTarget: [0, -1.3, 0],
-  fov: 30,
-  responsive: {
-    mobile: {
-      cameraPosition: [0.6, 2.2, 3.1],
-      modelScale: 0.8,
-      modelYOffset: -2.05,
-      orbitTarget: [0, -1.8, 0],
-      fov: 36,
-    },
-    tablet: {
-      cameraPosition: [0.4, 1.8, 2.7],
-      modelScale: 0.88,
-      modelYOffset: -1.8,
-      orbitTarget: [0, -1.35, 0],
-      fov: 32,
-    },
-    laptop: {
-      cameraPosition: [0.3, 1.6, 2.4],
-      modelScale: 0.92,
-      modelYOffset: -1.65,
-      orbitTarget: [0, -1.28, 0],
-      fov: 30,
-    },
-    desktop: {
-      cameraPosition: [0.25, 1.5, 2.2],
-      modelScale: 0.96,
-      modelYOffset: -1.5,
-      orbitTarget: [0, -1.25, 0],
-      fov: 28,
-    },
-    desktopXL: {
-      cameraPosition: [0.15, 1.45, 2],
-      modelScale: 1.04,
-      modelYOffset: -1.42,
-      orbitTarget: [0, -1.22, 0],
-      fov: 26,
-    },
-  },
-}
-
 const useViewportBreakpoint = () => {
   const [bp, setBp] = useState('desktop')
 
@@ -176,44 +130,6 @@ const useViewportBreakpoint = () => {
   }, [])
 
   return bp
-}
-
-const heroPathVariants = {
-  mobile: [
-    { progress: 0, x: -120, y: -220 },
-    { progress: 0.25, x: 120, y: -40 },
-    { progress: 0.5, x: -100, y: 200 },
-    { progress: 0.75, x: 110, y: 420 },
-    { progress: 1, x: -80, y: 580 },
-  ],
-  tablet: [
-    { progress: 0, x: -200, y: -260 },
-    { progress: 0.25, x: 220, y: -40 },
-    { progress: 0.5, x: -180, y: 240 },
-    { progress: 0.75, x: 200, y: 460 },
-    { progress: 1, x: -160, y: 360 },
-  ],
-  desktop: [
-    { progress: 0, x: -300, y: -320 },
-    { progress: 0.23, x: 320, y: -20 },
-    { progress: 0.5, x: -280, y: 280 },
-    { progress: 0.77, x: 300, y: 520 },
-    { progress: 1, x: -260, y: 260 },
-  ],
-  wide: [
-    { progress: 0, x: -380, y: -340 },
-    { progress: 0.23, x: 400, y: 0 },
-    { progress: 0.5, x: -360, y: 320 },
-    { progress: 0.77, x: 380, y: 560 },
-    { progress: 1, x: -340, y: 220 },
-  ],
-}
-
-const heroPathViewBoxes = {
-  mobile: '-260 -360 620 1020',
-  tablet: '-360 -420 860 1200',
-  desktop: '-520 -480 1180 1360',
-  wide: '-620 -520 1420 1480',
 }
 
 const layoutOffsets = {
@@ -352,20 +268,12 @@ const PortfolioLegend = ({ panels }) => {
 useGLTF.preload(PORTFOLIO_MODEL_SRC)
 
 const AboutPage = () => {
-  const pageRef = useRef(null)
   const [showIntroLoader, setShowIntroLoader] = useState(true)
   const [maxStep, setMaxStep] = useState(0)
   const totalSections = progressRoadmap.length
   const progressSpring = useSpring(0, { stiffness: 120, damping: 24, mass: 0.8 })
   const breakpoint = useViewportBreakpoint()
-  const heroPathPoints = heroPathVariants[breakpoint] ?? heroPathVariants.desktop
-  const pathViewBox = heroPathViewBoxes[breakpoint] ?? heroPathViewBoxes.desktop
   const sectionSpacing = layoutOffsets[breakpoint] ?? layoutOffsets.desktop
-
-  const { scrollYProgress: pageScroll } = useScroll({
-    target: pageRef,
-    offset: ['start start', 'end end'],
-  })
 
   useEffect(() => {
     progressSpring.set(maxStep / totalSections)
@@ -389,83 +297,21 @@ const AboutPage = () => {
     setMaxStep((prev) => Math.max(prev, index + 1))
   }
 
-  const stageProgress = useSpring(pageScroll, { stiffness: 100, damping: 30, mass: 0.65 })
   const handleLoaderComplete = useCallback(() => {
     setShowIntroLoader(false)
   }, [])
-
-  const computePathCoordinate = (axis, progressValue) => {
-    const clamped = Math.min(Math.max(progressValue, 0), 1)
-    for (let i = 0; i < heroPathPoints.length - 1; i++) {
-      const current = heroPathPoints[i]
-      const next = heroPathPoints[i + 1]
-      if (clamped >= current.progress && clamped <= next.progress) {
-        const span = Math.max(next.progress - current.progress, 0.0001)
-        const localT = (clamped - current.progress) / span
-        const eased = localT * localT * (3 - 2 * localT)
-        return current[axis] + (next[axis] - current[axis]) * eased
-      }
-    }
-    return heroPathPoints[heroPathPoints.length - 1][axis]
-  }
-
-  const modelX = useTransform(stageProgress, (value) => computePathCoordinate('x', value))
-  const modelY = useTransform(stageProgress, (value) => computePathCoordinate('y', value))
-  const modelScale = useTransform(stageProgress, [0, 0.4, 0.8, 1], [0.7, 0.86, 0.94, 0.78])
-  const modelGlow = useTransform(stageProgress, [0, 1], [0.2, 0.6])
-  const colorShift = useTransform(stageProgress, [0, 0.5, 1], ['hue-rotate(0deg) saturate(1)', 'hue-rotate(-35deg) saturate(1.3)', 'hue-rotate(18deg) saturate(1.1)'])
-  const trailOpacity = useTransform(stageProgress, [0, 0.5, 1], [0.08, 0.4, 0.2])
-  const stageOpacity = useTransform(stageProgress, [0, 0.05, 0.95, 1], [0.04, 0.3, 0.3, 0.1])
 
 
   return (
     <>
       {showIntroLoader && <LoadingScreen onComplete={handleLoaderComplete} />}
       <motion.main
-        ref={pageRef}
         aria-hidden={showIntroLoader}
         className="relative min-h-screen overflow-hidden bg-transparent text-white"
         initial={{ opacity: 0 }}
         animate={{ opacity: showIntroLoader ? 0 : 1 }}
         transition={createTransition(0, 0.6, 'easeOut')}
       >
-      <motion.div
-        aria-hidden="true"
-        className="pointer-events-none fixed left-1/2 top-1/2 z-0 -translate-x-1/2 -translate-y-1/2 mix-blend-screen"
-        style={{ x: modelX, y: modelY, scale: modelScale, opacity: stageOpacity, filter: colorShift }}
-      >
-        <motion.span
-          className="absolute -top-32 left-1/2 h-48 w-48 -translate-x-1/2 rounded-full bg-brand-cyan/30 blur-3xl mix-blend-screen"
-          style={{ opacity: trailOpacity }}
-        />
-        <motion.span
-          className="absolute -bottom-24 right-0 h-60 w-40 rounded-[120px] bg-brand-blush/25 blur-3xl mix-blend-screen"
-          style={{ opacity: modelGlow }}
-        />
-        <HeroModel
-          className="h-[400px] w-[360px] sm:h-[460px] sm:w-[420px] lg:h-[520px] lg:w-[480px]"
-          label="Cinderella"
-          modelSrc="/models/cinderella3D.glb"
-          modelSettings={{
-            ...cinderellaModelSettings,
-            modelScale: 0.38,
-            modelYOffset: -1.75,
-            lockOrientation: true,
-            orbitAzimuthRange: [-0.45, 0.45],
-            modelRotationY: 0,
-            responsive: {
-              ...cinderellaModelSettings.responsive,
-              mobile: { ...(cinderellaModelSettings.responsive?.mobile ?? {}), modelScale: 0.32, modelYOffset: -2.3 },
-              tablet: { ...(cinderellaModelSettings.responsive?.tablet ?? {}), modelScale: 0.36, modelYOffset: -2.05 },
-              laptop: { ...(cinderellaModelSettings.responsive?.laptop ?? {}), modelScale: 0.4, modelYOffset: -1.82 },
-              desktop: { ...(cinderellaModelSettings.responsive?.desktop ?? {}), modelScale: 0.44, modelYOffset: -1.65 },
-              desktopXL: { ...(cinderellaModelSettings.responsive?.desktopXL ?? {}), modelScale: 0.48, modelYOffset: -1.55 },
-            },
-          }}
-          slideId="about-floating"
-        />
-      </motion.div>
-
       <div className="layout-shell relative z-40 space-y-16 pb-20 pt-28 2xl:space-y-20 3xl:space-y-28 3xl:pb-28 4xl:space-y-32 4xl:pb-36 4xl:pt-32">
         <div
           aria-hidden="true"
