@@ -40,28 +40,36 @@ const themePalettes = {
 
 const now = () => (typeof performance !== 'undefined' ? performance.now() : Date.now())
 
-const LoadingScreen = ({ blocking = false, isReady = false, minVisibleTime = 900, onComplete }) => {
+const LoadingScreen = ({
+  blocking = false,
+  isReady = false,
+  minVisibleTime = 900,
+  onComplete,
+  speedMultiplier = 1,
+}) => {
   const [progress, setProgress] = useState(0)
   const [isFadingOut, setIsFadingOut] = useState(false)
   const mountedAtRef = useRef(now())
   const { theme } = useTheme()
   const palette = themePalettes[theme] ?? themePalettes.midnight
-  const { background, text, textMuted, label, cardBorder, accent, ringTrack, ringBackground, ringShadow } = palette
+  const { background, text, label, cardBorder, accent, ringTrack, ringBackground, ringShadow } = palette
 
   useEffect(() => {
+    const normalizedSpeed = Number.isFinite(speedMultiplier) && speedMultiplier > 0 ? speedMultiplier : 1
     const interval = setInterval(() => {
       setProgress((prev) => {
         const target = blocking ? (isReady ? 100 : 95) : 100
         if (prev >= target) {
           return prev
         }
-        const delta = blocking ? (isReady ? 4 : 1.2) : 2.4
+        const baseDelta = blocking ? (isReady ? 4 : 1.2) : 2.4
+        const delta = baseDelta * normalizedSpeed
         return Math.min(prev + delta, target)
       })
-    }, 30)
+    }, Math.max(16, 30 / normalizedSpeed))
 
     return () => clearInterval(interval)
-  }, [blocking, isReady])
+  }, [blocking, isReady, speedMultiplier])
 
   const readyToClose = progress >= 100 && (!blocking || isReady)
 

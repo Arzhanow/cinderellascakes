@@ -1,10 +1,10 @@
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route, Outlet } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop'
 import LoadingScreen from './components/LoadingScreen'
 import RouteLoadingOverlay from './components/RouteLoadingOverlay'
-import { HelmetProvider } from 'react-helmet-async'
 import { ThemeProvider } from './context/ThemeContext'
+import { preloadInitialAssets } from './utils/preloadInitialAssets'
 
 const MainLayout = lazy(() => import('./layouts/MainLayout'))
 const AboutPage = lazy(() => import('./pages/About'))
@@ -35,14 +35,63 @@ const router = createBrowserRouter(
   ),
 )
 
-const App = () => (
-  <HelmetProvider>
+const App = () => {
+  const [windowReady, setWindowReady] = useState(() => {
+    if (typeof window === 'undefined') {
+      return true
+    }
+    return document.readyState === 'complete'
+  })
+  const [assetsReady, setAssetsReady] = useState(false)
+  const [initialOverlayActive, setInitialOverlayActive] = useState(true)
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || windowReady) {
+      return
+    }
+    const handleLoad = () => setWindowReady(true)
+    window.addEventListener('load', handleLoad, { once: true })
+    return () => window.removeEventListener('load', handleLoad)
+  }, [windowReady])
+
+  useEffect(() => {
+    let cancelled = false
+
+    preloadInitialAssets()
+      .catch(() => {})
+      .finally(() => {
+        if (!cancelled) {
+          setAssetsReady(true)
+        }
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const handleInitialLoaderComplete = useCallback(() => {
+    setInitialOverlayActive(false)
+  }, [])
+
+  const initialReady = windowReady && assetsReady
+
+  return (
     <ThemeProvider>
-      <Suspense fallback={<LoadingScreen />}>
-        <RouterProvider router={router} fallbackElement={<LoadingScreen />} />
+      <Suspense fallback={null}>
+        <RouterProvider router={router} fallbackElement={null} />
       </Suspense>
+      {initialOverlayActive && (
+        <LoadingScreen
+          blocking
+          isReady={initialReady}
+          minVisibleTime={1600}
+          onComplete={handleInitialLoaderComplete}
+          speedMultiplier={0.85}
+        />
+      )}
     </ThemeProvider>
-  </HelmetProvider>
-)
+  )
+}
 
 export default App
