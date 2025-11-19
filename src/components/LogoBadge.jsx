@@ -1,6 +1,7 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Html, useGLTF } from '@react-three/drei'
+import { Html } from '@react-three/drei'
 import { Suspense, useMemo, useRef } from 'react'
+import { useOptimizedGLTF } from '../hooks/useOptimizedGLTF'
 
 const LOGO_MODEL_SRC = '/models/cinderella3D.glb'
 
@@ -11,7 +12,7 @@ const LogoLoading = () => (
 )
 
 const CinderellaLogo = () => {
-  const { scene } = useGLTF(LOGO_MODEL_SRC)
+  const { scene } = useOptimizedGLTF(LOGO_MODEL_SRC)
   const groupRef = useRef(null)
   const clonedScene = useMemo(() => scene.clone(true), [scene])
 
@@ -51,6 +52,6 @@ const LogoBadge = ({ className = 'h-14 w-14 sm:h-16 sm:w-16 3xl:h-20 3xl:w-20 4x
   )
 }
 
-useGLTF.preload(LOGO_MODEL_SRC)
+useOptimizedGLTF.preload(LOGO_MODEL_SRC)
 
 export default LogoBadge

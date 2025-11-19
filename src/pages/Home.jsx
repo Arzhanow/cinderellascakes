@@ -380,7 +380,7 @@ const HomePage = () => {
           ></div>
         </div>
         {currentDessert?.model && (
-          <div className="absolute inset-0">
+          <div className="pointer-events-none absolute inset-0">
             <div className="relative h-full w-full">
               {/* Bounded frame keeps the 3D model from overwhelming small viewports */}
               <div className="pointer-events-none absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
@@ -499,8 +499,12 @@ const HomePage = () => {
         </div>
       </section>
 
-      <motion.section className="layout-shell !mt-0" id="principles" variants={createStagger(0.08)} {...revealConfig}>
-        <motion.div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 2xl:gap-8 4xl:gap-10" variants={createStagger(0.1)}>
+      <section className="layout-shell !mt-0" id="principles">
+        <motion.div
+          className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 2xl:gap-8 4xl:gap-10"
+          variants={createStagger(0.1)}
+          {...revealConfig}
+        >
           {principles.map((principle) => (
             <motion.article
               key={principle.title}
@@ -514,7 +518,7 @@ const HomePage = () => {
             </motion.article>
           ))}
         </motion.div>
-      </motion.section>
+      </section>
 
       <motion.section className="layout-shell" id="about" variants={scaleIn} {...revealConfig} transition={createTransition(0.1, 0.8)}>
         <motion.div className={`rounded-[32px] border border-white/10 bg-white/5 px-6 py-8 text-white/85 backdrop-blur-lg 2xl:px-8 2xl:py-10 4xl:px-10 4xl:py-12 ${panelHoverClasses}`} variants={createStagger(0.1)}>

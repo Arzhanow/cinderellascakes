@@ -1,8 +1,9 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { ContactShadows, Environment, Html, OrbitControls, PerformanceMonitor, useGLTF } from '@react-three/drei'
+import { ContactShadows, Environment, Html, OrbitControls, PerformanceMonitor } from '@react-three/drei'
 import { Box3, MathUtils, Vector3 } from 'three'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState, useId } from 'react'
 import { HERO_ENV_TEXTURE } from '../constants/environment'
+import { useOptimizedGLTF } from '../hooks/useOptimizedGLTF'
 
 const resolveModelSettings = (modelSettings = {}, viewport = 'desktop') => {
   const { responsive = {}, ...baseSettings } = modelSettings ?? {}
@@ -174,7 +175,7 @@ const DessertModel = ({
   emitEvents = true,
   onModelReady,
 }) => {
-  const { scene } = useGLTF(src)
+  const { scene } = useOptimizedGLTF(src)
   const clonedScene = useMemo(() => {
     const cloned = scene.clone(true)
     if (typeof sceneOrientation === 'number') {
@@ -438,14 +439,14 @@ const HeroModel = ({
 
   useEffect(() => {
     if (modelSrc) {
-      useGLTF.preload(modelSrc)
+      useOptimizedGLTF.preload(modelSrc)
     }
   }, [modelSrc])
 
   useEffect(() => {
     HERO_MODEL_PRELOADS.forEach((path) => {
       if (path) {
-        useGLTF.preload(path)
+        useOptimizedGLTF.preload(path)
       }
     })
   }, [])

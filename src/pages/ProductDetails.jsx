@@ -1,9 +1,10 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { ContactShadows, Environment, Html, useGLTF } from '@react-three/drei'
+import { ContactShadows, Environment, Html } from '@react-three/drei'
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
+import { useOptimizedGLTF } from '../hooks/useOptimizedGLTF'
 
 const productStories = {
   garash: {
@@ -147,7 +148,7 @@ const ModelFallback = () => (
 
 const AnimatedProductModel = ({ xMotion, modelSrc, basePosition, scale, initialX }) => {
   const groupRef = useRef(null)
-  const { scene } = useGLTF(modelSrc)
+  const { scene } = useOptimizedGLTF(modelSrc)
   const model = useMemo(() => scene.clone(true), [scene])
   const pendingX = useRef(initialX ?? -1.5)
 
@@ -323,7 +324,7 @@ const ProductDetailsPage = () => {
 }
 
 Object.values(PRODUCT_VISUALS).forEach((visual) => {
-  useGLTF.preload(visual.modelSrc)
+  useOptimizedGLTF.preload(visual.modelSrc)
 })
 
 export default ProductDetailsPage

@@ -1,10 +1,11 @@
 import { Canvas, useFrame } from '@react-three/fiber'
-import { ContactShadows, Environment, Html, useGLTF } from '@react-three/drei'
+import { ContactShadows, Environment, Html } from '@react-three/drei'
 import { motion, useMotionValueEvent, useScroll, useSpring, useTransform } from 'framer-motion'
 import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import LoadingScreen from '../components/LoadingScreen'
 import { createStagger, createTransition, fadeInUp, glowIn, scaleIn, tiltIn } from '../utils/motionPresets'
+import { useOptimizedGLTF } from '../hooks/useOptimizedGLTF'
 
 const MotionLink = motion.create(Link)
 
@@ -157,7 +158,7 @@ const PortfolioModelFallback = () => (
 
 const AnimatedCinderella = ({ xMotion }) => {
   const groupRef = useRef(null)
-  const { scene } = useGLTF(PORTFOLIO_MODEL_SRC)
+  const { scene } = useOptimizedGLTF(PORTFOLIO_MODEL_SRC)
   const model = useMemo(() => scene.clone(true), [scene])
   const pendingX = useRef(-1.45)
 
@@ -265,7 +266,7 @@ const PortfolioLegend = ({ panels }) => {
   )
 }
 
-useGLTF.preload(PORTFOLIO_MODEL_SRC)
+useOptimizedGLTF.preload(PORTFOLIO_MODEL_SRC)
 
 const AboutPage = () => {
   const [showIntroLoader, setShowIntroLoader] = useState(true)
