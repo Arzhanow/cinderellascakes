@@ -172,6 +172,7 @@ const DessertModel = ({
   initialOpacity = targetOpacity,
   onFadeComplete,
   emitEvents = true,
+  onModelReady,
 }) => {
   const { scene } = useGLTF(src)
   const clonedScene = useMemo(() => {
@@ -187,12 +188,21 @@ const DessertModel = ({
   const targetVisibilityRef = useRef(targetOpacity)
   const fadeCompletedRef = useRef(targetOpacity === 0)
   const materialsRef = useRef([])
+  const modelReadyRef = useRef(false)
   const pivotOffset = useMemo(() => {
     const target = new Vector3()
     const box = new Box3().setFromObject(clonedScene)
     box.getCenter(target)
     return target
   }, [clonedScene])
+
+  useEffect(() => {
+    if (!onModelReady || modelReadyRef.current) {
+      return
+    }
+    modelReadyRef.current = true
+    onModelReady()
+  }, [onModelReady])
 
   useEffect(() => {
     clonedScene.traverse((child) => {
@@ -300,6 +310,7 @@ const HeroModel = ({
   modelSettings = {},
   onHalfRotation,
   onRotationChange,
+  onInitialLayerReady,
 }) => {
   const viewport = useViewportCategory()
   const isMobileViewport = viewport === 'mobile'
@@ -338,6 +349,15 @@ const HeroModel = ({
     },
     [onRotationChange],
   )
+
+  const initialLayerReadyRef = useRef(false)
+  const notifyInitialLayerReady = useCallback(() => {
+    if (initialLayerReadyRef.current) {
+      return
+    }
+    initialLayerReadyRef.current = true
+    onInitialLayerReady?.()
+  }, [onInitialLayerReady])
 
   const handleLayerFadeComplete = useCallback((key) => {
     setModelLayers((prev) => prev.filter((layer) => layer.key !== key))
@@ -564,6 +584,9 @@ const HeroModel = ({
                       initialOpacity={layer.initialOpacity ?? layer.targetOpacity}
                       onFadeComplete={() => handleLayerFadeComplete(layer.key)}
                       emitEvents={layer.emitEvents}
+                      onModelReady={
+                        layer.key === initialLayerKey ? notifyInitialLayerReady : undefined
+                      }
                     />
                   )
                 })}

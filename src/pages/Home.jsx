@@ -2,6 +2,7 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import HeroModel from '../components/HeroModel'
+import LoadingScreen from '../components/LoadingScreen'
 import {
   blurIn,
   createStagger,
@@ -244,7 +245,22 @@ const mapLocations = [
 const HomePage = () => {
   const [activeDessertIndex, setActiveDessertIndex] = useState(0)
   const [activeMap, setActiveMap] = useState(null)
+  const [heroLoaded, setHeroLoaded] = useState(false)
+  const [heroOverlayActive, setHeroOverlayActive] = useState(true)
   const closeButtonRef = useRef(null)
+  const announceHeroReady = useCallback(() => {
+    setHeroLoaded(true)
+  }, [])
+  const handleHeroOverlayComplete = useCallback(() => {
+    setHeroOverlayActive(false)
+  }, [])
+  useEffect(() => {
+    if (heroLoaded || typeof window === 'undefined') {
+      return undefined
+    }
+    const failSafe = window.setTimeout(() => setHeroLoaded(true), 8000)
+    return () => window.clearTimeout(failSafe)
+  }, [heroLoaded])
   const heroRotationRef = useRef(0)
   const heroDessertCount = heroDesserts.length
 
@@ -376,6 +392,7 @@ const HomePage = () => {
                     modelSettings={currentDessert.modelSettings}
                     onHalfRotation={handleHalfRotation}
                     onRotationChange={handleRotationChange}
+                    onInitialLayerReady={announceHeroReady}
                     className="h-full w-full"
                   />
                   <div className="pointer-events-none absolute left-1/2 hidden w-full max-w-[520px] -translate-x-1/2 flex-col items-center text-center text-white drop-shadow-[0_18px_35px_rgba(0,0,0,0.45)] md:flex md:top-12 lg:top-16 xl:top-20 2xl:top-24 3xl:top-28 4xl:top-32">
@@ -702,6 +719,15 @@ const HomePage = () => {
         </motion.div>
       </motion.section>
     </motion.main>
+    {heroOverlayActive && (
+      <LoadingScreen
+        blocking
+        isReady={heroLoaded}
+        minVisibleTime={1500}
+        onComplete={handleHeroOverlayComplete}
+        speedMultiplier={0.85}
+      />
+    )}
     <AnimatePresence>
       {activeLocation && (
         <motion.div
