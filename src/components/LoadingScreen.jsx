@@ -108,6 +108,7 @@ const LoadingScreen = ({
       style={{
         background,
         color: text,
+        pointerEvents: isFadingOut ? 'none' : 'auto',
       }}
     >
       <FallingCakesBackground />

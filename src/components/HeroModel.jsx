@@ -135,15 +135,15 @@ const LoadingOverlay = ({ label }) => (
   <Html center>
     <div className="flex flex-col items-center gap-2 text-white">
       <span className="h-10 w-10 animate-spin rounded-full border-2 border-white/30 border-t-white/80"></span>
-      <p className="text-[0.6rem] uppercase tracking-[0.4em] text-white/70">D-D��?D�DD'D�D�D� {label}</p>
+      <p className="text-[0.6rem] uppercase tracking-[0.4em] text-white/70">Зареждане · {label}</p>
     </div>
   </Html>
 )
 
 const ModelUnavailable = ({ label }) => (
   <div className="pointer-events-none absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 text-center text-white/80">
-    <span className="text-sm uppercase tracking-[0.45em]">3D D�D_D'D�D�</span>
-    <p className="text-xs uppercase tracking-[0.4em] text-white/60">{label} D� D� D�D_D'D3D_�,D_D�D�D�</p>
+    <span className="text-sm uppercase tracking-[0.45em]">3D моделът е недостъпен</span>
+    <p className="text-xs uppercase tracking-[0.4em] text-white/60">{label} не е наличен, опитайте отново.</p>
   </div>
 )
 

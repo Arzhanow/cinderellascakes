@@ -383,7 +383,7 @@ const HomePage = () => {
           <div className="absolute inset-0">
             <div className="relative h-full w-full">
               {/* Bounded frame keeps the 3D model from overwhelming small viewports */}
-              <div className="pointer-events-auto absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
+              <div className="pointer-events-none absolute left-1/2 bottom-6 z-30 h-[clamp(340px,90vw,520px)] w-[clamp(340px,90vw,520px)] -translate-x-1/2 opacity-95 sm:bottom-12 sm:h-[clamp(380px,75vw,600px)] sm:w-[clamp(380px,75vw,600px)] md:bottom-auto md:left-auto md:right-[4%] md:top-1/2 md:h-[540px] md:w-[540px] md:-translate-y-1/2 md:translate-x-0 lg:right-[3%] lg:h-[660px] lg:w-[660px] xl:right-[2%] xl:h-[780px] xl:w-[780px] 2xl:right-[1%] 2xl:h-[920px] 2xl:w-[920px] 3xl:right-0 3xl:h-[980px] 3xl:w-[980px] 4xl:right-0 4xl:h-[1080px] 4xl:w-[1080px]">
                 <div className="relative h-full w-full">
                   <HeroModel
                     label={currentDessert.label}
